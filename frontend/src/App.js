@@ -2,9 +2,13 @@ import React from 'react';
 import {BrowserRouter as Router, Switch ,Route} from 'react-router-dom';
 import Header from './components/Header';
 import Landing from './pages/Landing';
-
-
-function App(){
+import { connect } from 'react-redux';
+import * as actions from './actions'
+function App(props){
+    React.useEffect(() => {
+        console.log(props);
+        
+    }) 
     return (
         <Router>
             <>
@@ -16,4 +20,11 @@ function App(){
         </Router>
     )
 }
-export default App;
+
+function mapStateToProps({ userReducer }) {
+    return {
+        user: userReducer
+    }
+}
+
+export default connect(mapStateToProps, actions)(App);
