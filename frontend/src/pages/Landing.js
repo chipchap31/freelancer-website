@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import landingImg from '../../public/images/landing.png'
+import landingImg from '../../templates/images/landing.png';
+import posterImg from '../../templates/images/poster.png';
 export default () => {
     return (
         <main>
@@ -21,16 +22,14 @@ export default () => {
 
             <section id='services' className='padded'>
                 <div className='container'>
-                <h2>What can I offer?</h2>
-
-                <div className='row'>
-                <div class="card">
-                <div class="card-body">
-                <h5 class="card-title">Icons</h5>
-                    This is some text within a card body.
-                </div>
-                </div>
-                </div>
+                    <h2>What can I offer?</h2>
+                    <div className='row'>
+                        <div className='row'>
+                            <div className='col-4'>
+                                <img src={posterImg} alt='poster-image' />  
+                            </div> 
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>
