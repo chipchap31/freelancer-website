@@ -12,6 +12,7 @@ function Header(){
         <nav className="navbar navbar-expand-sm navbar-light bg-light">
             <div className='container'>
             <Link className="navbar-brand" to='/'>Navbar</Link>
+            
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>
@@ -22,12 +23,13 @@ function Header(){
                     <Link className="nav-link" to='/'>Home</Link>
                   </li>
                   <li className="nav-item active">
-                    <Link className="nav-link" to='/'>Home</Link>
+                    <Link className="nav-link" to='/'>Aboutsss</Link>
                   </li>
                 
                
                 </ul>
-                <Link className="btn btn-primary" to='/hire-me'>Get Quote</Link>
+                <Link className="btn btn-primary" to='/hire-me'>Hire me</Link>
+        
             </div>
             </div>
             

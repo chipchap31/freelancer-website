@@ -1,12 +1,13 @@
-const webpack = require('webpack');
+
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 module.exports = {
     mode: 'development',
     watch: true,
     devtool: 'inline-source-map',
     plugins: [
-        new webpack.HotModuleReplacementPlugin({
-            // Options...
-          })
-    ]
+        new HtmlWebpackPlugin({
+          template: path.resolve(__dirname, '..', 'frontend', 'src', 'index.html')
+        })
+      ]
 }

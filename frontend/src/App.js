@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch ,Route} from 'react-router-dom';
-import Header from './components/Header';
+import Header from './containers/Header';
 import Landing from './pages/Landing';
 import { connect } from 'react-redux';
 import * as actions from './actions'

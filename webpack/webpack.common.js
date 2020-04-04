@@ -1,17 +1,22 @@
 const path = require('path');
 
-const autoprefixer = require('autoprefixer')
+const autoprefixer = require('autoprefixer');
+const dev = process.env.NODE_ENV == 'dev'
 module.exports = {
     entry: {
         main: path.join(__dirname, '..', 'frontend', 'src', 'index.js')
     }, 
     output: {
-        publicPath: '/static/',
+        publicPath: dev ?'/' : '/static/',
         path: path.resolve(__dirname,'..', 'frontend', 'static'),
         filename: '[name].js'
     },
     module: {
         rules: [
+          {
+            test: /\.html$/i,
+            loader: 'html-loader',
+          },
             {
                 test: /\.(js|jsx)$/,
                 exclude: [/node_modules/],
@@ -47,5 +52,14 @@ module.exports = {
                 ],
               }
         ]
-    }
+    },
+  devServer:{
+    port: 5000,
+    open: true,
+    contentBase: path.resolve(__dirname, '..', 'frontend', 'static'),
+    publicPath: '/',
+    hot: true
+  
+  },
+  
 }
