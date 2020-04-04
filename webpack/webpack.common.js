@@ -3,9 +3,12 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const dev = process.env.NODE_ENV == 'dev'
 module.exports = {
-    entry: {
-        main: path.join(__dirname, '..', 'frontend', 'src', 'index.js')
-    }, 
+    entry: [
+      'react-hot-loader/patch',
+      path.join(__dirname, '..', 'frontend', 'src', 'index.js')
+    ]
+       
+    , 
     output: {
         publicPath: dev ?'/' : '/static/',
         path: path.resolve(__dirname,'..', 'frontend', 'static'),

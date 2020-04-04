@@ -23,12 +23,10 @@ function Header(){
                     <Link className="nav-link" to='/'>Home</Link>
                   </li>
                   <li className="nav-item active">
-                    <Link className="nav-link" to='/'>Aboutsss</Link>
+                    <Link className="nav-link" to='/'>Abouts</Link>
                   </li>
-                
-               
                 </ul>
-                <Link className="btn btn-primary" to='/hire-me'>Hire me</Link>
+                <Link className="btn btn-primary" to='/get-quote'>Get a Quote</Link>
         
             </div>
             </div>
