@@ -1,16 +1,16 @@
 import { hot } from "react-hot-loader";
 import React from 'react';
-import {BrowserRouter as Router, Switch ,Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './containers/Header';
 import LandingPage from './pages/LandingPage';
-import QuotePage  from './pages/QuotePage'
+import QuotePage from './pages/QuotePage'
 import { connect } from 'react-redux';
 import * as actions from './actions'
-function App(props){
+function App(props) {
     React.useEffect(() => {
-        console.log(props);
-        
-    }) 
+
+
+    })
     return (
         <Router>
             <>

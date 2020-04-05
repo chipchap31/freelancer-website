@@ -1,1 +1,13 @@
 const FETCH_USER = 'FETCH_USER';
+
+
+
+
+
+
+
+
+
+const ICON_QUOTE = 'ICON_QUOTE';
+const POSTER_QUOTE = 'ICON_QUOTE';
+const WEBSITE_QUOTE = 'ICON_QUOTE';
