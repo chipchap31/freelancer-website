@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './containers/Header';
 import LandingPage from './pages/LandingPage';
-import QuotePage from './pages/QuotePage'
+import QuotePage from './containers/quote/Quote'
 import { connect } from 'react-redux';
 import * as actions from './actions'
 function App(props) {
@@ -17,7 +17,7 @@ function App(props) {
                 <Header />
                 <Switch>
                     <Route exact path='/' component={LandingPage} />
-                    <Route exact path='/get-quote' component={QuotePage} />
+                    <Route path='/get-quote' component={QuotePage} />
 
                 </Switch>
             </>

@@ -58,9 +58,9 @@ export const loginUser = data => {
 
 
 export const getQuote = data => {
-    console.log(data);
+
 
     return dispatch => {
-        dispatch({ type: data.type, payload: data.payload })
+        dispatch({ type: data.type, payload: data })
     }
 }
