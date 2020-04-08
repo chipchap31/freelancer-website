@@ -1,47 +1,55 @@
-
-
 // colors
-body{
+body {
     background-color: #eee;
 }
+
 $white: white;
 $color-1: #033e8c;
 $color-2: #023373;
 $color-3: #d9d9d9;
 $color-4: #4b7ba6;
 $color-5: #789ebf;
-.text-white{
+
+.text-white {
     color: $white;
 }
-.text-small{
+
+.text-small {
     font-size: 14px;
 }
-.text-underline{
+
+.text-underline {
     text-decoration: underline;
 }
-.bg-grey{
+
+.bg-grey {
     background-color: grey;
 }
-.bg-1{
+
+.bg-1 {
     background-color: $color-1;
 }
-.bg-2{
+
+.bg-2 {
     background-color: $color-2;
 }
-.bg-3{
+
+.bg-3 {
     background-color: $color-3;
 }
-.bg-4{
+
+.bg-4 {
     background-color: $color-4;
 }
-.bg-5{
+
+.bg-5 {
     background-color: $color-5;
 }
 
 
 // buttons
 
-.btn-primary{
+.btn-primary {
     background-color: $color-1;
     border: none;
 }
@@ -50,10 +58,15 @@ $color-5: #789ebf;
 
 // classes
 
-.padded{
+.padded {
     padding-top: 50px;
 }
 
-.meta-width{
+.meta-width {
     max-width: 100px;
+}
+
+.form-group.required label::after {
+    content: ' *';
+    color: #990000;
 }

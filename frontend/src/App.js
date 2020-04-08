@@ -6,14 +6,15 @@ import LandingPage from './pages/LandingPage';
 import QuotePage from './containers/quote/Quote'
 import { connect } from 'react-redux';
 import * as actions from './actions'
+import { PromptLoginModal } from "./components/modals";
+
+
 function App(props) {
-    React.useEffect(() => {
 
-
-    })
     return (
         <Router>
             <>
+                <PromptLoginModal />
                 <Header />
                 <Switch>
                     <Route exact path='/' component={LandingPage} />

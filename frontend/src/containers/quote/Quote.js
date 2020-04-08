@@ -10,7 +10,7 @@ function Quote(props) {
 
     let match = useRouteMatch();
 
-    console.log(props);
+
 
     return (
         <main>
