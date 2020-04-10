@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import QuoteIndex from "./QuoteIndex";
-import LogoQuote from './LogoQuote';
+import QuoteLogo from './QuoteLogo';
 function Quote(props) {
 
 
@@ -22,7 +22,7 @@ function Quote(props) {
                                 <QuoteIndex />
                             </Route>
                             <Route path={`${match.path}/logo`}>
-                                <LogoQuote />
+                                <QuoteLogo />
                             </Route>
                         </Switch>
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useRouteMatch } from 'react-router-dom';
-import { getQuote } from '../../actions';
-import { connect } from 'react-redux'
+
 const options = [
     {
         name: 'logo',
@@ -53,12 +52,7 @@ function QuoteIndex(props) {
                             <Link
                                 className='btn btn-secondary'
                                 to={`${match.url}/${obj.name}`}
-                                onClick={() => props.getQuote({
-                                    type: `${obj.name}_Quote`.toUpperCase(),
-                                    payload: {
-                                        name: obj.name
-                                    }
-                                })}
+
                             >
 
                                 Choose {obj.name}</Link>
@@ -80,4 +74,4 @@ function QuoteIndex(props) {
     )
 }
 
-export default connect(null, { getQuote })(QuoteIndex)
+export default QuoteIndex
