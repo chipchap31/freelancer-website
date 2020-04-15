@@ -30,7 +30,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.(scss)$/,
+        test: /\.(css)$/,
         use: [{
           loader: 'style-loader',
         }, {
@@ -42,8 +42,6 @@ module.exports = {
               return [autoprefixer];
             }
           }
-        }, {
-          loader: 'sass-loader'
         }]
       },
       {

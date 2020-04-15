@@ -1,4 +1,4 @@
-import { QUOTE_LOGO_EDIT } from '../actions/types';
+import { QUOTE_EDIT } from '../actions/types';
 import moment from 'moment';
 /* Initialize a first ever state for getting the logo quote */
 const initState = {
@@ -8,10 +8,11 @@ const initState = {
     companyName: '',
     prototypeAmount: 1,
     deadline: false,
-    deadlineDate: false,
+    deadlineDate: new Date(),
     estimate: 125,
     submitDisable: true,
-    deadlineDateInvalid: true
+    deadlineDateInvalid: true,
+    type: ''
 }
 const dateNow = moment(new Date);
 
@@ -53,7 +54,7 @@ function calculateEstimate(data) {
 
 export default (state = initState, action) => {
     switch (action.type) {
-        case QUOTE_LOGO_EDIT:
+        case QUOTE_EDIT:
             const dateDiff = action.payload.deadlineDate ? moment(action.payload.deadlineDate).diff(dateNow, 'days') : 0
             return {
                 ...state,

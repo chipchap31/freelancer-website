@@ -1,8 +1,8 @@
-import { QUOTE_LOGO_EDIT } from '../actions/types'
-export const onChangeLogoQuote = data => {
+import { QUOTE_EDIT } from '../actions/types'
+export const onEditQuote = data => {
     return dispatch => {
         dispatch({
-            type: QUOTE_LOGO_EDIT,
+            type: QUOTE_EDIT,
             payload: data
         })
     }
