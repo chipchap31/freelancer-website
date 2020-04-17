@@ -6,8 +6,8 @@ import LandingPage from './pages/LandingPage';
 import { connect } from 'react-redux';
 import * as actions from './actions'
 import Login from './containers/Login';
-import Quote from './containers/Quote';
 import { Layout } from "antd";
+import QuoteRouter from "./containers/Quoute/QuoteRouter";
 
 function App(props) {
     const { Footer, Content } = Layout;
@@ -15,11 +15,14 @@ function App(props) {
         <Router>
 
             <Header />
-            <Switch>
-                <Route exact path='/' component={LandingPage} />
-                <Route path='/get-quote' component={Quote} />
-                <Route path='/login' component={Login} />
-            </Switch>
+            <main style={{ minHeight: '83vh' }}>
+                <Switch>
+                    <Route exact path='/' component={LandingPage} />
+                    <Route path='/get-quote' component={QuoteRouter} />
+                    <Route path='/login' component={Login} />
+                </Switch>
+            </main>
+
 
             <Footer>
                 <div className='container'>

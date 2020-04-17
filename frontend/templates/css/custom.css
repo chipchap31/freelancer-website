@@ -2,3 +2,38 @@
     max-width: 1000px;
     margin: 0 auto;
 }
+
+
+
+
+
+
+
+
+
+/* calendar custom cells */
+
+
+.cell {
+    height: 60px;
+    width: 90%;
+    border-top: 1px solid #FF7642;
+    transition: 200ms;
+}
+
+.cell:hover {
+    background-color: #FFDA5C;
+}
+
+.cell.selected {
+    background-color: #FFDA5C;
+}
+
+.cell.current {
+    border-top-color: #364DFF;
+}
+
+.cell.disabled {
+    background-color: #eee;
+    pointer-events: none;
+}

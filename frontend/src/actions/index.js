@@ -1,5 +1,5 @@
 import { QUOTE_EDIT } from '../actions/types'
-export const onEditQuote = data => {
+export const handleQuoteChange = data => {
     return dispatch => {
         dispatch({
             type: QUOTE_EDIT,

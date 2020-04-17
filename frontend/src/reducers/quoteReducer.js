@@ -2,17 +2,24 @@ import { QUOTE_EDIT } from '../actions/types';
 import moment from 'moment';
 /* Initialize a first ever state for getting the logo quote */
 const initState = {
-    firstname: '',
-    lastname: '',
-    email: '',
     companyName: '',
-    prototypeAmount: 1,
-    deadline: false,
-    deadlineDate: new Date(),
-    estimate: 125,
-    submitDisable: true,
-    deadlineDateInvalid: true,
-    type: ''
+    conceptAmount: 1,
+    type: 'icon',
+    colors: [],
+    height: 16,
+    width: 16,
+    defaultWidth: {
+        icon: 16,
+        logo: 250,
+        poster: 768
+    },
+    defaultHeight: {
+        icon: 16,
+        logo: 250,
+        poster: 1632
+    },
+    current: 0
+
 }
 const dateNow = moment(new Date);
 
