@@ -6,82 +6,89 @@ import {
     Col,
     Calendar,
     Typography,
-    Modal,
-    Badge
+    message,
+    Button,
+    Badge,
+    Space,
+    Modal
 } from 'antd';
-import { ClockCircleOutlined } from '@ant-design/icons';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+import { Link } from 'react-router-dom';
 
 function QuoteDeadline(props) {
+    const [modalVisible, setModalVisible] = useState(false);
+    const { quoteState, handleQuoteChange } = props;
     const { Content } = Layout;
     const { Title, Text } = Typography;
-    const [modal, setModal] = useState(false);
-    const [currentDate, setCurrentDate] = useState(moment.now())
-    function handleSelectDate(date) {
-        setCurrentDate(date)
+    const renderMessage = () => message.error('You cannot select this date!');
+    const handleSelectDate = date => setCurrentDate(date);
+    const dataCellRender = value => {
 
-    }
+        const isDisabled = moment().add(14, 'days') > value;
 
-    function dataCellRender(value) {
-        const disableCurrent = moment().add(14, 'days') > moment.now()
-
-        switch (value.calendar()) {
-
-            case moment().calendar():
+        switch (value.format('L')) {
+            case moment().format('L'):
                 return (
-                    <div className={`cell current ${disableCurrent ? 'disabled' : null}`}>
+                    <div className={`cell current ${isDisabled ? 'disabled' : null}`}>
                         <Row justify='end'>
-                            <Text>
+                            <Col>
                                 {value.date()}
-                            </Text>
-
+                            </Col>
                         </Row>
-
-                    </div >
-                )
-
-            case moment(currentDate).calendar():
-                return (
-                    <div className='cell selected'>
-                        <Row justify='end'>
-                            <Text>
-                                {value.date()}
-                            </Text>
-                        </Row>
-
                     </div>
                 )
 
-
-
             default:
-                if (moment().add(14, 'days') > value) {
-                    return (
-                        <div className='cell disabled'>
-                            <Row justify='end'>
-                                <Text>
-                                    {value.date()}
-                                </Text>
-                            </Row>
 
+                if (isDisabled) {
+                    return (
+                        <div onClick={renderMessage} className='cell disabled'>
+                            <Row justify='end'>
+                                <Col>
+                                    {value.date()}
+                                </Col>
+                            </Row>
+                        </div>
+                    )
+                } else if (quoteState.deadlineDate && quoteState.deadlineDate.format('L') == value.format('L')) {
+                    return (
+                        <div onClick={renderMessage} className='cell deadline'>
+                            <Row justify='end'>
+                                <Col>
+                                    {value.date()}
+                                </Col>
+                            </Row>
+                            <Badge status='error' text='Deadline' />
                         </div>
                     )
                 }
                 return (
-                    <div className='cell'>
+                    <div onClick={
+                        () => handleQuoteChange({
+                            ...quoteState,
+                            deadlineDate: value
+                        })
+                    } className='cell'>
                         <Row justify='end'>
-                            <Text>
+                            <Col>
                                 {value.date()}
-                            </Text>
+                            </Col>
                         </Row>
                     </div>
                 )
-
         }
 
 
-
-
     }
+
+
+
+
+
+
+
+
     return (
         <>
             <Content >
@@ -89,7 +96,7 @@ function QuoteDeadline(props) {
 
                     <Col md={16}>
                         <Typography>
-                            <Title level={3}>Deadline date</Title>
+                            <Title level={2}>Deadline date</Title>
                             <Text>Please select a date after two weeks.</Text>
                         </Typography>
                         <div >
@@ -99,21 +106,32 @@ function QuoteDeadline(props) {
                                 onSelect={handleSelectDate}
                             />
                         </div>
+                        <Row style={{ marginTop: '20px' }}>
+                            <Space><Button className='btn-back' type='primary'><Link to='/get-quote'>Back</Link></Button>
+                                {!quoteState.deadlineDate &&
+                                    (<Button onClick={() => setModalVisible(true)} type='primary'>Next</Button>)}
+                                {quoteState.deadlineDate &&
+                                    (<Button type='primary'><Link to='/get-quote/profile'>Next</Link></Button>)}
 
+
+
+                            </Space>
+
+                        </Row>
                     </Col>
                 </Row>
 
             </Content>
-            <Modal
-                title={moment(currentDate).format("MMM Do YY")}
-                visible={modal}
-                onCancel={() => setModal(false)}
-            >
+            <Modal onCancel={() => setModalVisible(false)} visible={modalVisible}>
 
             </Modal>
         </>
     )
 }
-
-export default QuoteDeadline;
+function mapStateToProps(state) {
+    return {
+        quoteState: state.quoteReducer
+    }
+}
+export default connect(mapStateToProps, actions)(QuoteDeadline);
 

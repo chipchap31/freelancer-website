@@ -4,6 +4,7 @@ import moment from 'moment';
 const initState = {
     companyName: '',
     conceptAmount: 1,
+    deadlineDate: null,
     type: 'icon',
     colors: [],
     height: 16,
@@ -62,14 +63,10 @@ function calculateEstimate(data) {
 export default (state = initState, action) => {
     switch (action.type) {
         case QUOTE_EDIT:
-            const dateDiff = action.payload.deadlineDate ? moment(action.payload.deadlineDate).diff(dateNow, 'days') : 0
             return {
                 ...state,
-                ...action.payload,
-                deadlineDate: action.payload.deadline ? action.payload.deadlineDate : false,
-                estimate: calculateEstimate(action.payload),
-                buyDisable: action.payload.companyName && action.payload.email ? false : true,
-                deadlineDateInvalid: dateDiff > 2 ? false : true
+                ...action.payload
+
             }
 
 

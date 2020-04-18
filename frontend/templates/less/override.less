@@ -1,0 +1,87 @@
+@primary-color: #364DFF; // primary color for all components
+@link-color: #1890ff; // link color
+@success-color: #52c41a; // success state color
+@warning-color: #faad14; // warning state color
+@error-color: #f5222d; // error state color
+@font-size-base: 14px; // major text font size
+@heading-color: #FF7642; // heading text color
+@text-color: rgba(0, 0, 0, 0.65); // major text color
+@text-color-secondary: rgba(0, 0, 0, 0.45); // secondary text color
+@disabled-color: rgba(0, 0, 0, 0.25); // disable state color
+@border-radius-base: 4px; // major border radius
+@border-color-base: #d9d9d9; // major border color
+@box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15); // major shadow for layers
+
+.header {
+    background-color: #ffb34f;
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+
+.cell {
+    height: 60px;
+    width: 90%;
+    border-top: 1px solid grey;
+    transition: 200ms;
+    transition-delay: 200ms;
+    border-bottom: 1px #eee solid;
+
+}
+
+.cell:hover {
+    background-color: #eee;
+}
+
+
+.cell.current {
+
+    border-top: 2px solid #364DFF;
+}
+
+.cell.disabled {
+
+    background-color: #eee;
+
+}
+
+
+
+
+
+
+
+
+.steps-wrapper {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+
+
+// Form overrides css
+
+.ant-form-item-label label {
+    color: @text-color
+}
+
+
+
+
+
+// buttons 
+
+.btn-back {
+    background-color: grey;
+    border: none;
+}
+
+.btn-back:hover {
+    background-color: rgb(91, 91, 91);
+    border: none;
+}

@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import QuoteHome from './QuoteHome';
 import { connect } from 'react-redux';
 import {
     Switch,
-    useRouteMatch,
-    Route
+    useLocation,
+    Route,
+    useRouteMatch
 } from 'react-router-dom';
 import {
     ProjectOutlined,
     ClockCircleOutlined,
     EuroCircleOutlined,
-    SmileOutlined
+    SmileOutlined,
+    UserOutlined
 } from '@ant-design/icons';
 import {
     Steps,
@@ -19,20 +21,50 @@ import {
 
 } from 'antd';
 import QuoteDeadline from './QuoteDeadline';
-
-
+import * as actions from '../../actions';
+import { quoteRoutes } from './QuoteHelpers';
 function QuoteRouter(props) {
     /* This is the main view for the Quote page */
-    const { quoteState } = props;
-    const match = useRouteMatch;
+    const { quoteState, handleQuoteChange, } = props;
+
     const { Title } = Typography;
     const { Step } = Steps;
     const { Content } = Layout;
-    let { path, url } = useRouteMatch();
+    const { path, url } = useRouteMatch();
+    const location = useLocation();
+    useEffect(() => {
+
+
+        switch (location.pathname) {
+            case quoteRoutes.home:
+
+                handleQuoteChange({
+                    ...quoteState,
+                    current: 0
+                })
+                break;
+            case quoteRoutes.deadline:
+
+                handleQuoteChange({
+                    ...quoteState,
+                    current: 1
+                })
+                break;
+
+            default:
+                handleQuoteChange({
+                    ...quoteState,
+                    current: 0
+                })
+                break;
+        }
+
+
+    }, [])
+
     return (
         <Content>
             <div className='container'>
-
                 <Switch>
                     <Route exact path={path}>
                         <QuoteHome />
@@ -41,13 +73,16 @@ function QuoteRouter(props) {
                         <QuoteDeadline />
                     </Route>
                 </Switch>
-                <Steps current={quoteState.current} style={{ margin: '30px 0' }}>
-                    <Step title="Project info" icon={<ProjectOutlined />} />
-                    <Step title="Deadline" icon={<ClockCircleOutlined />} />
-                    <Step title="Pay" icon={<EuroCircleOutlined />} />
-                    <Step title="Pay" icon={<EuroCircleOutlined />} />
-                    <Step title="Done" icon={<SmileOutlined />} />
-                </Steps>
+                <div className='steps-wrapper'>
+                    <Steps current={quoteState.current} size='small' style={{ margin: '30px 0' }}>
+                        <Step title="Project info" icon={<ProjectOutlined />} />
+                        <Step title="Deadline" icon={<ClockCircleOutlined />} />
+                        <Step title="Pay" icon={<UserOutlined />} />
+                        <Step title="Pay" icon={<EuroCircleOutlined />} />
+                        <Step title="Done" icon={<SmileOutlined />} />
+                    </Steps>
+                </div>
+
             </div>
 
         </Content>
@@ -58,6 +93,6 @@ function mapStateToProps(state) {
         quoteState: state.quoteReducer
     }
 }
-export default connect(mapStateToProps)(QuoteRouter)
+export default connect(mapStateToProps, actions)(QuoteRouter)
 
 
