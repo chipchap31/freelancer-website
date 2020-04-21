@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'frontend',
     'accounts',
     'rest_framework',
-    'knox'
+    'knox',
+    'config'
+
 ]
 
 MIDDLEWARE = [

@@ -21,49 +21,32 @@ import TextArea from 'antd/lib/input/TextArea';
 
 
 
-
-
-
-
 function QuoteHome(props) {
     const { quoteState, handleQuoteChange, history } = props;
     const { Title } = Typography;
     const [color, setColor] = useState("#EEEE")
-    const layout = {
-        labelCol: { span: 24 }
-    }
+    const layout = { labelCol: { span: 24 } }
     const [visibleModal, handleVisibleModal] = useState(false);
-
-
-    function handleColorChange(color, event) {
-        setColor(color.hex)
-    }
-
-
-    function handlePickColor() {
-
-
-        handleQuoteChange({ ...quoteState, colors: [...quoteState.colors, color] });
+    const handleColorChange = (color, event) => setColor(color.hex);
+    const onPickColor = () => {
+        handleQuoteChange({ colors: [...quoteState.colors, color] });
         handleVisibleModal(false)
     }
-
-
-
-    function handleColorDelete(i) {
-        let colorMutation = quoteState.colors;
-        // deletes removes the color from the color copy 
+    const onColorDelete = i => {
+        // removes the color from the color copy via index
         // the copy then becomes the new color array
-        colorMutation.splice(i, 1);
-        handleQuoteChange({ ...quoteState, colors: colorMutation })
+        let quoteStateColorsCopy = quoteState.colors;
+        quoteStateColorsCopy.splice(i, 1);
+        handleQuoteChange({ colors: quoteStateColorsCopy })
     }
 
-    function handleClickNext() {
-        history.push('/get-quote/deadline')
-        handleQuoteChange({
-            ...quoteState,
-            current: 1
-        })
+    const onClickNext = () => {
+        history.push('/get-quote/deadline');
+        handleQuoteChange({ current: 1 })
     }
+
+
+
     return (
         <>
             <Form {...layout}>
@@ -80,7 +63,6 @@ function QuoteHome(props) {
                                 <Form.Item label="Project type">
                                     <Select
                                         onChange={value => handleQuoteChange({
-                                            ...quoteState,
                                             type: value,
                                             width: quoteState.defaultWidth[value],
                                             height: quoteState.defaultHeight[value]
@@ -94,11 +76,7 @@ function QuoteHome(props) {
 
                                 <Form.Item label="Project size (width x height)" >
                                     <InputNumber
-                                        onChange={
-                                            value => handleQuoteChange({
-                                                ...quoteState,
-                                                width: value
-                                            })
+                                        onChange={value => handleQuoteChange({ width: value })
                                         }
                                         value={quoteState.width}
                                         defaultValue={16}
@@ -108,12 +86,7 @@ function QuoteHome(props) {
                                     <span> x </span>
 
                                     <InputNumber
-                                        onChange={
-                                            value => handleQuoteChange({
-                                                ...quoteState,
-                                                height: value
-                                            })
-                                        }
+                                        onChange={value => handleQuoteChange({ height: value })}
                                         value={quoteState.height}
                                         defaultValue={16}
                                         parser={value => value.replace('px', '')}
@@ -124,10 +97,9 @@ function QuoteHome(props) {
                                     <Row>
                                         {quoteState.colors.map((o, i) =>
                                             <Popconfirm
-
                                                 title="Are you sure delete this color?"
                                                 okText="Yes"
-                                                onConfirm={() => handleColorDelete(i)}
+                                                onConfirm={() => onColorDelete(i)}
                                                 key={i}
                                             >
                                                 <div
@@ -176,7 +148,7 @@ function QuoteHome(props) {
 
                         </Form.Item>
                         <Form.Item>
-                            <Button onClick={() => handleClickNext()} type="primary">
+                            <Button onClick={() => onClickNext()} type="primary">
                                 Next
                             </Button>
                         </Form.Item>
@@ -192,7 +164,7 @@ function QuoteHome(props) {
             </Form>
             <Modal
                 onCancel={() => handleVisibleModal(false)}
-                onOk={() => handlePickColor(false)}
+                onOk={() => onPickColor(false)}
                 title="Select color"
                 visible={visibleModal}>
 

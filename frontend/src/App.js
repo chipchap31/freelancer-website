@@ -1,16 +1,24 @@
 import { hot } from "react-hot-loader";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './containers/Header';
 import LandingPage from './pages/LandingPage';
+import WaitingListPage from './pages/WaitingListPage';
 import { connect } from 'react-redux';
 import * as actions from './actions'
 import Login from './containers/Login';
-import { Layout } from "antd";
+import { Layout, Button } from "antd";
 import QuoteRouter from "./containers/Quoute/QuoteRouter";
 
 function App(props) {
-    const { Footer, Content } = Layout;
+    const { Footer } = Layout;
+
+    useEffect(() => {
+        props.handleAcceptingProject()
+    }, [])
+
+
+
     return (
         <Router>
 
@@ -19,7 +27,7 @@ function App(props) {
                 <Switch>
                     <Route exact path='/' component={LandingPage} />
                     <Route path='/get-quote' component={QuoteRouter} />
-                    <Route path='/login' component={Login} />
+                    <Route path='/waiting-list' component={WaitingListPage} />
                 </Switch>
             </main>
 

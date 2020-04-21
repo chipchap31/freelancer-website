@@ -14,107 +14,102 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+
+
+const { Content } = Layout;
+const { Title, Text } = Typography;
+
 
 function QuoteDeadline(props) {
     const [modalVisible, setModalVisible] = useState(false);
-    const { quoteState, handleQuoteChange } = props;
-    const { Content } = Layout;
-    const { Title, Text } = Typography;
+    const { quoteState, history, handleQuoteChange } = props;
     const renderMessage = () => message.error('You cannot select this date!');
-    const handleSelectDate = date => setCurrentDate(date);
+    const Cell = props => {
+        const { value, classes } = props;
+        return (
+            <div className={classes}>
+                <Row justify='end'>
+                    <Col style={{ marginRight: '10px' }}>
+                        {value.date()}
+                    </Col>
+                </Row>
+            </div>
+        )
+    }
     const dataCellRender = value => {
 
         const isDisabled = moment().add(14, 'days') > value;
+        const now = moment().format('L');
+        const target = value.format('L');
+        const { deadlineDate } = quoteState
+        if (now === target) {
 
-        switch (value.format('L')) {
-            case moment().format('L'):
-                return (
-                    <div className={`cell current ${isDisabled ? 'disabled' : null}`}>
-                        <Row justify='end'>
-                            <Col>
-                                {value.date()}
-                            </Col>
-                        </Row>
-                    </div>
-                )
+            const classes = `cell current ${isDisabled ? 'disabled' : null}`;
 
-            default:
+            return <Cell classes={classes} value={value} />
 
-                if (isDisabled) {
-                    return (
-                        <div onClick={renderMessage} className='cell disabled'>
-                            <Row justify='end'>
-                                <Col>
-                                    {value.date()}
-                                </Col>
-                            </Row>
-                        </div>
-                    )
-                } else if (quoteState.deadlineDate && quoteState.deadlineDate.format('L') == value.format('L')) {
-                    return (
-                        <div onClick={renderMessage} className='cell deadline'>
-                            <Row justify='end'>
-                                <Col>
-                                    {value.date()}
-                                </Col>
-                            </Row>
-                            <Badge status='error' text='Deadline' />
-                        </div>
-                    )
-                }
-                return (
-                    <div onClick={
-                        () => handleQuoteChange({
-                            ...quoteState,
-                            deadlineDate: value
-                        })
-                    } className='cell'>
-                        <Row justify='end'>
-                            <Col>
-                                {value.date()}
-                            </Col>
-                        </Row>
-                    </div>
-                )
+        } else if (isDisabled) {
+            return <Cell classes='cell disabled' value={value} />
+
+        } else if (deadlineDate && deadlineDate.format('L') == target) {
+            return (
+                <div onClick={renderMessage} className='cell deadline'>
+                    <Row justify='end'>
+                        <Col style={{ marginRight: '10px' }}>
+                            {value.date()}
+                        </Col>
+                    </Row>
+                    <Row justify='start'>
+                        <Badge style={{ marginLeft: '10px' }} status='error' text='Deadline' />
+                    </Row>
+
+                </div>
+            )
+        } else {
+            return (
+                <div onClick={
+                    () => handleQuoteChange({ deadlineDate: value })
+                } className='cell'>
+                    <Row justify='end'>
+                        <Col>
+                            {value.date()}
+                        </Col>
+                    </Row>
+                </div>
+            )
         }
 
 
+
     }
+    const onClickNext = () => {
 
-
-
-
-
-
-
-
+        if (!quoteState.deadlineDate) {
+            return setModalVisible(true)
+        }
+        return history.push('/get-quote/user')
+    }
     return (
         <>
-            <Content >
+            <Content>
                 <Row>
-
                     <Col md={16}>
                         <Typography>
                             <Title level={2}>Deadline date</Title>
                             <Text>Please select a date after two weeks.</Text>
                         </Typography>
-                        <div >
+                        <div>
                             <Calendar
                                 dateFullCellRender={dataCellRender}
                                 fullscreen={true}
-                                onSelect={handleSelectDate}
+
                             />
                         </div>
                         <Row style={{ marginTop: '20px' }}>
-                            <Space><Button className='btn-back' type='primary'><Link to='/get-quote'>Back</Link></Button>
-                                {!quoteState.deadlineDate &&
-                                    (<Button onClick={() => setModalVisible(true)} type='primary'>Next</Button>)}
-                                {quoteState.deadlineDate &&
-                                    (<Button type='primary'><Link to='/get-quote/profile'>Next</Link></Button>)}
-
-
-
+                            <Space>
+                                <Button className='btn-back' type='primary'><Link to='/get-quote'>Back</Link></Button>
+                                <Button onClick={onClickNext} type='primary'>Next</Button>
                             </Space>
 
                         </Row>
@@ -122,8 +117,12 @@ function QuoteDeadline(props) {
                 </Row>
 
             </Content>
-            <Modal onCancel={() => setModalVisible(false)} visible={modalVisible}>
-
+            <Modal
+                title='Deadline missing!'
+                onCancel={() => setModalVisible(false)} visible={modalVisible}
+                onOk={() => history.push('/get-quote/user')}
+                okText='Yes'
+            >
             </Modal>
         </>
     )
@@ -133,5 +132,5 @@ function mapStateToProps(state) {
         quoteState: state.quoteReducer
     }
 }
-export default connect(mapStateToProps, actions)(QuoteDeadline);
+export default connect(mapStateToProps, actions)(withRouter(QuoteDeadline));
 

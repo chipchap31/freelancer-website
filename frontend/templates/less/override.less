@@ -1,10 +1,10 @@
-@primary-color: #364DFF; // primary color for all components
+@primary-color: #FF7642; // primary color for all components
 @link-color: #1890ff; // link color
 @success-color: #52c41a; // success state color
 @warning-color: #faad14; // warning state color
 @error-color: #f5222d; // error state color
 @font-size-base: 14px; // major text font size
-@heading-color: #FF7642; // heading text color
+@heading-color: #364DFF; // heading text color
 @text-color: rgba(0, 0, 0, 0.65); // major text color
 @text-color-secondary: rgba(0, 0, 0, 0.45); // secondary text color
 @disabled-color: rgba(0, 0, 0, 0.25); // disable state color
@@ -26,28 +26,25 @@
 
 .cell {
     height: 60px;
-    width: 90%;
-    border-top: 1px solid grey;
+    width: 95%;
+    border-top: 1px solid #FFB34F;
     transition: 200ms;
     transition-delay: 200ms;
     border-bottom: 1px #eee solid;
+    background-color: rgba(255, 217, 92, 0.318);
 
 }
 
 .cell:hover {
-    background-color: #eee;
+    background-color: #FFDA5C;
 }
 
-
 .cell.current {
-
     border-top: 2px solid #364DFF;
 }
 
 .cell.disabled {
-
     background-color: #eee;
-
 }
 
 
@@ -70,10 +67,6 @@
     color: @text-color
 }
 
-
-
-
-
 // buttons 
 
 .btn-back {
@@ -84,4 +77,19 @@
 .btn-back:hover {
     background-color: rgb(91, 91, 91);
     border: none;
+}
+
+
+
+
+
+.spinner-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

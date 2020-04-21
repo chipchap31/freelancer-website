@@ -5,7 +5,8 @@ import {
     Switch,
     useLocation,
     Route,
-    useRouteMatch
+    useRouteMatch,
+    Redirect
 } from 'react-router-dom';
 import {
     ProjectOutlined,
@@ -17,61 +18,48 @@ import {
 import {
     Steps,
     Layout,
-    Typography,
+
 
 } from 'antd';
 import QuoteDeadline from './QuoteDeadline';
 import * as actions from '../../actions';
-import { quoteRoutes } from './QuoteHelpers';
+import QuoteUserForm from './QuoteUser';
+import Spinner from '../../components/accessories';
 function QuoteRouter(props) {
     /* This is the main view for the Quote page */
-    const { quoteState, handleQuoteChange, } = props;
-
-    const { Title } = Typography;
+    const { quoteState, acceptingProject: { isLoading, accept_project } } = props;
     const { Step } = Steps;
     const { Content } = Layout;
     const { path, url } = useRouteMatch();
-    const location = useLocation();
-    useEffect(() => {
 
 
-        switch (location.pathname) {
-            case quoteRoutes.home:
-
-                handleQuoteChange({
-                    ...quoteState,
-                    current: 0
-                })
-                break;
-            case quoteRoutes.deadline:
-
-                handleQuoteChange({
-                    ...quoteState,
-                    current: 1
-                })
-                break;
-
-            default:
-                handleQuoteChange({
-                    ...quoteState,
-                    current: 0
-                })
-                break;
-        }
 
 
-    }, [])
-
+    const ProtectedRoute = ({ component: Component, ...rest }) => (
+        <Route
+            {...rest}
+            render={(props) => {
+                if (isLoading) {
+                    return <Spinner size='large' />;
+                } else if (!accept_project && !isLoading) {
+                    return <Redirect to="/waiting-list" />;
+                } else {
+                    return <Component {...props} />;
+                }
+            }}
+        />
+    );
     return (
         <Content>
             <div className='container'>
                 <Switch>
-                    <Route exact path={path}>
-                        <QuoteHome />
-                    </Route>
-                    <Route path={`${url}/deadline`}>
-                        <QuoteDeadline />
-                    </Route>
+                    <ProtectedRoute exact path={path} component={QuoteHome} />
+
+                    <ProtectedRoute path={`${url}/deadline`} component={QuoteDeadline} />
+
+                    <ProtectedRoute path={`${url}/user`} component={QuoteUserForm} />
+
+
                 </Switch>
                 <div className='steps-wrapper'>
                     <Steps current={quoteState.current} size='small' style={{ margin: '30px 0' }}>
@@ -90,9 +78,14 @@ function QuoteRouter(props) {
 }
 function mapStateToProps(state) {
     return {
-        quoteState: state.quoteReducer
+        quoteState: state.quoteReducer,
+        acceptingProject: state.projectConfigReducer
     }
 }
 export default connect(mapStateToProps, actions)(QuoteRouter)
+
+
+
+
 
 
