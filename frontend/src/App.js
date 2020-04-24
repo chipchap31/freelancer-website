@@ -6,7 +6,7 @@ import LandingPage from './pages/LandingPage';
 import WaitingListPage from './pages/WaitingListPage';
 import { connect } from 'react-redux';
 import * as actions from './actions'
-import Login from './containers/Login';
+
 import { Layout, Button } from "antd";
 import QuoteRouter from "./containers/Quoute/QuoteRouter";
 
@@ -14,7 +14,8 @@ function App(props) {
     const { Footer } = Layout;
 
     useEffect(() => {
-        props.handleAcceptingProject()
+        props.handleAcceptingProject();
+        props.handleServicesFetch();
     }, [])
 
 

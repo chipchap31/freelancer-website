@@ -22,7 +22,9 @@ import TextArea from 'antd/lib/input/TextArea';
 
 
 function QuoteHome(props) {
-    const { quoteState, handleQuoteChange, history } = props;
+    const { quoteState, servicesState, handleQuoteChange, history } = props;
+    console.log(servicesState);
+
     const { Title } = Typography;
     const [color, setColor] = useState("#EEEE")
     const layout = { labelCol: { span: 24 } }
@@ -66,9 +68,11 @@ function QuoteHome(props) {
                                         height: quoteState.defaultHeight[value]
                                     })}
                                     value={quoteState.type}>
-                                    <Select.Option value="icon">Icon</Select.Option>
-                                    <Select.Option value="logo">Logo</Select.Option>
-                                    <Select.Option value="poster">Poster</Select.Option>
+
+                                    {servicesState.map((x, i) =>
+                                        <Select.Option key={i} value={x.name.toLowerCase()}>{x.name}</Select.Option>
+                                    )}
+
                                 </Select>
                             </Form.Item>
 
@@ -160,7 +164,8 @@ function QuoteHome(props) {
 }
 function mapStateToProps(state) {
     return {
-        quoteState: state.quoteReducer
+        quoteState: state.quoteReducer,
+        servicesState: state.servicesReducer
     }
 }
 

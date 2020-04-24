@@ -7,5 +7,6 @@ urlpatterns = [
     path('', include('accounts.urls')),
     path('api/', include('config.urls')),
     path('api/', include('checkout.urls')),
+    path('api/', include('services.urls')),
     re_path(r'^.*', TemplateView.as_view(template_name='index.html'))
 ]
