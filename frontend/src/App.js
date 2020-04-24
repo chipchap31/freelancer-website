@@ -23,6 +23,8 @@ function App(props) {
         <Router>
 
             <Header />
+
+
             <main style={{ minHeight: '83vh' }}>
                 <Switch>
                     <Route exact path='/' component={LandingPage} />

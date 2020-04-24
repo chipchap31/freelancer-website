@@ -4,5 +4,5 @@ from django.urls import path
 
 
 urlpatterns = [
-    path('config/', ConfigViewSet.as_view()),
+    path('config/<pk>', ConfigViewSet.as_view()),
 ]

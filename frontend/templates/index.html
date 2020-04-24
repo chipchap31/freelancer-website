@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freelance Graphic | Jomari Alang</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'main.css' %}">
 </head>
+
 <body>
     <div id='root'></div>
     {% load static %}
-    <script src="{% static "main.js" %}"></script>
+    <script src="{% static 'vendors~main.js' %}"></script>
+    <script src="{% static 'main.js' %}"></script>
 </body>
+
 </html>

@@ -26,9 +26,9 @@ function QuoteDeadline(props) {
     const { quoteState, history, handleQuoteChange } = props;
     const renderMessage = () => message.error('You cannot select this date!');
     const Cell = props => {
-        const { value, classes } = props;
+        const { value, classes, cb } = props;
         return (
-            <div className={classes}>
+            <div onClick={cb ? renderMessage : null} className={classes}>
                 <Row justify='end'>
                     <Col style={{ marginRight: '10px' }}>
                         {value.date()}
@@ -37,6 +37,8 @@ function QuoteDeadline(props) {
             </div>
         )
     }
+
+
     const dataCellRender = value => {
 
         const isDisabled = moment().add(14, 'days') > value;
@@ -50,7 +52,7 @@ function QuoteDeadline(props) {
             return <Cell classes={classes} value={value} />
 
         } else if (isDisabled) {
-            return <Cell classes='cell disabled' value={value} />
+            return <Cell cb={renderMessage} classes='cell disabled' value={value} />
 
         } else if (deadlineDate && deadlineDate.format('L') == target) {
             return (
@@ -68,11 +70,9 @@ function QuoteDeadline(props) {
             )
         } else {
             return (
-                <div onClick={
-                    () => handleQuoteChange({ deadlineDate: value })
-                } className='cell'>
+                <div onClick={() => handleQuoteChange({ deadlineDate: value })} className='cell'>
                     <Row justify='end'>
-                        <Col>
+                        <Col style={{ marginRight: '10px' }}>
                             {value.date()}
                         </Col>
                     </Row>
@@ -103,6 +103,7 @@ function QuoteDeadline(props) {
                             <Calendar
                                 dateFullCellRender={dataCellRender}
                                 fullscreen={true}
+                                defaultValue={quoteState.deadlineDate}
 
                             />
                         </div>
