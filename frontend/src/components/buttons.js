@@ -1,7 +1,11 @@
 import React from 'react';
 import { IoIosArrowRoundBack } from "react-icons/io";
-
 import { withRouter } from 'react-router-dom';
+
+/** 
+    * @module BacButton 
+    * @description Type of button when click, the user goes to the previous page.
+    */
 function BackButton(props) {
     const { history } = props
     if (props.warn) {
@@ -39,8 +43,6 @@ function BackButton(props) {
 
 
 BackButton = withRouter(BackButton)
-
-
 
 export {
     BackButton

@@ -1,3 +1,6 @@
+/** 
+    * 
+    */
 import {
     QUOTE_EDIT,
     LOADING_CONFIG,
@@ -8,34 +11,26 @@ import {
 } from '../actions/types'
 import { postRequest } from '../utils/requests'
 
-
-export const handleQuoteChange = data => {
-    return dispatch => {
-        dispatch({
-            type: QUOTE_EDIT,
-            payload: data
-        })
-    }
+/** 
+    * @function handleQuoteChange 
+    * @param {Object} payload  onChange value when called i.e. { type: 'icon' }
+    * @description - to be called when there is a change on input 
+    * within the quote modules i.e. QuoteHome.js
+    */
+export const handleQuoteChange = payload => {
+    return dispatch => { dispatch({ type: QUOTE_EDIT, payload }) }
 }
 
-// register user after paying
-
-export const handleUserRegister = data => async dispatch => {
-
-
-
-
-    console.log();
-
-}
-
+/** 
+    * @function handleAcceptingProject 
+    */
 export const handleAcceptingProject = () => async dispatch => {
     dispatch({ type: LOADING_CONFIG })
-    const url = '/api/config/1';
+
     try {
+        const url = '/api/config/1';
         const response = await fetch(url);
         const payload = await response.json();
-
 
         if (response.status !== 200) {
             return dispatch({ type: ERROR_CONFIG })
@@ -44,19 +39,12 @@ export const handleAcceptingProject = () => async dispatch => {
         return dispatch({ type: LOADED_CONFIG, payload })
 
     } catch (error) {
-        throw new Error(error)
+        console.log(error)
     }
 
 
 
 }
-
-
-
-
-
-
-
 
 /** 
     * 

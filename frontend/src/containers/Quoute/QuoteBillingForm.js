@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import { withRouter } from 'react-router-dom';
 
-function QuoteUserForm(props) {
+function QuoteBillingForm(props) {
 
     // Display this form after the deadline has been chosen
 
@@ -27,7 +27,7 @@ function QuoteUserForm(props) {
     return (
         <Content>
             <Col md={16}>
-                <Title level={2}>About you</Title>
+                <Title level={2}></Title>
                 <Form {...layout} onFinish={onFinish}>
                     <Row justify='space-between'>
                         <Col md={11}>
@@ -90,4 +90,4 @@ function QuoteUserForm(props) {
     )
 }
 
-export default withRouter(QuoteUserForm);
+export default withRouter(QuoteBillingForm);

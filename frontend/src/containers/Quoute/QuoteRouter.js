@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import QuoteHome from './QuoteHome';
+import QuoteProjectForm from './QuoteProjectForm';
 import { connect } from 'react-redux';
 import {
     Switch,
@@ -23,7 +23,7 @@ import {
 } from 'antd';
 import QuoteDeadline from './QuoteDeadline';
 import * as actions from '../../actions';
-import QuoteUserForm from './QuoteUser';
+import QuoteBillingForm from './QuoteBillingForm';
 import Spinner from '../../components/accessories';
 import StripeMain from '../Stripe';
 function QuoteRouter(props) {
@@ -54,11 +54,11 @@ function QuoteRouter(props) {
         <Content>
             <div className='container'>
                 <Switch>
-                    <ProtectedRoute exact path={path} component={QuoteHome} />
+                    <ProtectedRoute exact path={path} component={QuoteProjectForm} />
 
                     <ProtectedRoute path={`${url}/deadline`} component={QuoteDeadline} />
 
-                    <ProtectedRoute path={`${url}/user`} component={QuoteUserForm} />
+                    <ProtectedRoute path={`${url}/user`} component={QuoteBillingForm} />
 
                     <ProtectedRoute path={`${url}/payment`} component={StripeMain} />
                 </Switch>

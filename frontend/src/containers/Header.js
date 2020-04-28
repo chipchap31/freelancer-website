@@ -9,20 +9,16 @@ function Header() {
         <Header className="header">
 
             <Row className='container' justify='space-between'>
-                <Col >
+                <Col>
                     <Link to='/'>Logo</Link>
                 </Col>
-                <Col >
+                <Col>
                     <Button type='primary'>
                         <Link to='/get-quote'>Get Quote</Link>
                     </Button>
                 </Col>
             </Row>
         </Header>
-
-
-
-
     )
 }
 
