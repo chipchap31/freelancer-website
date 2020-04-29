@@ -14,9 +14,10 @@ import {
     InputNumber,
     Button,
     Upload,
-    Input
+    Input,
+    Slider
 } from 'antd';
-import { PlusCircleOutlined, UpOutlined, UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 /** 
     * @module QuoteHome 
@@ -90,7 +91,7 @@ function QuoteProjectForm(props) {
             </div>
         )
     }
-
+    const marks = { 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five' }
     return (
         <>
             <Form {...layout}>
@@ -141,6 +142,17 @@ function QuoteProjectForm(props) {
 
                         </Col>
                         <Col xs={24} sm={18} md={11}>
+                            <Form.Item label='How many concepts do you want?'>
+                                <Slider
+                                    min={1}
+                                    marks={marks}
+                                    onAfterChange={value => handleQuoteChange({
+                                        concept_amount: value
+                                    })}
+                                    defaultValue={quoteState.concept_amount}
+                                    max={5} />
+
+                            </Form.Item>
                             <Form.Item label='Upload at least 3 snapshots of your interface.'>
                                 <Upload
 

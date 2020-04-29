@@ -9,8 +9,9 @@ import {
     Button,
     Space
 } from 'antd';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
+import * as actions from '../../actions';
 function QuotePersonalForm(props) {
 
     // Display this form after the deadline has been chosen
@@ -21,21 +22,40 @@ function QuotePersonalForm(props) {
     const { history } = props;
     const layout = { labelCol: { span: 24 } };
     const [state, setState] = useState({
-        firstname: '',
-        lastname: '',
+        first_name: '',
+        last_name: '',
         email: '',
         mobile: '',
         addressline1: '',
         addressline2: '',
         city: '',
         county: ''
-    })
+    });
+    const { quoteState } = props;
     const onFinish = () => {
         // run this block when the next button is pressed 
         // move on payment if no error
+        const {
+            deadline_date,
+            meeting_date,
+            colors,
+            height,
+            width,
+            description,
+            concept_amount
+        } = quoteState;
+        props.handleQuoteRequest({
+            ...state,
+            deadline_date,
+            meeting_date,
+            colors,
+            height,
+            width,
+            description,
+            concept_amount
 
-        console.log(state);
 
+        })
     };
 
     return (
@@ -51,9 +71,9 @@ function QuotePersonalForm(props) {
                                 <Input
                                     onChange={({ target: { value } }) => setState({
                                         ...state,
-                                        firstname: value
+                                        first_name: value
                                     })}
-                                    value={state.firstname} />
+                                    value={state.first_name} />
                             </Form.Item>
                         </Col>
                         <Col md={11}>
@@ -61,9 +81,9 @@ function QuotePersonalForm(props) {
                                 <Input
                                     onChange={({ target: { value } }) => setState({
                                         ...state,
-                                        lastname: value
+                                        last_name: value
                                     })}
-                                    value={state.lastname} />
+                                    value={state.last_name} />
                             </Form.Item>
                         </Col>
                     </Row>
@@ -166,4 +186,10 @@ function QuotePersonalForm(props) {
     )
 }
 
+function mapStateToProps(state) {
+    return {
+        quoteState: state.quoteReducer
+    }
+}
+QuotePersonalForm = connect(mapStateToProps, actions)(QuotePersonalForm)
 export default withRouter(QuotePersonalForm);

@@ -24,7 +24,7 @@ function QuoteDeadline(props) {
     const [modalVisible, setModalVisible] = useState(false);
     const { quoteState, history, handleQuoteChange } = props;
     const startOfFreeDays = moment().add(14, 'days');
-    const { deadlineDate, meetingDate } = quoteState;
+    const { deadline_date, meeting_date } = quoteState;
     const renderMessage = () => message.error('You cannot select this date!');
 
     const Cell = props => {
@@ -41,7 +41,7 @@ function QuoteDeadline(props) {
     }
 
     const onDoubleClickMeeting = value => {
-        handleQuoteChange({ meetingDate: null, deadlineDate: value });
+        handleQuoteChange({ meeting_date: null, deadline_date: value });
 
 
     }
@@ -68,7 +68,7 @@ function QuoteDeadline(props) {
                 </div>
             )
 
-        } else if (meetingDate && meetingDate.format('L') === target) {
+        } else if (meeting_date && meeting_date.format('L') === target) {
             return (
                 <div className='cell meeting'>
                     <Row justify='end'>
@@ -85,8 +85,8 @@ function QuoteDeadline(props) {
                 </div>
             )
         } else if (
-            deadlineDate &&
-            target < deadlineDate.format('L') &&
+            deadline_date &&
+            target < deadline_date.format('L') &&
             target > now &&
             // prevent picking saturday and sunday
             value.format('dddd') !== 'Sunday' &&
@@ -100,7 +100,7 @@ function QuoteDeadline(props) {
                     onDoubleClick={() => {
                         onDoubleClickMeeting({ value })
                     }}
-                    onClick={() => handleQuoteChange({ meetingDate: value })}
+                    onClick={() => handleQuoteChange({ meeting_date: value })}
                 >
                     <Row justify='end'>
                         <Col style={{ marginRight: '10px' }}>
@@ -114,14 +114,14 @@ function QuoteDeadline(props) {
             isDisabled ||
             value.format('dddd') === 'Sunday' ||
             value.format('dddd') === 'Saturday' ||
-            deadlineDate && deadlineDate.format('L') !== target
+            deadline_date && deadline_date.format('L') !== target
 
         ) {
             return <Cell cb={renderMessage} classes='cell disabled' value={value} />
 
         } else if (
-            deadlineDate &&
-            deadlineDate.format('L') == target
+            deadline_date &&
+            deadline_date.format('L') == target
         ) {
             return (
                 <div onClick={renderMessage} className='cell deadline selected'>
@@ -141,7 +141,7 @@ function QuoteDeadline(props) {
             )
         } else {
             return (
-                <div onClick={() => handleQuoteChange({ deadlineDate: value })} className='cell'>
+                <div onClick={() => handleQuoteChange({ deadline_date: value })} className='cell'>
                     <Row justify='end'>
                         <Col style={{ marginRight: '10px' }}>
                             {value.date()}
@@ -155,23 +155,23 @@ function QuoteDeadline(props) {
     }
     const onClickNext = () => {
 
-        if (!deadlineDate) {
+        if (!deadline_date) {
             return setModalVisible(true)
         }
         return history.push('/get-quote/user')
     }
     const cellDefaultValue = () => {
-        if (meetingDate) {
-            return meetingDate;
-        } else if (deadlineDate) {
+        if (meeting_date) {
+            return meeting_date;
+        } else if (deadline_date) {
 
-            return deadlineDate;
+            return deadline_date;
         } else {
             return startOfFreeDays;
         }
     }
     const onClickResetButton = () => {
-        handleQuoteChange({ deadlineDate: null, meetingDate: null })
+        handleQuoteChange({ deadline_date: null, meeting_date: null })
     }
 
 
@@ -184,8 +184,8 @@ function QuoteDeadline(props) {
                         {quoteState.type.charAt(0).toUpperCase()
                             + quoteState.type.slice(1) + ' '}
                         project timeline.</Title>
-                    {!deadlineDate && (<Text>Please select a suitable deadline for your project.</Text>)}
-                    {deadlineDate && (<Text>Please select a date if you want to meet. </Text>)}
+                    {!deadline_date && (<Text>Please select a suitable deadline for your project.</Text>)}
+                    {deadline_date && (<Text>Please select a date if you want to meet. </Text>)}
 
                 </Typography>
 

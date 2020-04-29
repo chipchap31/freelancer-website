@@ -7,7 +7,9 @@ import {
     LOADED_CONFIG,
     SERVICES_LOADING,
     SERVICES_LOADED,
-    SERVICES_ERROR
+    SERVICES_ERROR,
+    QUOTE_REQUEST_LOAD,
+    QUOTE_REQUEST_LOADED
 } from '../actions/types'
 import { postRequest } from '../utils/requests'
 
@@ -75,3 +77,29 @@ export const handleServicesFetch = () => async dispatch => {
 
 }
 
+
+
+
+export const handleQuoteRequest = data => async dispatch => {
+    dispatch({ type: QUOTE_REQUEST_LOAD })
+
+
+    const opt = {
+        url: '/api/quote/request',
+        body: data
+    }
+    try {
+        const { data, status } = await postRequest({ ...opt });
+        if (status != 200) {
+            return
+        }
+        return dispatch({ type: QUOTE_REQUEST_LOADED, payload: data })
+    } catch (error) {
+        console.log(error);
+
+    }
+
+
+
+
+}

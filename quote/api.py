@@ -10,13 +10,12 @@ class QuoteViewSet(generics.GenericAPIView):
     serializer_class = QuoteSerializer
 
     def post(self, request, *args, **kwargs):
+        quote_email = CustomEmail()
+        serializer = self.get_serializer(
+            data={**request.data, "quote_price": '99'})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-        try:
-            quote_email = CustomEmail()
-            quote_email.receiver = request.data.get('email')
-            print(quote_email.receiver)
-            quote_email.send_quote()
-            return Response({'message': 'received'})
-        except:
-
-            return Response({'message': 'error'})
+        quote_email.receiver = request.data.get('email')
+        send = quote_email.send_quote(request.data)
+        return Response({"price": 300})

@@ -2,18 +2,19 @@ import { QUOTE_EDIT, SERVICES_LOADED } from '../actions/types';
 
 /* Initialize a first ever state for getting the quote */
 const initState = {
-    companyName: '',
-    conceptAmount: 1,
-    deadlineDate: null,
-    meetingDate: null,
-    type: 'icon',
+    company_name: '',
+    concept_amount: 1,
+    deadline_date: null,
+    meeting_date: null,
+    type: '',
     colors: ['#EEEE', '#EEEE', '#EEEE', '#EEEE', '#EEEE'],
     height: 0,
     width: 0,
     default_width: {},
     default_height: {},
     current: 0,
-    description: ''
+    description: '',
+    quote_price: 0
 
 }
 

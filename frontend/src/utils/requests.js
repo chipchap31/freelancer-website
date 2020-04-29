@@ -12,6 +12,7 @@ export const postRequest = async ({ url, body }) => {
 
     });
 
+
     const promise = await res.json()
-    return promise
+    return { data: promise, status: res.status }
 }
