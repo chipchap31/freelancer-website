@@ -90,11 +90,11 @@ function QuoteProjectForm(props) {
             </div>
         )
     }
-    console.log(quoteState);
+
     return (
         <>
             <Form {...layout}>
-                <Col md={16}>
+                <Col md={14}>
                     <Typography>
                         <Title level={3}>Tell me about your project</Title>
                     </Typography>
@@ -142,8 +142,6 @@ function QuoteProjectForm(props) {
                         </Col>
                         <Col xs={24} sm={18} md={11}>
                             <Form.Item label='Upload at least 3 snapshots of your interface.'>
-
-
                                 <Upload
 
                                     listType="picture-card"

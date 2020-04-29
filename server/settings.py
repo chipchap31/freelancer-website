@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'config',
     'rest_framework.authtoken',
     'checkout',
-    'services'
+    'services',
+    'quote'
 ]
 
 MIDDLEWARE = [

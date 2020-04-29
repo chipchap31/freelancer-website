@@ -10,7 +10,8 @@ import {
     Button,
     Badge,
     Space,
-    Modal
+    Modal,
+    Alert
 } from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -54,23 +55,32 @@ function QuoteDeadline(props) {
 
         if (now === target) {
 
-            const classes = `cell current ${isDisabled ? 'disabled' : null}`;
+            return (
+                <div onClick={renderMessage} className={`cell current ${isDisabled ? 'disabled' : null}`}>
+                    <Row justify='end'>
+                        <Col style={{ marginRight: '10px' }}>
+                            <span className='current-value'>{value.date()}</span>
 
-            return <Cell classes={classes} value={value} />
+                        </Col>
+                    </Row>
+
+
+                </div>
+            )
 
         } else if (meetingDate && meetingDate.format('L') === target) {
             return (
-                <div
-                    className='cell meeting'
-
-                >
+                <div className='cell meeting'>
                     <Row justify='end'>
                         <Col style={{ marginRight: '10px' }}>
                             {value.date()}
                         </Col>
                     </Row>
                     <Row justify='start'>
-                        <Badge style={{ marginLeft: '10px' }} status='success' text='Meeting' />
+                        <div style={{ marginLeft: '20px' }}>
+                            <Badge status='default' color='#69ffe4' text='Meeting' />
+                        </div>
+
                     </Row>
                 </div>
             )
@@ -78,9 +88,12 @@ function QuoteDeadline(props) {
             deadlineDate &&
             target < deadlineDate.format('L') &&
             target > now &&
+            // prevent picking saturday and sunday
             value.format('dddd') !== 'Sunday' &&
-            value.format('dddd') !== 'Saturday'
-
+            value.format('dddd') !== 'Saturday' &&
+            // prevent user from picking the first two
+            // days from the current day
+            moment(new Date).add(2, 'day') < value
         ) {
             return (
                 <div className='cell meeting'
@@ -97,20 +110,31 @@ function QuoteDeadline(props) {
 
                 </div>
             )
-        }
-        else if (isDisabled) {
+        } else if (
+            isDisabled ||
+            value.format('dddd') === 'Sunday' ||
+            value.format('dddd') === 'Saturday' ||
+            deadlineDate && deadlineDate.format('L') !== target
+
+        ) {
             return <Cell cb={renderMessage} classes='cell disabled' value={value} />
 
-        } else if (deadlineDate && deadlineDate.format('L') == target) {
+        } else if (
+            deadlineDate &&
+            deadlineDate.format('L') == target
+        ) {
             return (
-                <div onClick={renderMessage} className='cell deadline'>
+                <div onClick={renderMessage} className='cell deadline selected'>
                     <Row justify='end'>
                         <Col style={{ marginRight: '10px' }}>
                             {value.date()}
                         </Col>
                     </Row>
                     <Row justify='start'>
-                        <Badge style={{ marginLeft: '10px' }} status='error' text='Deadline' />
+                        <div style={{ marginLeft: '20px' }}>
+                            <Badge status='default' color='#FFDA5C' text='Deadline' />
+                        </div>
+
                     </Row>
 
                 </div>
@@ -126,6 +150,7 @@ function QuoteDeadline(props) {
                 </div>
             )
         }
+
 
     }
     const onClickNext = () => {
@@ -148,15 +173,28 @@ function QuoteDeadline(props) {
     const onClickResetButton = () => {
         handleQuoteChange({ deadlineDate: null, meetingDate: null })
     }
+
+
+
     return (
         <>
             <Content>
-                <Row>
+                <Typography>
+                    <Title level={2}>
+                        {quoteState.type.charAt(0).toUpperCase()
+                            + quoteState.type.slice(1) + ' '}
+                        project timeline.</Title>
+                    {!deadlineDate && (<Text>Please select a suitable deadline for your project.</Text>)}
+                    {deadlineDate && (<Text>Please select a date if you want to meet. </Text>)}
+
+                </Typography>
+
+                <Row justify='space-between'>
+
+
                     <Col md={16}>
-                        <Typography>
-                            <Title level={2}>Select a deadline for your {quoteState.type}.</Title>
-                            <Text>Please select a date after two weeks.</Text>
-                        </Typography>
+
+
                         <div>
                             <Calendar
                                 dateFullCellRender={dataCellRender}
@@ -172,14 +210,13 @@ function QuoteDeadline(props) {
                                     <Button onClick={onClickNext} type='primary'>Next</Button>
                                 </Space>
                             </Col>
-
                             <Col>
                                 <Button onClick={onClickResetButton} type='danger'>Reset</Button>
                             </Col>
-
-
                         </Row>
                     </Col>
+
+
                 </Row>
 
             </Content>
@@ -189,6 +226,7 @@ function QuoteDeadline(props) {
                 onOk={() => history.push('/get-quote/user')}
                 okText='Yes'
             >
+                Are you sure you don't want to set the deadline?
             </Modal>
         </>
     )
@@ -199,4 +237,6 @@ function mapStateToProps(state) {
     }
 }
 export default connect(mapStateToProps, actions)(withRouter(QuoteDeadline));
+
+
 

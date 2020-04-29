@@ -23,7 +23,7 @@ import {
 } from 'antd';
 import QuoteDeadline from './QuoteDeadline';
 import * as actions from '../../actions';
-import QuoteBillingForm from './QuoteBillingForm';
+import QuotePersonalForm from './QuotePersonalForm';
 import Spinner from '../../components/accessories';
 import StripeMain from '../Stripe';
 function QuoteRouter(props) {
@@ -58,7 +58,7 @@ function QuoteRouter(props) {
 
                     <ProtectedRoute path={`${url}/deadline`} component={QuoteDeadline} />
 
-                    <ProtectedRoute path={`${url}/user`} component={QuoteBillingForm} />
+                    <ProtectedRoute path={`${url}/user`} component={QuotePersonalForm} />
 
                     <ProtectedRoute path={`${url}/payment`} component={StripeMain} />
                 </Switch>
