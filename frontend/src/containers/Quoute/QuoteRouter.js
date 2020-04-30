@@ -26,6 +26,7 @@ import * as actions from '../../actions';
 import QuotePersonalForm from './QuotePersonalForm';
 import Spinner from '../../components/accessories';
 import StripeMain from '../Stripe';
+import QuoteResult from './QuoteResult';
 function QuoteRouter(props) {
     /* This is the main view for the Quote page */
     const { quoteState, acceptingProject: { isLoading, accept_project } } = props;
@@ -61,6 +62,7 @@ function QuoteRouter(props) {
                     <ProtectedRoute path={`${url}/user`} component={QuotePersonalForm} />
 
                     <ProtectedRoute path={`${url}/payment`} component={StripeMain} />
+                    <ProtectedRoute path={`${url}/result`} component={QuoteResult} />
                 </Switch>
                 <div className='steps-wrapper'>
                     <Steps current={quoteState.current} size='small' style={{ margin: '30px 0' }}>

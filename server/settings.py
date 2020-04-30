@@ -43,10 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'knox',
     'config',
-    'rest_framework.authtoken',
     'checkout',
     'services',
-    'quote'
+    'projects'
 ]
 
 MIDDLEWARE = [

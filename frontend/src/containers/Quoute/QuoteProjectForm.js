@@ -93,9 +93,9 @@ function QuoteProjectForm(props) {
     }
     const marks = { 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five' }
     return (
-        <>
+        <Row justify='center'>
             <Form {...layout}>
-                <Col md={14}>
+                <Col md={24}>
                     <Typography>
                         <Title level={3}>Tell me about your project</Title>
                     </Typography>
@@ -192,7 +192,7 @@ function QuoteProjectForm(props) {
 
                 <SketchPicker width='96%' color={color} onChange={(color, event) => handleColorChange(color, event)} />
             </Modal>
-        </>
+        </Row>
     )
 }
 function mapStateToProps(state) {

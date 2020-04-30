@@ -11,7 +11,7 @@ import {
     Badge,
     Space,
     Modal,
-    Alert
+
 } from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
@@ -32,7 +32,7 @@ function QuoteDeadline(props) {
         return (
             <div onClick={cb ? renderMessage : null} className={classes}>
                 <Row justify='end'>
-                    <Col style={{ marginRight: '10px' }}>
+                    <Col className='mr-1'>
                         {value.date()}
                     </Col>
                 </Row>
@@ -58,7 +58,7 @@ function QuoteDeadline(props) {
             return (
                 <div onClick={renderMessage} className={`cell current ${isDisabled ? 'disabled' : null}`}>
                     <Row justify='end'>
-                        <Col style={{ marginRight: '10px' }}>
+                        <Col className='mt-1'>
                             <span className='current-value'>{value.date()}</span>
 
                         </Col>
@@ -72,12 +72,12 @@ function QuoteDeadline(props) {
             return (
                 <div className='cell meeting'>
                     <Row justify='end'>
-                        <Col style={{ marginRight: '10px' }}>
+                        <Col className='mr-1'>
                             {value.date()}
                         </Col>
                     </Row>
                     <Row justify='start'>
-                        <div style={{ marginLeft: '20px' }}>
+                        <div className='ml-1'>
                             <Badge status='default' color='#69ffe4' text='Meeting' />
                         </div>
 
@@ -103,7 +103,7 @@ function QuoteDeadline(props) {
                     onClick={() => handleQuoteChange({ meeting_date: value })}
                 >
                     <Row justify='end'>
-                        <Col style={{ marginRight: '10px' }}>
+                        <Col className='mr-1'>
                             {value.date()}
                         </Col>
                     </Row>
@@ -126,12 +126,12 @@ function QuoteDeadline(props) {
             return (
                 <div onClick={renderMessage} className='cell deadline selected'>
                     <Row justify='end'>
-                        <Col style={{ marginRight: '10px' }}>
+                        <Col className='mr-1'>
                             {value.date()}
                         </Col>
                     </Row>
                     <Row justify='start'>
-                        <div style={{ marginLeft: '20px' }}>
+                        <div className='ml-1'>
                             <Badge status='default' color='#FFDA5C' text='Deadline' />
                         </div>
 
@@ -143,7 +143,7 @@ function QuoteDeadline(props) {
             return (
                 <div onClick={() => handleQuoteChange({ deadline_date: value })} className='cell'>
                     <Row justify='end'>
-                        <Col style={{ marginRight: '10px' }}>
+                        <Col className='mr-1'>
                             {value.date()}
                         </Col>
                     </Row>
@@ -203,7 +203,7 @@ function QuoteDeadline(props) {
 
                             />
                         </div>
-                        <Row justify='space-between' style={{ marginTop: '20px' }}>
+                        <Row justify='space-between' className='mt-2'>
                             <Col>
                                 <Space>
                                     <Button className='btn-back' type='primary'><Link to='/get-quote'>Back</Link></Button>

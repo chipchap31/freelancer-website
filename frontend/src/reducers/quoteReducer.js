@@ -1,4 +1,9 @@
-import { QUOTE_EDIT, SERVICES_LOADED } from '../actions/types';
+import {
+    QUOTE_EDIT,
+    SERVICES_LOADED,
+    QUOTE_REQUEST_LOAD,
+    QUOTE_REQUEST_LOADED
+} from '../actions/types';
 
 /* Initialize a first ever state for getting the quote */
 const initState = {
@@ -43,7 +48,14 @@ export default (state = initState, action) => {
                 height: action.payload.length > 0 ? Number(action.payload[0].default_height) : 0,
                 width: action.payload.length > 0 ? Number(action.payload[0].default_width) : 0
             }
-
+        case QUOTE_REQUEST_LOAD:
+            return {
+                ...state
+            }
+        case QUOTE_REQUEST_LOADED:
+            return {
+                ...state, ...action.payload
+            }
         default:
             return state
     }

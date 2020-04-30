@@ -11,6 +11,7 @@ stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
 def payment_intent(request):
     if request.method == 'POST':
+        print(request.POST)
         intent = PaymentIntent.create(
             amount=100,
             currency='eur',

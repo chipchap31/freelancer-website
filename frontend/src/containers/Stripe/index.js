@@ -3,8 +3,9 @@ import React from 'react'
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { StripeForm } from '../../components/forms';
+
 import { Layout, Row, Col } from 'antd';
+import QuotePayForm from './QuotePayForm';
 const stripePromise = loadStripe(process.env.STRIPE_KEY)
 
 function StripeMain(props) {
@@ -15,7 +16,7 @@ function StripeMain(props) {
                 <Row>
                     <Col md={16}>
                         <Elements stripe={stripePromise}>
-                            <StripeForm />
+                            <QuotePayForm />
                         </Elements>
                     </Col>
                 </Row>

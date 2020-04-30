@@ -1,0 +1,76 @@
+// testing
+.generate(@count) when (@count <= 10){
+
+    .m-@{count}{
+        margin: (@count * 10px);
+    }
+    .mt-@{count}{
+        margin-top: (@count * 10px);
+    }
+    .mr-@{count}{
+        margin-right:(@count * 10px);
+    }
+    .ml-@{count}{
+        margin-left: (@count * 10px);
+    }
+    .mb-@{count}{
+        margin-bottom: (@count * 10px);
+    }
+    .mx-@{count}{
+        margin: 0 (@count * 10px);
+    }
+    .my-@{count}{
+        margin: (@count * 10px) 0;
+    }
+    
+    .p-@{count}{
+        padding: (@count * 10px);
+    }
+    .pt-@{count}{
+        padding-top: (@count * 10px);
+    }
+    .pr-@{count}{
+        padding-right: (@count * 10px);
+    }
+    .pl-@{count}{
+        padding-left: (@count * 10px);
+    }
+    .pb-@{count}{
+        padding-bottom:(@count * 10px);
+    }
+    .px-@{count}{
+        padding: 0 (@count * 10px);
+    }
+    .py-@{count}{
+        padding: (@count * 10px) 0;
+    }
+
+
+
+    
+
+    .generate(@count + 1)
+}
+
+.generate(1);
+
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 96%;
+}
+
+
+
+
+
+.text-center {
+    text-align: center;
+}
+
+
+
+.bordered {
+    border: 1px lightgrey solid
+}

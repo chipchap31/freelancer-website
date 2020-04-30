@@ -19,19 +19,19 @@ function QuotePersonalForm(props) {
 
     const { Content } = Layout;
     const { Title } = Typography;
-    const { history } = props;
+    const { history, quoteState } = props;
     const layout = { labelCol: { span: 24 } };
     const [state, setState] = useState({
         first_name: '',
         last_name: '',
         email: '',
         mobile: '',
-        addressline1: '',
-        addressline2: '',
+        address_line1: '',
+        address_line2: '',
         city: '',
         county: ''
     });
-    const { quoteState } = props;
+
     const onFinish = () => {
         // run this block when the next button is pressed 
         // move on payment if no error
@@ -42,26 +42,31 @@ function QuotePersonalForm(props) {
             height,
             width,
             description,
-            concept_amount
+            concept_amount,
+            project_type
         } = quoteState;
-        props.handleQuoteRequest({
+
+        const newData = {
             ...state,
-            deadline_date,
-            meeting_date,
-            colors,
+            deadline_date: deadline_date.format('YYYY-MM-DD'),
+            meeting_date: meeting_date.format('YYYY-MM-DD'),
+            colors: colors.join(','),
             height,
             width,
             description,
-            concept_amount
+            concept_amount,
+            project_type,
+            county
+        }
+        props.handleQuoteRequest(history, newData)
 
-
-        })
+        props.handleQuoteChange({ ...state })
     };
 
     return (
         <Content>
             <Col md={12}>
-                <Title level={2}></Title>
+                <Title level={2}>Personal Information</Title>
                 <Form  {...layout} onFinish={onFinish}>
 
                     <Row justify='space-between'>
@@ -126,9 +131,9 @@ function QuotePersonalForm(props) {
                         <Input
                             onChange={({ target: { value } }) => setState({
                                 ...state,
-                                addressline1: value
+                                address_line1: value
                             })}
-                            value={state.addressline1} />
+                            value={state.address_line1} />
 
                     </Form.Item>
                     <Form.Item
@@ -136,9 +141,9 @@ function QuotePersonalForm(props) {
                         <Input
                             onChange={({ target: { value } }) => setState({
                                 ...state,
-                                addressline2: value
+                                address_line2: value
                             })}
-                            value={state.addressline2} />
+                            value={state.address_line2} />
 
                     </Form.Item>
                     <Row justify='space-between'>
