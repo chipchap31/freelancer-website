@@ -1,6 +1,7 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.urls import path
-from . import views
+
+from django.urls import path, include
+from .views import payment_quote
+
 urlpatterns = [
-    path('payment-intent', csrf_exempt(views.payment_intent), name='payment_intent')
+    path('payment/quote', payment_quote, name='payment_intent')
 ]

@@ -11,7 +11,7 @@ const initState = {
     concept_amount: 1,
     deadline_date: null,
     meeting_date: null,
-    type: '',
+    project_type: '',
     colors: ['#EEEE', '#EEEE', '#EEEE', '#EEEE', '#EEEE'],
     height: 0,
     width: 0,

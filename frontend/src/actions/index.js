@@ -83,15 +83,15 @@ export const handleServicesFetch = () => async dispatch => {
 export const handleQuoteRequest = (history, data) => async dispatch => {
     dispatch({ type: QUOTE_REQUEST_LOAD })
 
-
+    print(data)
     const opt = {
-        url: '/api/quote/request',
+        url: '/api/payment/quote',
         body: data
     }
     try {
         const { data, status } = await postRequest({ ...opt });
         if (status != 200) {
-            return
+            return;
         }
         history.push('/get-quote/result')
         return dispatch({ type: QUOTE_REQUEST_LOADED, payload: data })

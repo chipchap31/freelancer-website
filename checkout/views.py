@@ -1,20 +1,17 @@
-from django.shortcuts import render, HttpResponse
-import json
+from django.shortcuts import render
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from services.models import Services
+from django.views.decorators.csrf import csrf_exempt
+import json
+from utils import price_calculator
 
-# Create your views here.
-import stripe
-from stripe import PaymentIntent
-import os
-stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
+@csrf_exempt
+def payment_quote(request):
+    body = json.loads(request.body)
 
-def payment_intent(request):
-    if request.method == 'POST':
-        print(request.POST)
-        intent = PaymentIntent.create(
-            amount=100,
-            currency='eur',
-            metadata={'integration_check': 'accept_a_payment'})
+    service = get_object_or_404(Services, name=body.get('project_type'))
+    final_price = price_calculator(service, body)
 
-    return JsonResponse(intent)
+    return JsonResponse({'dsd': final_price})

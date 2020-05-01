@@ -105,11 +105,11 @@ function QuoteProjectForm(props) {
                             <Form.Item label="Project type">
                                 <Select
                                     onChange={value => handleQuoteChange({
-                                        type: value,
+                                        project_type: value,
                                         width: quoteState.default_width[value],
                                         height: quoteState.default_height[value]
                                     })}
-                                    value={quoteState.type}>
+                                    value={quoteState.project_type}>
                                     {servicesState.map((x, i) =>
                                         <Select.Option key={`services${i}`} value={x.name.toLowerCase()}>{x.name}</Select.Option>
                                     )}
