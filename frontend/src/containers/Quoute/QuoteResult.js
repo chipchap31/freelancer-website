@@ -17,7 +17,7 @@ function QuoteResult(props) {
     const { quoteState } = props;
 
 
-    const title = quoteState.type.charAt(0).toUpperCase() + quoteState.type.slice(1)
+    const title = quoteState.project_type.charAt(0).toUpperCase() + quoteState.project_type.slice(1)
     return (
         <Layout.Content>
             <Row justify='center'>

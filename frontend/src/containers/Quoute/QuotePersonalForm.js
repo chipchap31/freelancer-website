@@ -48,14 +48,14 @@ function QuotePersonalForm(props) {
 
         const newData = {
             ...state,
-            deadline_date: deadline_date ? deadline_date.format('YYYY-MM-DD') : null,
-            meeting_date: meeting_date ? meeting_date.format('YYYY-MM-DD') : null,
+            deadline_date: deadline_date ? deadline_date.format('M/D/YYYY') : null,
+            meeting_date: meeting_date ? meeting_date.format('M/D/YYYY') : null,
             colors: colors.join(','),
             height,
             width,
             description,
             concept_amount,
-            project_type,
+            project_type: project_type.charAt(0).toUpperCase() + project_type.slice(1),
 
         }
         props.handleQuoteRequest(history, newData)

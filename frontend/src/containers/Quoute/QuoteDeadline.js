@@ -181,8 +181,8 @@ function QuoteDeadline(props) {
             <Content>
                 <Typography>
                     <Title level={2}>
-                        {quoteState.type.charAt(0).toUpperCase()
-                            + quoteState.type.slice(1) + ' '}
+                        {quoteState.project_type.charAt(0).toUpperCase()
+                            + quoteState.project_type.slice(1) + ' '}
                         project timeline.</Title>
                     {!deadline_date && (<Text>Please select a suitable deadline for your project.</Text>)}
                     {deadline_date && (<Text>Please select a date if you want to meet. </Text>)}

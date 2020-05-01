@@ -10,8 +10,8 @@ from utils import price_calculator
 @csrf_exempt
 def payment_quote(request):
     body = json.loads(request.body)
+    if request.method == "POST":
+        service = get_object_or_404(Services, name=body.get('project_type'))
+        final_price = price_calculator(service, body)
 
-    service = get_object_or_404(Services, name=body.get('project_type'))
-    final_price = price_calculator(service, body)
-
-    return JsonResponse({'dsd': final_price})
+        return JsonResponse({'dsd': final_price})

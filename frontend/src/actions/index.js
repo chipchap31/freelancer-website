@@ -82,8 +82,9 @@ export const handleServicesFetch = () => async dispatch => {
 
 export const handleQuoteRequest = (history, data) => async dispatch => {
     dispatch({ type: QUOTE_REQUEST_LOAD })
+    console.log(data);
 
-    print(data)
+
     const opt = {
         url: '/api/payment/quote',
         body: data

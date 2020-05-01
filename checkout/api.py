@@ -10,7 +10,6 @@ from stripe import PaymentIntent
 import os
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
-
 # class QuoteAPI(APIView):
 #     def post(self, request):
 #         intent = PaymentIntent.create(
@@ -19,15 +18,10 @@ stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 #             metadata={'integration_check': 'accept_a_payment'})
 
 
-class QuoteRequestView(RetrieveAPIView):
+class PaymentIntentView(RetrieveAPIView):
     # get the service type user wants
-    queryset = Services.objects.all()
 
     @csrf_exempt
     def post(self, request):
 
-        queryset = Services.objects.get(name=request.data.get('project_type'))
-
-        services = ServicesSerializer(queryset)
-
-        return Response(services.data)
+        intent = PaymentIntent.create()

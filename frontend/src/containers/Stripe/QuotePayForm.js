@@ -89,7 +89,7 @@ function QuotePayForm(props) {
                 <CardElement options={cardElementOpts} onChange={handleCardDetailsChange} />
             </Form.Item>
             <div className=''>
-                {paymentError && <Typography.Text>{paymentError}</Typography.Text>}
+                {paymentError && <Typography.Text type='danger'>{paymentError}</Typography.Text>}
 
             </div>
 

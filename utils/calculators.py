@@ -24,3 +24,18 @@ def price_calculator(service, data):
     # concept_multiplyer
     final_price = concept_price_mult * concept_amount
     return final_price
+
+
+class PriceCalculator():
+
+    """
+    Calculates the quote price depending on the services price 
+    and the data provided by the user
+    """
+
+    def __init__(self, total=0):
+        self.total = total
+        self.service_data = service_data
+
+    def calculate(self, service_data, user_data):
+        return
