@@ -53,8 +53,12 @@ export default (state = initState, action) => {
                 ...state
             }
         case QUOTE_REQUEST_LOADED:
+
+
+            const { quote_price } = action.payload;
+
             return {
-                ...state, ...action.payload
+                ...state, quote_price: Number(quote_price)
             }
         default:
             return state
@@ -78,12 +82,6 @@ function getDefaultDimensions(target, arr) {
         const convertToLowerCase = x.name.toLowerCase();
         obj[convertToLowerCase] = Number(x[target])
     })
-
-    // const reducerCB = (prev, curr) => {
-    //     let nameToLowerCase = curr.name.toLowerCase()
-    //     return { [nameToLowerCase]: { [target]: Number(curr[target]) } }
-
-    // };
 
     return obj
 

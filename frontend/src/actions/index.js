@@ -82,7 +82,7 @@ export const handleServicesFetch = () => async dispatch => {
 
 export const handleQuoteRequest = (history, data) => async dispatch => {
     dispatch({ type: QUOTE_REQUEST_LOAD })
-    console.log(data);
+
 
 
     const opt = {
@@ -90,12 +90,17 @@ export const handleQuoteRequest = (history, data) => async dispatch => {
         body: data
     }
     try {
-        const { data, status } = await postRequest({ ...opt });
+        const { response, status } = await postRequest({ ...opt });
         if (status != 200) {
             return;
         }
-        history.push('/get-quote/result')
-        return dispatch({ type: QUOTE_REQUEST_LOADED, payload: data })
+
+
+        dispatch({ type: QUOTE_REQUEST_LOADED, payload: response })
+
+
+
+        return history.push('/get-quote/result')
     } catch (error) {
         console.log(error);
 

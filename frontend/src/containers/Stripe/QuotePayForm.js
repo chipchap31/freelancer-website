@@ -26,10 +26,7 @@ function QuotePayForm(props) {
         const cardElement = elements.getElement('card');
 
         try {
-            const opt = {
-                url: '/api/payment-intent',
-                body: { receipt_email: quoteState.email }
-            }
+
 
 
             const paymentMethodReq = await stripe.createPaymentMethod({
@@ -37,6 +34,16 @@ function QuotePayForm(props) {
                 card: cardElement,
                 billing_details: {
                     name: full_name,
+                    email: quoteState.email,
+                    phone: quoteState.mobile,
+                    address: {
+                        city: quoteState.city,
+                        state: quoteState.county,
+                        line1: quoteState.address_line1,
+                        line2: quoteState.address_line2
+                    }
+
+
                 }
             });
             if (paymentMethodReq.error) {
@@ -44,21 +51,16 @@ function QuotePayForm(props) {
                 setPaymentError(paymentMethodReq.error.message)
                 return;
             }
-            const request_secret = await postRequest({ ...opt })
 
-            if (request_secret.status !== 200) {
-                return;
+            let request_data = {
+                url: '/api/payment/intent',
+                body: {
+                    payment_method_id: paymentMethodReq.paymentMethod.id,
+                    email: "jomarialang31@gmail.com"
+                }
             }
-            const { data } = request_secret;
-
-            const confirmCard = await stripe.confirmCardPayment(data.client_secret, {
-                payment_method: paymentMethodReq.paymentMethod.id
-            });
-            console.log(confirmCard);
-
-            if (confirmCard.error) {
-                setPaymentError(confirmCard.error);
-            }
+            const confirmCard = await postRequest({ ...request_data })
+            console.log(confirmCard)
 
         } catch (error) {
             console.log(error);
@@ -93,9 +95,14 @@ function QuotePayForm(props) {
 
             </div>
 
-            <Button htmlType="submit" disabled={!elements || !stripe} className='mt-2' type='primary'>
-                Pay
-          </Button>
+            <Button
+                htmlType="submit"
+                disabled={!elements || !stripe}
+                className='mt-2'
+                size="large"
+                type='primary'>
+                Pay €{quoteState.quote_price}
+            </Button>
         </Form>
     );
 }
