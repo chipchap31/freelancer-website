@@ -7,7 +7,6 @@ import urllib
 
 class CustomEmail:
     def __init__(self):
-        self._receiver = ''
 
         self.sendgrid_client = SendGridAPIClient(
             api_key=os.environ.get('SENDGRID_KEY'))
@@ -20,7 +19,7 @@ class CustomEmail:
     def receiver(self, value):
         self._receiver = value
 
-    def send_quote(self, data):
+    def send_quote(self):
         html_text = """
                     <html>
                     <body style='margin-top: 20px;'>

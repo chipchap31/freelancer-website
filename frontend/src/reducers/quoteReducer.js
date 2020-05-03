@@ -39,10 +39,18 @@ export default (state = initState, action) => {
                 * In this case we get extract the default heights and weight 
                 * from each project type.
                 */
+            console.log(action.payload);
 
+            if (action.payload.length <= 0) {
+                // return the current state if admin does not have any services
+                return { ...state }
+            }
+
+            const project_type = action.payload[0].name
 
             return {
                 ...state,
+                project_type,
                 default_width: getDefaultDimensions('default_width', [...action.payload]),
                 default_height: getDefaultDimensions('default_height', [...action.payload]),
                 height: action.payload.length > 0 ? Number(action.payload[0].default_height) : 0,
