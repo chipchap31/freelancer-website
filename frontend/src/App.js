@@ -9,6 +9,8 @@ import * as actions from './actions'
 
 import { Layout, Button } from "antd";
 import QuoteRouter from "./containers/Quoute/QuoteRouter";
+import AccountCreated from "./containers/AccountCreated";
+import Login from "./containers/Login";
 
 function App(props) {
     const { Footer } = Layout;
@@ -31,6 +33,8 @@ function App(props) {
                     <Route exact path='/' component={LandingPage} />
                     <Route path='/get-quote' component={QuoteRouter} />
                     <Route path='/waiting-list' component={WaitingListPage} />
+                    <Route path='/account/created' component={AccountCreated} />
+                    <Route path='/login' component={Login} />
                 </Switch>
             </main>
 

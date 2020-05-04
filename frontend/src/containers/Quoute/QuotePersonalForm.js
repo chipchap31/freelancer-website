@@ -101,6 +101,7 @@ function QuotePersonalForm(props) {
                                 label='email'
                                 rules={[{ required: true, message: 'Please enter an email!' }]} label='Email Address'>
                                 <Input
+                                    type='email'
                                     onChange={({ target: { value } }) => setState({
                                         ...state,
                                         email: value

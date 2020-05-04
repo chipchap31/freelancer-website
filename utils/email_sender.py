@@ -19,8 +19,8 @@ class CustomEmail:
     def receiver(self, value):
         self._receiver = value
 
-    def send_quote(self):
-        html_text = """
+    def send_user_info(self, username, password):
+        html_text = f"""
                     <html>
                     <body style='margin-top: 20px;'>
                         <div style="
@@ -38,6 +38,9 @@ class CustomEmail:
                             text-align: center;'>
                             <span style="text-transform: capitalize;">icon</span> Quote</h2>
                             </div>
+
+                            username: {username}
+                            password: {password}
                         </div>
                         
                     </body>

@@ -9,7 +9,9 @@ from .views import quote
 import os
 import stripe
 from utils import CustomEmail
-
+from django.contrib.auth.models import User
+import secrets
+import string
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 account_info_email = CustomEmail()
@@ -41,8 +43,19 @@ class PaymentIntentView(GenericAPIView):
         # create account here
         # save the order here
         # send email with account info
+        alphabet = string.ascii_letters + string.digits
+        # create a password for user that they can easily change in the future
+
+        password = ''.join(secrets.choice(alphabet) for i in range(10))
+
+        # check if the user exist
+        if User.objects.filter(username=user_data.get('email')).exists():
+            return Response({'message': 'user already exist'}, status=status.HTTP_400_BAD_REQUEST)
+        user_new = User.objects.create_user(
+            username=user_data.get('email'), password=password)
+
         account_info_email.receiver = user_data.get('email')
 
-        account_info_email.send_quote()
+        account_info_email.send_user_info(user_data.get('email'), password)
 
-        return Response({'message': quote.get_total()}, status=status.HTTP_200_OK)
+        return Response({'message': password}, status=status.HTTP_200_OK)

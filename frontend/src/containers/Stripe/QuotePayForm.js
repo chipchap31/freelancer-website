@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
-
+import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { postRequest } from '../../utils/requests';
-import { Form, Alert, Input, Typography, Col, Button } from 'antd';
+import { Form, Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
 
 function QuotePayForm(props) {
     const stripe = useStripe();
     const elements = useElements();
+    const { history } = props;
     const { quoteState } = props;
 
     const [full_name, setFullName] = useState(`${quoteState.first_name || ''} ${quoteState.last_name || ''}`);
@@ -26,7 +27,6 @@ function QuotePayForm(props) {
         const cardElement = elements.getElement('card');
 
         try {
-
 
 
             const paymentMethodReq = await stripe.createPaymentMethod({
@@ -60,7 +60,17 @@ function QuotePayForm(props) {
                 }
             }
             const confirmCard = await postRequest({ ...request_data })
-            console.log(confirmCard)
+            console.log(confirmCard.status === 400);
+
+            if (confirmCard.status === 400) {
+                // Status is 400 if the user already exist 
+                // if exist redirect to login
+                return history.push('/login');
+
+            }
+
+
+            return history.push('/account/created')
 
         } catch (error) {
             console.log(error);
@@ -107,4 +117,4 @@ function QuotePayForm(props) {
     );
 }
 
-export default connect(({ quoteReducer }) => ({ quoteState: quoteReducer }))(QuotePayForm);
+export default connect(({ quoteReducer }) => ({ quoteState: quoteReducer }))(withRouter(QuotePayForm));

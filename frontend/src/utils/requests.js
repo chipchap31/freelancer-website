@@ -1,4 +1,6 @@
+import { getCookie } from './cookie'
 export const postRequest = async ({ url, body }) => {
+    console.log(getCookie('csrftoken'));
 
 
     try {
@@ -6,7 +8,8 @@ export const postRequest = async ({ url, body }) => {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
             },
             body: JSON.stringify(body)
 

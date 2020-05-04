@@ -11,7 +11,8 @@ import {
     QUOTE_REQUEST_LOAD,
     QUOTE_REQUEST_LOADED
 } from '../actions/types'
-import { postRequest } from '../utils/requests'
+import { postRequest } from '../utils/requests';
+
 
 /** 
     * @function handleQuoteChange 
@@ -104,6 +105,25 @@ export const handleQuoteRequest = (history, data) => async dispatch => {
     } catch (error) {
         console.log(error);
 
+    }
+}
+
+
+
+
+
+export const handleLogin = data => async dispatch => {
+    console.log(data);
+
+    try {
+        const { response, status } = await postRequest({
+            url: '/api/login',
+            body: data
+        });
+        console.log(response);
+
+    } catch (error) {
+        console.log(error)
     }
 
 
