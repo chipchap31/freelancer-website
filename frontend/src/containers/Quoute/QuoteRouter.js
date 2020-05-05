@@ -3,10 +3,10 @@ import QuoteProjectForm from './QuoteProjectForm';
 import { connect } from 'react-redux';
 import {
     Switch,
-    useLocation,
     Route,
     useRouteMatch,
-    Redirect
+    Redirect,
+    withRouter
 } from 'react-router-dom';
 import {
     ProjectOutlined,
@@ -33,7 +33,18 @@ function QuoteRouter(props) {
     const { Step } = Steps;
     const { Content } = Layout;
     const { path, url } = useRouteMatch();
+    useEffect(() => {
 
+        const isRefreshed = sessionStorage.getItem('refreshed');
+        if (isRefreshed) {
+            props.history.push('/get-quote')
+            sessionStorage.removeItem('refreshed')
+        }
+        window.onbeforeunload = function (event) {
+            sessionStorage.setItem('refreshed', true)
+            return '';
+        }
+    }, [])
 
 
 
@@ -64,7 +75,7 @@ function QuoteRouter(props) {
                     <ProtectedRoute path={`${url}/payment`} component={StripeMain} />
                     <ProtectedRoute path={`${url}/result`} component={QuoteResult} />
                 </Switch>
-                <div className='steps-wrapper'>
+                <div className='steps-wrapper mt-4'>
                     <Steps current={quoteState.current} size='small' style={{ margin: '30px 0' }}>
                         <Step title="Project info" icon={<ProjectOutlined />} />
                         <Step title="Deadline" icon={<ClockCircleOutlined />} />
@@ -85,7 +96,7 @@ function mapStateToProps(state) {
         acceptingProject: state.projectConfigReducer
     }
 }
-export default connect(mapStateToProps, actions)(QuoteRouter)
+export default connect(mapStateToProps, actions)(withRouter(QuoteRouter))
 
 
 

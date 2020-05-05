@@ -23,6 +23,7 @@ import { postRequest, getRequest } from '../utils/requests';
     * @description - to be called when there is a change on input 
     * within the quote modules i.e. QuoteHome.js
     */
+
 export const handleQuoteChange = payload => {
     return dispatch => { dispatch({ type: QUOTE_EDIT, payload }) }
 }
@@ -63,14 +64,10 @@ export const handleServicesFetch = () => async dispatch => {
     dispatch({ type: SERVICES_LOADING });
 
     try {
-        const res = await fetch('/api/services/fetch');
-        const payload = await res.json();
-
-        if (res.status !== 200) {
-            return dispatch({ type: SERVICES_ERROR })
-        }
-
-        return dispatch({ type: SERVICES_LOADED, payload });
+        const response = await getRequest({
+            url: '/api/services/fetch', auth: false
+        });
+        return dispatch({ type: SERVICES_LOADED, payload: response });
     } catch (error) {
         return dispatch({ type: SERVICES_ERROR })
     }
@@ -85,19 +82,18 @@ export const handleServicesFetch = () => async dispatch => {
 
 
 export const handleQuoteRequest = (history, data) => async dispatch => {
-    dispatch({ type: QUOTE_REQUEST_LOAD })
+    dispatch({ type: QUOTE_REQUEST_LOAD });
 
 
 
-    const opt = {
-        url: '/api/payment/quote',
-        body: data
-    }
+
     try {
-        const { response, status } = await postRequest({ ...opt });
-        if (status != 200) {
-            return;
-        }
+        const response = await postRequest({
+            url: '/api/payment/quote',
+            body: data
+        });
+
+
 
 
         dispatch({ type: QUOTE_REQUEST_LOADED, payload: response })

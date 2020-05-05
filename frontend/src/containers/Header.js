@@ -11,11 +11,7 @@ import {
 
 function Header(props) {
     const { Header } = Layout;
-    console.log(props);
-
     const { authenticated } = props;
-    const { username } = props.user
-
 
     return (
         <>
