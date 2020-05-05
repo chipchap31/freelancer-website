@@ -16,9 +16,25 @@ export const postRequest = async ({ url, body }) => {
     }
 
     return await res.json()
+}
 
 
 
+export const getRequest = async ({ url, auth }) => {
+    let res;
 
+    if (!auth) {
+        res = await fetch(url);
+    }
 
+    res = await fetch(url, {
+        headers: {
+            'Authorization': `Token ${sessionStorage.getItem('token')}`
+        }
+    });
+
+    if (res.status !== 200) {
+        throw await res.json();
+    }
+    return await res.json();
 }

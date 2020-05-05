@@ -14,7 +14,7 @@ import {
     USER_LOGGED_IN,
     USER_LOGIN_ERROR
 } from '../actions/types'
-import { postRequest } from '../utils/requests';
+import { postRequest, getRequest } from '../utils/requests';
 
 
 /** 
@@ -113,26 +113,45 @@ export const handleQuoteRequest = (history, data) => async dispatch => {
 
 
 
+export const handleAuthentication = () => async dispatch => {
+    dispatch({ type: USER_LOGGING_IN });
+    try {
+        const response = await getRequest({
+            url: '/api/auth/user', auth: true
+        });
+        return dispatch({
+            type: USER_LOGGED_IN, payload: {
+                authenticated: true,
 
+                user: response
+            }
+        })
+    } catch (error) {
+        return dispatch({ type: USER_LOGIN_ERROR, payload: { error: error.message } })
+    }
+}
 
-export const handleLogin = data => async dispatch => {
+export const handleLogin = (data, history) => async dispatch => {
     dispatch({ type: USER_LOGGING_IN })
 
     try {
         const response = await postRequest({
-            url: '/api/login',
+            url: '/api/auth/login',
             body: data
         });
-        return dispatch({
+        sessionStorage.setItem('token', response.token)
+        sessionStorage.setItem('auth', true)
+        dispatch({
             type: USER_LOGGED_IN, payload: {
                 authenticated: true,
                 user: response.user
 
             }
         })
+        return history.push('/dashboard')
     } catch (error) {
-
-
+        sessionStorage.removeItem('token')
+        sessionStorage.removeItem('auth')
 
         return dispatch({ type: USER_LOGIN_ERROR, payload: { error: error.message } })
     }

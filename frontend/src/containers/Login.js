@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Row, Layout, Col, Form, Input, Typography, Button, Alert } from 'antd';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
@@ -18,7 +18,7 @@ function Login(props) {
         }
     }
     const onSubmit = () => {
-        props.handleLogin(state)
+        props.handleLogin(state, props.history)
     }
 
 
@@ -66,4 +66,5 @@ function Login(props) {
     )
 }
 
-export default connect(({ userReducer }) => ({ userState: userReducer }), actions)(Login);
+export default connect(({ userReducer }) =>
+    ({ userState: userReducer }), actions)(withRouter(Login));

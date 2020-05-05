@@ -6,7 +6,7 @@ import {
 
 const initState = {
     user: null,
-    authenticated: false,
+    authenticated: JSON.parse(sessionStorage.getItem('auth')),
     isLoading: false,
     error: ''
 }
@@ -29,7 +29,8 @@ export default function (state = initState, action) {
                 ...state,
                 ...action.payload,
                 isLoading: false,
-                authenticated: true
+                authenticated: true,
+                error: ''
             }
 
 

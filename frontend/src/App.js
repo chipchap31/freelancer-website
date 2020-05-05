@@ -10,15 +10,20 @@ import { Layout } from "antd";
 import QuoteRouter from "./containers/Quoute/QuoteRouter";
 import AccountCreated from "./containers/AccountCreated";
 import Login from "./containers/Login";
-
+import Dashboard from './containers/Dashboard';
+import Spinner from './components/accessories'
 function App(props) {
     const { Footer } = Layout;
+
+
 
     useEffect(() => {
         props.handleAcceptingProject();
         props.handleServicesFetch();
+        props.handleAuthentication()
     }, [])
 
+    const { authenticated, isLoading } = props.userState
 
     const PrivateRoute = ({ component: Component, ...rest }) => (
         <Route
@@ -26,8 +31,8 @@ function App(props) {
             render={(props) => {
                 if (isLoading) {
                     return <Spinner size='large' />;
-                } else if (!accept_project && !isLoading) {
-                    return <Redirect to="/waiting-list" />;
+                } else if (!authenticated) {
+                    return <Redirect to="/login" />;
                 } else {
                     return <Component {...props} />;
                 }
@@ -36,10 +41,12 @@ function App(props) {
     );
     return (
         <Router>
-            <Header />
+            <Header {...props.userState} />
             <main style={{ minHeight: '83vh' }}>
                 <Switch>
-                    <Route exact path='/' component={LandingPage} />
+
+                    <PrivateRoute exact path='/dashboard' component={Dashboard} />
+
                     <Route path='/get-quote' component={QuoteRouter} />
                     <Route path='/waiting-list' component={WaitingListPage} />
                     <Route path='/account/created' component={AccountCreated} />
@@ -58,7 +65,7 @@ function App(props) {
 
 function mapStateToProps({ userReducer }) {
     return {
-        user: userReducer
+        userState: userReducer
     }
 }
 
