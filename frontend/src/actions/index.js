@@ -9,7 +9,10 @@ import {
     SERVICES_LOADED,
     SERVICES_ERROR,
     QUOTE_REQUEST_LOAD,
-    QUOTE_REQUEST_LOADED
+    QUOTE_REQUEST_LOADED,
+    USER_LOGGING_IN,
+    USER_LOGGED_IN,
+    USER_LOGIN_ERROR
 } from '../actions/types'
 import { postRequest } from '../utils/requests';
 
@@ -113,17 +116,25 @@ export const handleQuoteRequest = (history, data) => async dispatch => {
 
 
 export const handleLogin = data => async dispatch => {
-    console.log(data);
+    dispatch({ type: USER_LOGGING_IN })
 
     try {
-        const { response, status } = await postRequest({
+        const response = await postRequest({
             url: '/api/login',
             body: data
         });
-        console.log(response);
+        return dispatch({
+            type: USER_LOGGED_IN, payload: {
+                authenticated: true,
+                user: response.user
 
+            }
+        })
     } catch (error) {
-        console.log(error)
+
+
+
+        return dispatch({ type: USER_LOGIN_ERROR, payload: { error: error.message } })
     }
 
 

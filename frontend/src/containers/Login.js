@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Layout, Col, Form, Input, Typography, Button } from 'antd';
+import { Row, Layout, Col, Form, Input, Typography, Button, Alert } from 'antd';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
 
 function Login(props) {
+    const { userState } = props;
+    console.log(userState);
+
     const [state, setState] = React.useState({
         username: '',
         password: ''
@@ -15,8 +18,6 @@ function Login(props) {
         }
     }
     const onSubmit = () => {
-
-
         props.handleLogin(state)
     }
 
@@ -30,8 +31,11 @@ function Login(props) {
                         <Typography.Title level={2}>
                             Login To Your Account
                         </Typography.Title>
+                        {userState.error && <Alert message={userState.error} type="error" />}
+
                         <Form.Item
                             name='email'
+
                             rules={[
                                 {
                                     required: true,
@@ -41,13 +45,13 @@ function Login(props) {
                             label='Email Address'>
                             <Input
                                 type='email'
-
                                 value={state.username}
                                 onChange={({ target: { value } }) =>
                                     setState({ ...state, username: value })} />
                         </Form.Item>
                         <Form.Item label='Password'>
                             <Input
+                                type='password'
                                 value={state.password}
                                 onChange={({ target: { value } }) =>
                                     setState({ ...state, password: value })} />
@@ -62,4 +66,4 @@ function Login(props) {
     )
 }
 
-export default connect(null, actions)(Login);
+export default connect(({ userReducer }) => ({ userState: userReducer }), actions)(Login);

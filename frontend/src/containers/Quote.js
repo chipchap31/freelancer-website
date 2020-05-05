@@ -26,17 +26,13 @@ import { SketchPicker } from 'react-color';
 function Quote(props) {
     const { quoteState, onEditQuote } = props;
 
-    function handleColorChange(color, event, index) {
+    const setColorChange = (color, event, index) => {
         let colorMutation = quoteState.colors;
         colorMutation.splice(index, 1, color.hex)
-
         onEditQuote({ ...quoteState, colors: colorMutation })
-
-
     }
-    const [modalVisible, handleModalVisible] = React.useState(false)
-    const [showPicker, setShowPicker] = React.useState(-1)
 
+    const [modalVisible, handleModalVisible] = React.useState(false)
     const { Step } = Steps;
     const { Title } = Typography;
     const { Content } = Layout;
@@ -44,7 +40,6 @@ function Quote(props) {
     const layout = {
         labelCol: { span: 24 }
     };
-
 
     return (
 
@@ -144,7 +139,7 @@ function Quote(props) {
                                         title="Select color"
                                         visible={modalVisible}>
 
-                                        <SketchPicker width='96%' color={quoteState.colors[0]} onChange={(color, event) => handleColorChange(color, event, 0)} />
+                                        <SketchPicker width='96%' color={quoteState.colors[0]} onChange={(color, event) => setColorChange(color, event, 0)} />
                                     </Modal>
 
 
