@@ -22,25 +22,21 @@ class CustomEmail:
     def send_user_info(self, username, password):
         html_text = f"""
                     <html>
-                    <body style='margin-top: 20px;'>
+                    <body>
                         <div style="
-                        background-color: white;
                         max-width: 60%;
                         margin: 0 auto;
                         ">
-                            <h2 style="color: #364DFF;text-align: center;">first, Thank You For Considering Me</h2>
-                            <p style="text-align: center;">You're now click away from getting your data</p>
+                            <p>Hello,</p>
 
-
-                            <div style="background-color: #FFB34F; padding: 20px;">
-
-                            <h2 style='color: white;
-                            text-align: center;'>
-                            <span style="text-transform: capitalize;">icon</span> Quote</h2>
-                            </div>
-
-                            username: {username}
-                            password: {password}
+                            <p>Your account has been created and ready to use. In order to obtain access to your account
+                                please click <a href="http://localhost:5000/login">here</a> and enter the details below:
+                            </p>
+                            <ul>
+                                <li>username: {username}</li>
+                                <li>password: {password}</li>
+                            </ul>
+                            
                         </div>
                         
                     </body>

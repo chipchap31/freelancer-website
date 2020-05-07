@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Layout,
     Typography,
@@ -19,7 +19,7 @@ function QuotePersonalForm(props) {
 
     const { Content } = Layout;
     const { Title } = Typography;
-    const { history, quoteState } = props;
+    const { history, userState } = props;
     const layout = { labelCol: { span: 24 } };
     const [state, setState] = useState({
         first_name: '',
@@ -33,36 +33,17 @@ function QuotePersonalForm(props) {
     });
 
     const onFinish = () => {
-        // run this block when the next button is pressed 
-        // move on payment if no error
-        const {
-            deadline_date,
-            meeting_date,
-            colors,
-            height,
-            width,
-            description,
-            concept_amount,
-            project_type
-        } = quoteState;
-
-        const newData = {
-            ...state,
-            deadline_date: deadline_date ? deadline_date.format('M/D/YYYY') : null,
-            meeting_date: meeting_date ? meeting_date.format('M/D/YYYY') : null,
-            colors: colors.join(','),
-            height,
-            width,
-            description,
-            concept_amount,
-            project_type: project_type.charAt(0).toUpperCase() + project_type.slice(1),
-
-        }
-        props.handleQuoteRequest(history, newData)
-
-        props.handleQuoteChange({ ...state })
+        props.handleQuoteChange({ ...state, current: 3 })
+        history.push('/get-quote/result')
     };
+    useEffect(() => {
+        if (userState.authenticated) {
 
+
+
+            history.push('/get-quote/result')
+        }
+    }, [])
     return (
         <Content>
             <Col md={12}>
@@ -194,7 +175,8 @@ function QuotePersonalForm(props) {
 
 function mapStateToProps(state) {
     return {
-        quoteState: state.quoteReducer
+        quoteState: state.quoteReducer,
+        userState: state.userReducer
     }
 }
 QuotePersonalForm = connect(mapStateToProps, actions)(QuotePersonalForm)

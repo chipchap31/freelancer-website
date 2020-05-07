@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import * as actions from './actions'
 import { Layout } from "antd";
 import QuoteRouter from "./containers/Quoute/QuoteRouter";
-import AccountCreated from "./containers/AccountCreated";
+
 import Login from "./containers/Login";
 import Dashboard from './containers/Dashboard';
 import Spinner from './components/accessories'
@@ -49,7 +49,7 @@ function App(props) {
 
                     <Route path='/get-quote' component={QuoteRouter} />
                     <Route path='/waiting-list' component={WaitingListPage} />
-                    <Route path='/account/created' component={AccountCreated} />
+
                     <Route path='/login' component={Login} />
                 </Switch>
             </main>

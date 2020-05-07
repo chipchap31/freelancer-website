@@ -13,7 +13,7 @@ class PriceCalculator():
 
     def process_data(self, service_data, user_data):
         # todays date
-        print(user_data)
+
         today = date.today()
 
         deadline_price_mult = service_data.deadline_price

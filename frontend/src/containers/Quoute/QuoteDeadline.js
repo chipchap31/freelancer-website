@@ -22,7 +22,14 @@ const { Title, Text } = Typography;
 
 function QuoteDeadline(props) {
     const [modalVisible, setModalVisible] = useState(false);
-    const { quoteState, history, handleQuoteChange } = props;
+    const {
+        quoteState,
+        userState,
+        handleQuoteChange,
+        handleQuoteRequest,
+        history,
+    } = props;
+
     const startOfFreeDays = moment().add(14, 'days');
     const { deadline_date, meeting_date } = quoteState;
     const renderMessage = () => message.error('You cannot select this date!');
@@ -155,10 +162,28 @@ function QuoteDeadline(props) {
     }
     const onClickNext = () => {
 
+        // when deadline is not set render a modal to make sure
+        // continue if it is set
         if (!deadline_date) {
             return setModalVisible(true)
         }
+        handleQuoteRequest({
+            ...quoteState,
+            deadline_date: quoteState.deadline_date ? quoteState.deadline_date.format('M/D/YYYY') : null,
+            meeting_date: quoteState.meeting_date ? quoteState.meeting_date.format('M/D/YYYY') : null,
+            colors: quoteState.colors.join(','),
+
+        });
+        handleQuoteChange({ current: 2 })
+        if (userState.authenticated) {
+
+
+            return history.push('/get-quote/result')
+
+        }
+
         return history.push('/get-quote/user')
+
     }
     const cellDefaultValue = () => {
         if (meeting_date) {
@@ -223,7 +248,15 @@ function QuoteDeadline(props) {
             <Modal
                 title='Deadline missing!'
                 onCancel={() => setModalVisible(false)} visible={modalVisible}
-                onOk={() => history.push('/get-quote/user')}
+                onOk={() => {
+                    handleQuoteRequest({
+                        ...quoteState,
+                        deadline_date: quoteState.deadline_date ? quoteState.deadline_date.format('M/D/YYYY') : null,
+                        meeting_date: quoteState.meeting_date ? quoteState.meeting_date.format('M/D/YYYY') : null,
+                        colors: quoteState.colors.join(',')
+                    });
+                    history.push('/get-quote/user')
+                }}
                 okText='Yes'
             >
                 Are you sure you don't want to set the deadline?
@@ -233,7 +266,8 @@ function QuoteDeadline(props) {
 }
 function mapStateToProps(state) {
     return {
-        quoteState: state.quoteReducer
+        quoteState: state.quoteReducer,
+        userState: state.userReducer
     }
 }
 export default connect(mapStateToProps, actions)(withRouter(QuoteDeadline));

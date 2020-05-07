@@ -5,8 +5,9 @@ import * as actions from '../actions'
 import { connect } from 'react-redux';
 
 function Login(props) {
-    const { userState } = props;
-    console.log(userState);
+    const { userState, history: { location } } = props;
+
+
 
     const [state, setState] = React.useState({
         username: '',
@@ -28,9 +29,13 @@ function Login(props) {
                 <Row>
 
                     <Form {...layout} onFinish={onSubmit}>
+
                         <Typography.Title level={2}>
                             Login To Your Account
-                        </Typography.Title>
+                            </Typography.Title>
+
+
+
                         {userState.error && <Alert message={userState.error} type="error" />}
 
                         <Form.Item

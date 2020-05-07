@@ -56,6 +56,8 @@ export default (state = initState, action) => {
                 height: action.payload.length > 0 ? Number(action.payload[0].default_height) : 0,
                 width: action.payload.length > 0 ? Number(action.payload[0].default_width) : 0
             }
+
+
         case QUOTE_REQUEST_LOAD:
             return {
                 ...state
@@ -63,10 +65,10 @@ export default (state = initState, action) => {
         case QUOTE_REQUEST_LOADED:
 
 
-            const { quote_price } = action.payload;
+
 
             return {
-                ...state, quote_price: Number(quote_price)
+                ...state, quote_price: Number(action.payload.quote_price)
             }
         default:
             return state

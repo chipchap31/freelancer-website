@@ -81,7 +81,7 @@ export const handleServicesFetch = () => async dispatch => {
 
 
 
-export const handleQuoteRequest = (history, data) => async dispatch => {
+export const handleQuoteRequest = data => async dispatch => {
     dispatch({ type: QUOTE_REQUEST_LOAD });
 
 
@@ -96,11 +96,11 @@ export const handleQuoteRequest = (history, data) => async dispatch => {
 
 
 
-        dispatch({ type: QUOTE_REQUEST_LOADED, payload: response })
+        return dispatch({ type: QUOTE_REQUEST_LOADED, payload: response })
 
 
 
-        return history.push('/get-quote/result')
+
     } catch (error) {
         console.log(error);
 
@@ -153,6 +153,20 @@ export const handleLogin = (data, history) => async dispatch => {
     }
 
 
+}
 
+
+export const handleUserProfile = data => async dispatch => {
+    dispatch({ type: QUOTE_REQUEST_LOAD })
+    try {
+        const response = getRequest({
+            url: `/api/user/profile/${data}`,
+            auth: true
+        })
+        console.log(await response);
+    } catch (error) {
+        console.log(error);
+
+    }
 
 }

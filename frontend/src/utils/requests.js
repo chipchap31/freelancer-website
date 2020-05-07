@@ -1,5 +1,5 @@
 import { getCookie } from './cookie'
-export const postRequest = async ({ url, body }) => {
+export const postRequest = async ({ auth, url, body }) => {
 
     const res = await fetch(url, {
         method: "POST",
@@ -18,20 +18,42 @@ export const postRequest = async ({ url, body }) => {
     return await res.json()
 }
 
+export const postAuth = async ({ token, url, body }) => {
+    const res = await fetch(url, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'),
+            'Authorization': `Token ${token}`
+        },
+        body: JSON.stringify(body)
 
+
+    });
+
+    if (res.status !== 200) {
+        throw await res.json()
+    }
+
+    return await res.json()
+
+}
 
 export const getRequest = async ({ url, auth }) => {
     let res;
 
     if (!auth) {
         res = await fetch(url);
+    } else {
+        res = await fetch(url, {
+            headers: {
+                'Authorization': `Token ${sessionStorage.getItem('token')}`
+            }
+        });
     }
 
-    res = await fetch(url, {
-        headers: {
-            'Authorization': `Token ${sessionStorage.getItem('token')}`
-        }
-    });
+
 
     if (res.status !== 200) {
         throw await res.json();

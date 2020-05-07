@@ -27,24 +27,14 @@ import QuotePersonalForm from './QuotePersonalForm';
 import Spinner from '../../components/accessories';
 import StripeMain from '../Stripe';
 import QuoteResult from './QuoteResult';
+import QuotePaid from './QuotePaid'
 function QuoteRouter(props) {
     /* This is the main view for the Quote page */
     const { quoteState, acceptingProject: { isLoading, accept_project } } = props;
     const { Step } = Steps;
     const { Content } = Layout;
     const { path, url } = useRouteMatch();
-    useEffect(() => {
 
-        const isRefreshed = sessionStorage.getItem('refreshed');
-        if (isRefreshed) {
-            props.history.push('/get-quote')
-            sessionStorage.removeItem('refreshed')
-        }
-        window.onbeforeunload = function (event) {
-            sessionStorage.setItem('refreshed', true)
-            return '';
-        }
-    }, [])
 
 
 
@@ -74,13 +64,15 @@ function QuoteRouter(props) {
 
                     <ProtectedRoute path={`${url}/payment`} component={StripeMain} />
                     <ProtectedRoute path={`${url}/result`} component={QuoteResult} />
+                    <ProtectedRoute path={`${url}/paid`} component={QuotePaid} />
                 </Switch>
                 <div className='steps-wrapper mt-4'>
                     <Steps current={quoteState.current} size='small' style={{ margin: '30px 0' }}>
                         <Step title="Project info" icon={<ProjectOutlined />} />
                         <Step title="Deadline" icon={<ClockCircleOutlined />} />
-                        <Step title="Pay" icon={<UserOutlined />} />
-                        <Step title="Pay" icon={<EuroCircleOutlined />} />
+                        <Step title="Personal Info" icon={<UserOutlined />} />
+                        <Step title="Result" icon={<EuroCircleOutlined />} />
+                        <Step title="Payment" icon={<EuroCircleOutlined />} />
                         <Step title="Done" icon={<SmileOutlined />} />
                     </Steps>
                 </div>

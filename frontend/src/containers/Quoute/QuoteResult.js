@@ -6,17 +6,21 @@ import {
     Row,
     Button
 } from 'antd'
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import * as actions from '../../actions'
 /**
     * @module QuoteResult
     * @description this module shows the calculated price of the 
     */
 
 function QuoteResult(props) {
-    const { quoteState } = props;
+    const { quoteState, history, handleQuoteChange } = props;
 
-
+    const onClickButton = () => {
+        handleQuoteChange({ current: 4 })
+        history.push('/get-quote/payment')
+    }
 
     const title = quoteState.project_type.charAt(0).toUpperCase() + quoteState.project_type.slice(1)
     return (
@@ -27,8 +31,8 @@ function QuoteResult(props) {
 
                     <Typography.Title level={1}>€{quoteState.quote_price}</Typography.Title>
 
-                    <Button size='large' type='primary'>
-                        <Link to='/get-quote/payment'>Pay Now</Link>
+                    <Button onClick={onClickButton} size='large' type='primary'>
+                        Pay Now
                     </Button>
                 </Col>
             </Row>
@@ -38,4 +42,5 @@ function QuoteResult(props) {
 }
 
 
-export default connect(({ quoteReducer }) => ({ quoteState: quoteReducer }))(QuoteResult);
+export default connect(({ quoteReducer }) =>
+    ({ quoteState: quoteReducer }), actions)(withRouter(QuoteResult));
