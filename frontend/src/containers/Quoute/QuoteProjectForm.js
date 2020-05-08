@@ -51,16 +51,17 @@ function QuoteProjectForm(props) {
         colorMutation.splice(i, 1, '#EEEE');
         handleQuoteChange({ colors: colorMutation })
     }
-
-    const onClickNext = () => {
-        history.push('/get-quote/deadline');
-        handleQuoteChange({ current: 1 })
-    }
-
     const [state, setState] = useState({
         description: '',
         colors: []
     })
+    const onClickNext = () => {
+        handleQuoteChange({ current: 1, description: state.description })
+        history.push('/get-quote/deadline');
+
+    }
+
+
     const ColorPick = props => {
         if (props.color !== '#EEEE') {
             return (

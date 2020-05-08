@@ -46,7 +46,7 @@ export const handleAcceptingProject = () => async dispatch => {
         return dispatch({ type: LOADED_CONFIG, payload })
 
     } catch (error) {
-        console.log(error)
+        return dispatch({ type: LOADED_CONFIG, payload: { accept_project: false } })
     }
 
 
@@ -127,7 +127,7 @@ export const handleAuthentication = () => async dispatch => {
     }
 }
 
-export const handleLogin = (data, history) => async dispatch => {
+export const handleLogin = (data) => async dispatch => {
     dispatch({ type: USER_LOGGING_IN })
 
     try {
@@ -144,7 +144,7 @@ export const handleLogin = (data, history) => async dispatch => {
 
             }
         })
-        return history.push('/dashboard')
+
     } catch (error) {
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('auth')

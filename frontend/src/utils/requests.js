@@ -1,5 +1,6 @@
-import { getCookie } from './cookie'
-export const postRequest = async ({ auth, url, body }) => {
+import { getCookie } from './cookie';
+
+export const postRequest = async ({ url, body }) => {
 
     const res = await fetch(url, {
         method: "POST",
@@ -17,6 +18,8 @@ export const postRequest = async ({ auth, url, body }) => {
 
     return await res.json()
 }
+
+
 
 export const postAuth = async ({ token, url, body }) => {
     const res = await fetch(url, {

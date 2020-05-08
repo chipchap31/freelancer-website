@@ -1,32 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { postRequest, postAuth } from '../../utils/requests';
-import { Form, Input, Typography, Button } from 'antd';
+import { Form, Input, Typography, Button, Modal } from 'antd';
 import { connect } from 'react-redux';
 import Spinner from '../../components/accessories';
 import * as actions from '../../actions';
 function QuotePayForm(props) {
     const stripe = useStripe();
     const elements = useElements();
-
     const {
         quoteState,
         userState,
-        handleQuoteChange,
+
         history } = props;
 
+    useEffect(() => {
+        if (!userState.authenticated) {
+            const checkUserExist = postRequest({
+                url: '/api/user/check',
+                body: { email: quoteState.email }
+            })
+            checkUserExist.then(res => {
+                if (res) {
+                    setProcessingTo(false);
+
+                    return setTimeout(() => setModalState(true), 1000)
+                }
+            })
+        }
+
+    }, [])
 
     const [full_name, setFullName] = useState(`${quoteState.first_name || ''} ${quoteState.last_name || ''}`);
     const [isProcessing, setProcessingTo] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
+    const [loginState, setLoginState] = useState({
+        username: quoteState.email || '',
+        password: ''
+    })
+    const [modalState, setModalState] = useState(false)
+
+
+
     const handleCardDetailsChange = ev => {
         ev.error ? setPaymentError(ev.error.message) : setPaymentError();
     };
     const onCheckoutComplete = async () => {
-        const { authenticated } = userState;
 
-        console.log(authenticated);
+        const { authenticated } = userState;
+        const data = {
+            ...quoteState,
+            deadline_date: quoteState.deadline_date ? quoteState.deadline_date.format('M/D/YYYY') : null,
+            meeting_date: quoteState.meeting_date ? quoteState.meeting_date.format('M/D/YYYY') : null,
+            colors: quoteState.colors.join(','),
+        }
+
 
         let user;
         if (!authenticated) {
@@ -37,13 +66,13 @@ function QuotePayForm(props) {
                     url: '/api/auth/register',
                     body: quoteState
                 })
-                console.log(user.token);
+
 
 
                 await postAuth({
                     token: user.token,
                     url: '/api/order/new',
-                    body: quoteState
+                    body: data
                 })
                 return history.push('/get-quote/paid')
             } catch (error) {
@@ -87,6 +116,9 @@ function QuotePayForm(props) {
             }
 
 
+
+
+
             const opt = {
                 url: '/api/payment/intent',
                 body: { email: quoteState.email }
@@ -118,12 +150,20 @@ function QuotePayForm(props) {
         hidePostalCode: true
     }
 
+
+
+    const onModalCancel = () => {
+        setModalState(false)
+    }
+    const onFinishLogin = () => {
+        props.handleLogin(loginState)
+    }
     return (
         <>
             {isProcessing && <Spinner tip="Don't leave until the payment is finished" />}
             <Form labelCol={{ span: 24 }} onFinish={handleSubmit}>
 
-                <Form.Item label='Name on the card'>
+                <Form.Item label='Cardholder Name'>
                     <Input onChange={({ target: { value } }) => setFullName(value)} value={full_name} size='large' />
                 </Form.Item>
 
@@ -148,6 +188,27 @@ function QuotePayForm(props) {
                     Pay €{quoteState.quote_price}
                 </Button>
             </Form>
+            <Modal
+                title="Account Login"
+                visible={modalState}
+                onCancel={onModalCancel}
+                onOk={onFinishLogin}
+            >
+                <Form labelCol={{ span: 24 }}>
+                    <Form.Item label='Username'>
+                        <Input
+                            type='text'
+                            onChange={({ target: { value } }) => setLoginState({ ...loginState, username: value })}
+                            value={loginState.username} />
+                    </Form.Item>
+                    <Form.Item label='Password'>
+                        <Input
+                            onChange={({ target: { value } }) => setLoginState({ ...loginState, password: value })}
+                            type='password'
+                            value={loginState.password} />
+                    </Form.Item>
+                </Form>
+            </Modal>
         </>
     );
 }

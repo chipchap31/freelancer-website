@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from services.serializers import ServicesSerializer
 from services.models import Services
+from projects.serializers import ProjectSerializer
 from rest_framework.generics import GenericAPIView, CreateAPIView
 from .serializers import OrderSerializer, OrderLineSerializer
 from django.shortcuts import get_object_or_404
@@ -41,12 +42,17 @@ class CreateOrderView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-
+        print(request.data)
         order_serializer = OrderSerializer(data=request.data)
         order_serializer.is_valid(raise_exception=True)
         order_serializer.save()
         service = get_object_or_404(
             Services, name=request.data.get('project_type'))
+
+        project_serializer = ProjectSerializer(
+            data={**request.data, 'order': int(order_serializer.data.get('id'))})
+        project_serializer.is_valid(raise_exception=True)
+        project_serializer.save(owner=self.request.user)
 
         order_line_serializer = self.get_serializer(data={
             'order': int(order_serializer.data.get('id')),

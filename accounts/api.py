@@ -6,6 +6,8 @@ from knox.models import AuthToken
 from .serializers import LoginSerializer, UserSerializer, ProfileSerializer, RegisterSerializer
 from django.contrib.auth import authenticate, logout, login
 from .models import ProfileModel
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 import secrets
 import string
 from utils import CustomEmail
@@ -16,7 +18,7 @@ class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
     def post(self, request):
-
+        print(request.data)
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
             return Response({'message': 'Invalid username or password.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -71,9 +73,20 @@ class RegisterView(generics.GenericAPIView):
         email_sender.receiver = user.username
 
         # using the send_user_info method send the email and the raw password
-        # email_sender.send_user_info(user.username, password)
+        email_sender.send_user_info(user.username, password)
 
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             'token': token
         })
+
+
+class CheckUserExist(generics.GenericAPIView):
+    def post(self, request):
+
+        queryset = User.objects.filter(username=request.data.get('email'))
+        print(queryset)
+        obj = get_object_or_404(queryset)
+
+        serializer = UserSerializer(obj, many=False)
+        return Response(serializer.data)

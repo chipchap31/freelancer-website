@@ -19,7 +19,8 @@ const initState = {
     default_height: {},
     current: 0,
     description: '',
-    quote_price: 0
+    quote_price: 0,
+
 
 }
 
