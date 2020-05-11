@@ -38,18 +38,17 @@ class UserView(generics.RetrieveAPIView):
         return (self.request.user)
 
 
-class ProfileView(generics.GenericAPIView):
+class ProfileView(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated,
     ]
     serializer_class = ProfileSerializer
 
-    def get(self, request):
-        user = self.request.user
-        queryset = ProfileModel.objects.filter(owner=user)
-        obj = get_object_or_404(queryset)
-        serializer = ProfileSerializer(obj, many=False)
+    def retrieve(self, request, pk):
+        queryset = ProfileModel.objects.all()
+        profile = get_object_or_404(ProfileModel, owner=pk)
 
+        serializer = ProfileSerializer(profile, many=False)
         return Response(serializer.data)
 
 

@@ -4,6 +4,7 @@ from rest_framework.response import Response
 
 
 class ProjectView(generics.GenericAPIView):
+
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticated]
 

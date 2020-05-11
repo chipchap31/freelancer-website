@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import quoteReducer from './quoteReducer';
 import projectConfigReducer from './projectConfigReducer';
 import servicesReducer from './servicesReducer';
+import profileReducer from './profileReducer';
 import userReducer from './userReducer';
 /** 
     * @function combineReducers
@@ -13,5 +14,6 @@ export default combineReducers({
     quoteReducer,
     servicesReducer,
     projectConfigReducer,
-    userReducer
+    userReducer,
+    profileReducer
 })

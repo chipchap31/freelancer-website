@@ -6,7 +6,8 @@ urlpatterns = [
     path('auth', include('knox.urls')),
     path('auth/user', UserView.as_view()),
     path('auth/login', LoginView.as_view()),
-    path('user/profile', ProfileView.as_view()),
+    path('profile/<pk>', ProfileView.as_view({'get': 'retrieve'})),
     path('auth/register', RegisterView.as_view()),
-    path('user/check', CheckUserExist.as_view())
+    path('user/check', CheckUserExist.as_view()),
+
 ]

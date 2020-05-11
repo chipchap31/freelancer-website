@@ -18,12 +18,17 @@ function App(props) {
 
 
 
+
     useEffect(() => {
         props.handleAcceptingProject();
         props.handleServicesFetch();
-        props.handleAuthentication()
-        if (userState.authenticated) {
-            props.handleProjectsFetch()
+        props.handleAuthentication();
+
+        if (userState.authenticated && !userState.isLoading) {
+            props.handleProjectsFetch();
+            props.handleProfileFetch(sessionStorage.getItem('auth'))
+
+
         }
     }, [])
 

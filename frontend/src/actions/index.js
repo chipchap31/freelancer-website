@@ -15,7 +15,10 @@ import {
     USER_LOGIN_ERROR,
     PROJECTS_LOADING,
     PROJECTS_LOADED,
-    PROJECTS_ERROR
+    PROJECTS_ERROR,
+    PROFILE_ERROR,
+    PROFILE_LOADING,
+    PROFILE_LOADED
 } from '../actions/types'
 import { postRequest, getRequest } from '../utils/requests';
 
@@ -110,21 +113,20 @@ export const handleQuoteRequest = data => async dispatch => {
     }
 }
 
-export const handleProfileFetch = () => async dispatch => {
-    dispatch({ type: QUOTE_REQUEST_LOAD })
+export const handleProfileFetch = user_id => async dispatch => {
+    dispatch({ type: 'PROFILE_LOADING' });
     try {
         const response = await getRequest({
-            url: '/api/user/profile',
+            url: `/api/profile/${user_id}`,
             auth: true
         })
 
 
-        dispatch({ type: QUOTE_EDIT, payload: response })
-
+        dispatch({ type: 'PROFILE_LOADED', payload: response })
     } catch (error) {
-        console.log(error);
-
+        dispatch({ type: 'PROFILE_ERROR', payload: error })
     }
+
 }
 
 export const handleAuthentication = () => async dispatch => {
@@ -157,7 +159,7 @@ export const handleLogin = data => async dispatch => {
             body: data
         });
         sessionStorage.setItem('token', response.token)
-        sessionStorage.setItem('auth', true)
+        sessionStorage.setItem('auth', response.user.id)
         dispatch({
             type: USER_LOGGED_IN, payload: {
                 authenticated: true,

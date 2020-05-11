@@ -27,7 +27,6 @@ function QuoteDeadline(props) {
         userState,
         handleQuoteChange,
         handleQuoteRequest,
-        handleProfileFetch,
         history,
     } = props;
 
@@ -175,9 +174,7 @@ function QuoteDeadline(props) {
             colors: quoteState.colors.join(','),
 
         });
-        if (userState.authenticated) {
-            handleProfileFetch()
-        }
+
 
 
 
