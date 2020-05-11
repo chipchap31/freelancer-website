@@ -22,154 +22,149 @@ function QuotePersonalForm(props) {
 
     const { Content } = Layout;
     const { Title } = Typography;
-    const { history, userState, quoteState } = props;
+    const { history, quoteState, userState } = props;
+
+
     const layout = { labelCol: { span: 24 } };
-    const [state, setState] = useState({
-        first_name: '',
-        last_name: '',
-        email: '',
-        mobile: '',
-        address_line1: '',
-        address_line2: '',
-        city: '',
-        county: ''
-    });
-
-
-    const onFinish = async () => {
 
 
 
-        props.handleQuoteChange({ ...state, current: 3 })
+
+
+    const onFinish = async values => {
+
+
+
+        props.handleQuoteChange({ ...values, current: 3 })
         return history.push('/get-quote/result')
     };
 
     return (
         <>
             <Content>
-                <Col md={12}>
-                    <Title level={2}>Personal Information</Title>
-                    <Form  {...layout} onFinish={onFinish}>
+                <Row justify='center'>
+                    <Col md={15}>
+                        <Title level={2}>Personal Information</Title>
+                        <Form
+                            initialValues={{
+                                ['first_name']: quoteState.first_name || '',
+                                ['last_name']: quoteState.last_name || '',
+                                ['email']: quoteState.email || '',
+                                ['county']: quoteState.county || '',
+                                ['mobile']: quoteState.mobile || '',
+                                ['city']: quoteState.city || '',
+                                ['address_line1']: quoteState.address_line1 || '',
+                                ['address_line2']: quoteState.address_line2 || '',
 
-                        <Row justify='space-between'>
-                            <Col md={11}>
-                                <Form.Item
-                                    label='First name'>
-                                    <Input
-                                        onChange={({ target: { value } }) => setState({
-                                            ...state,
-                                            first_name: value
-                                        })}
-                                        value={state.first_name} />
-                                </Form.Item>
-                            </Col>
-                            <Col md={11}>
-                                <Form.Item label='Last name'>
-                                    <Input
-                                        onChange={({ target: { value } }) => setState({
-                                            ...state,
-                                            last_name: value
-                                        })}
-                                        value={state.last_name} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                            }}
+                            {...layout} onFinish={onFinish}>
 
-                        <Row justify='space-between'>
-                            <Col md={11}>
-                                <Form.Item
-                                    name='email'
+                            <Row justify='space-between'>
+                                <Col md={11}>
+                                    <Form.Item
+                                        name='first_name'
+                                        label='First name'>
+                                        <Input
 
-                                    label='email'
-                                    rules={[{ required: true, message: 'Please enter an email!' }]} label='Email Address'>
-                                    <Input
-                                        type='email'
-                                        onChange={({ target: { value } }) => setState({
-                                            ...state,
-                                            email: value
-                                        })}
-                                        value={state.email} type='email' />
-                                </Form.Item>
-                            </Col>
-                            <Col md={11}>
-                                <Form.Item
-                                    name="phone"
-                                    label="Phone Number"
-
-                                >
-                                    <Input
-                                        onChange={({ target: { value } }) => setState({
-                                            ...state,
-                                            mobile: value
-                                        })}
-                                        value={state.mobile}
-                                        addonBefore='+353' style={{ width: '100%' }} />
-                                </Form.Item>
-                            </Col>
-                        </Row>
-
-                        <Form.Item
-
-                            label='Address Line'>
-                            <Input
-                                onChange={({ target: { value } }) => setState({
-                                    ...state,
-                                    address_line1: value
-                                })}
-                                value={state.address_line1} />
-
-                        </Form.Item>
-                        <Form.Item
-                            label='Address Line 2 (Optional)'>
-                            <Input
-                                onChange={({ target: { value } }) => setState({
-                                    ...state,
-                                    address_line2: value
-                                })}
-                                value={state.address_line2} />
-
-                        </Form.Item>
-                        <Row justify='space-between'>
-                            <Col md={11}>
-                                <Form.Item
-                                    name='city'
-                                    label='City'
-                                >
-                                    <Input
-                                        onChange={({ target: { value } }) => setState({
-                                            ...state,
-                                            city: value
-                                        })}
-                                        value={state.city} type='text' />
-                                </Form.Item>
-                            </Col>
-                            <Col md={11}>
-                                <Form.Item
-                                    name="county"
-                                    label="County"
-                                >
-                                    <Input
-                                        onChange={({ target: { value } }) => setState({
-                                            ...state,
-                                            county: value
-                                        })}
-                                        value={state.county} type='text' />
-                                </Form.Item>
-                            </Col>
-                        </Row>
+                                            type='text'
 
 
+                                        />
+                                    </Form.Item>
+                                </Col>
+                                <Col md={11}>
+                                    <Form.Item name='last_name' label='Last name'>
+                                        <Input
+                                            type='text'
 
 
-                        <Space>
-                            <Button className='btn-back' type='primary' onClick={() => history.goBack()}>Back</Button>
-                            <Button htmlType="submit" type='primary'>Next</Button>
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
-                        </Space>
-                    </Form>
+                            <Row justify='space-between'>
+                                <Col md={11}>
+                                    <Form.Item
+                                        name='email'
 
-                </Col>
+                                        label='email'
+                                        rules={[{ required: true, message: 'Please enter an email!' }]} label='Email Address'>
+                                        <Input
 
+                                            type='email'
+
+                                        />
+                                    </Form.Item>
+                                </Col>
+                                <Col md={11}>
+                                    <Form.Item
+
+                                        name="mobile"
+                                        label="Phone Number"
+
+                                    >
+                                        <Input
+                                            type='text'
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+
+                            <Form.Item
+                                name='address_line1'
+                                label='Address Line'>
+                                <Input
+                                    type='text'
+
+                                />
+
+                            </Form.Item>
+                            <Form.Item
+                                name='address_line2'
+                                label='Address Line 2 (Optional)'>
+                                <Input
+
+
+                                />
+
+                            </Form.Item>
+                            <Row justify='space-between'>
+                                <Col md={11}>
+                                    <Form.Item
+                                        name='city'
+                                        label='City'
+                                    >
+                                        <Input
+
+
+                                            type='text' />
+                                    </Form.Item>
+                                </Col>
+                                <Col md={11}>
+                                    <Form.Item
+                                        name="county"
+                                        label="County"
+                                    >
+                                        <Input
+
+                                            type='text' />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+
+
+
+
+                            <Space>
+                                <Button className='btn-back' type='primary' onClick={() => history.goBack()}>Back</Button>
+                                <Button htmlType="submit" type='primary'>Next</Button>
+
+                            </Space>
+                        </Form>
+
+                    </Col>
+                </Row>
             </Content>
 
 

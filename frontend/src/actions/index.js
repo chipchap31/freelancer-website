@@ -12,7 +12,10 @@ import {
     QUOTE_REQUEST_LOADED,
     USER_LOGGING_IN,
     USER_LOGGED_IN,
-    USER_LOGIN_ERROR
+    USER_LOGIN_ERROR,
+    PROJECTS_LOADING,
+    PROJECTS_LOADED,
+    PROJECTS_ERROR
 } from '../actions/types'
 import { postRequest, getRequest } from '../utils/requests';
 
@@ -107,7 +110,22 @@ export const handleQuoteRequest = data => async dispatch => {
     }
 }
 
+export const handleProfileFetch = () => async dispatch => {
+    dispatch({ type: QUOTE_REQUEST_LOAD })
+    try {
+        const response = await getRequest({
+            url: '/api/user/profile',
+            auth: true
+        })
 
+
+        dispatch({ type: QUOTE_EDIT, payload: response })
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
 
 export const handleAuthentication = () => async dispatch => {
     dispatch({ type: USER_LOGGING_IN });
@@ -127,10 +145,13 @@ export const handleAuthentication = () => async dispatch => {
     }
 }
 
-export const handleLogin = (data) => async dispatch => {
+export const handleLogin = data => async dispatch => {
     dispatch({ type: USER_LOGGING_IN })
 
+
+
     try {
+
         const response = await postRequest({
             url: '/api/auth/login',
             body: data
@@ -144,10 +165,11 @@ export const handleLogin = (data) => async dispatch => {
 
             }
         })
-
+        return true
     } catch (error) {
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('auth')
+        console.log(error);
 
         return dispatch({ type: USER_LOGIN_ERROR, payload: { error: error.message } })
     }
@@ -163,10 +185,30 @@ export const handleUserProfile = data => async dispatch => {
             url: `/api/user/profile/${data}`,
             auth: true
         })
-        console.log(await response);
+
     } catch (error) {
         console.log(error);
 
     }
 
+}
+
+
+
+
+
+
+export const handleProjectsFetch = () => async dispatch => {
+    dispatch({ type: PROJECTS_LOADING });
+
+    try {
+        const response = await getRequest({
+            url: '/api/projects',
+            auth: true
+        });
+
+        dispatch({ type: PROJECTS_LOADED, payload: response });
+    } catch (error) {
+        dispatch({ type: PROJECTS_ERROR, payload: error });
+    }
 }

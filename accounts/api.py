@@ -1,5 +1,5 @@
 from checkout.views import quote
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from knox.models import AuthToken
@@ -18,7 +18,7 @@ class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
     def post(self, request):
-        print(request.data)
+
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
             return Response({'message': 'Invalid username or password.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -38,15 +38,19 @@ class UserView(generics.RetrieveAPIView):
         return (self.request.user)
 
 
-class ProfileView(generics.RetrieveAPIView):
-
-    permission_classes = [permissions.IsAuthenticated]
+class ProfileView(generics.GenericAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = ProfileSerializer
 
-    def get_queryset(self):
-        queryset = self.request.user.profile.all()
+    def get(self, request):
+        user = self.request.user
+        queryset = ProfileModel.objects.filter(owner=user)
+        obj = get_object_or_404(queryset)
+        serializer = ProfileSerializer(obj, many=False)
 
-        return queryset
+        return Response(serializer.data)
 
 
 class RegisterView(generics.GenericAPIView):
@@ -66,6 +70,11 @@ class RegisterView(generics.GenericAPIView):
         # save the user if the user does not exist
         user = user_serializer.save()
         _, token = AuthToken.objects.create(user)
+
+        # save profile
+        # change the mobile phone if starts with 0
+        mobile_number = request.data.get('mobile')
+
         profile_serializer = ProfileSerializer(data=request.data)
         profile_serializer.is_valid(raise_exception=True)
         profile_serializer.save(owner=user)
@@ -85,7 +94,7 @@ class CheckUserExist(generics.GenericAPIView):
     def post(self, request):
 
         queryset = User.objects.filter(username=request.data.get('email'))
-        print(queryset)
+
         obj = get_object_or_404(queryset)
 
         serializer = UserSerializer(obj, many=False)

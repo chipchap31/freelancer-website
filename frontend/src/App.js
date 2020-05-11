@@ -13,6 +13,7 @@ import Login from "./containers/Login";
 import Dashboard from './containers/Dashboard';
 import Spinner from './components/accessories'
 function App(props) {
+    const { userState } = props;
     const { Footer } = Layout;
 
 
@@ -21,6 +22,9 @@ function App(props) {
         props.handleAcceptingProject();
         props.handleServicesFetch();
         props.handleAuthentication()
+        if (userState.authenticated) {
+            props.handleProjectsFetch()
+        }
     }, [])
 
     const { authenticated, isLoading } = props.userState

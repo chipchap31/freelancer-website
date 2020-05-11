@@ -9,6 +9,7 @@ urlpatterns = [
     path('api/', include('config.urls')),
     path('api/', include('checkout.urls')),
     path('api/', include('services.urls')),
+    path('api/', include('projects.urls')),
 
     re_path(r'^.*', TemplateView.as_view(template_name='index.html'))
 ]

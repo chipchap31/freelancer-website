@@ -12,9 +12,10 @@ class OrderModel(models.Model):
     address_line2 = models.CharField(max_length=40, blank=False)
     city = models.CharField(max_length=40, blank=False)
     ordered_at = models.DateField(auto_now=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.first_name}ordered at {self.ordered_at}"
+        return f"{self.first_name} ordered  at {self.ordered_at}"
 
 
 class OrderLineModel(models.Model):
@@ -27,4 +28,4 @@ class OrderLineModel(models.Model):
         Services,  on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.price}, {self.service.name}"
+        return f"{self.order.email} ordered {self.service.name} for the price of {self.price}"

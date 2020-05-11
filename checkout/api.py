@@ -1,4 +1,5 @@
 
+from utils import PriceCalculator
 from rest_framework.response import Response
 from rest_framework import status, permissions
 from services.serializers import ServicesSerializer
@@ -7,7 +8,7 @@ from projects.serializers import ProjectSerializer
 from rest_framework.generics import GenericAPIView, CreateAPIView
 from .serializers import OrderSerializer, OrderLineSerializer
 from django.shortcuts import get_object_or_404
-from .views import quote
+
 import os
 import stripe
 
@@ -15,6 +16,19 @@ from django.contrib.auth.models import User
 
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
+
+
+quote_price_estimate = PriceCalculator()
+
+
+class PaymentQuoteView(GenericAPIView):
+    def post(self, request):
+        service_name = request.data.get('project_type')
+        service_data = get_object_or_404(Services, name=service_name)
+
+        quote_price_estimate.process_data(service_data, user_data=request.data)
+
+        return Response({'quote_price': quote_price_estimate.get_total()})
 
 
 class PaymentIntentView(GenericAPIView):
@@ -26,7 +40,7 @@ class PaymentIntentView(GenericAPIView):
 
         payment = stripe.PaymentIntent.create(
 
-            amount=int(quote.get_total()) * 100,
+            amount=int(quote_price_estimate.get_total()) * 100,
             currency='eur',
             customer=customer_new.id,
             receipt_email=email
@@ -42,27 +56,26 @@ class CreateOrderView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        print(request.data)
+
         order_serializer = OrderSerializer(data=request.data)
         order_serializer.is_valid(raise_exception=True)
-        order_serializer.save()
+        order_serializer.save(owner=self.request.user)
         service = get_object_or_404(
             Services, name=request.data.get('project_type'))
 
         project_serializer = ProjectSerializer(
-            data={**request.data, 'order': int(order_serializer.data.get('id'))})
+            data={**request.data, 'project_type': service.id, 'order': int(order_serializer.data.get('id'))})
         project_serializer.is_valid(raise_exception=True)
         project_serializer.save(owner=self.request.user)
 
         order_line_serializer = self.get_serializer(data={
             'order': int(order_serializer.data.get('id')),
-            'price': int(quote.get_total()),
+            'price': int(quote_price_estimate.get_total()),
             'service': service.id
         }
 
         )
         order_line_serializer.is_valid(raise_exception=True)
         order_line_serializer.save()
-        print(order_line_serializer.validated_data)
 
-        return Response({'message': True})
+        return Response({}, status=status.HTTP_200_OK)

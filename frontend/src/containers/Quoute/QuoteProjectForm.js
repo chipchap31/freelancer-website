@@ -13,7 +13,7 @@ import {
     Popconfirm,
     InputNumber,
     Button,
-    Upload,
+
     Input,
     Slider
 } from 'antd';
@@ -56,7 +56,7 @@ function QuoteProjectForm(props) {
         colors: []
     })
     const onClickNext = () => {
-        handleQuoteChange({ current: 1, description: state.description })
+        handleQuoteChange({ description: state.description })
         history.push('/get-quote/deadline');
 
     }
@@ -92,99 +92,101 @@ function QuoteProjectForm(props) {
             </div>
         )
     }
-    const marks = { 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five' }
+    const marks = { 1: 'One', 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five' }
+
+
     return (
-        <Row justify='center'>
+        <>
             <Form {...layout}>
-                <Col md={24}>
-                    <Typography>
-                        <Title level={3}>Tell me about your project</Title>
-                    </Typography>
-                    <Row justify='space-between'>
-
-                        <Col xs={24} sm={18} md={11}>
-                            <Form.Item label="Project type">
-                                <Select
-                                    onChange={value => handleQuoteChange({
-                                        project_type: value,
-                                        width: quoteState.default_width[value],
-                                        height: quoteState.default_height[value]
-                                    })}
-                                    value={quoteState.project_type}>
-                                    {servicesState.map((x, i) =>
-                                        <Select.Option key={`services${i}`} value={x.name.toLowerCase()}>{x.name}</Select.Option>
-                                    )}
-
-                                </Select>
-                            </Form.Item>
 
 
-                            <Form.Item label="Select colors">
-                                <Row>
-                                    {quoteState.colors.map((o, i) => <ColorPick key={'color' + i} color={o} i={i} />)}
-                                </Row>
 
-                            </Form.Item>
-                            <Form.Item label="Project size (width x height)" >
-                                <InputNumber
-                                    onChange={value => handleQuoteChange({ width: value })}
-                                    value={quoteState.width}
-                                    parser={value => value.replace('px', '')}
-                                    formatter={value => `${value}px`} />
-
-                                <span> x </span>
-
-                                <InputNumber
-                                    onChange={value => handleQuoteChange({ height: value })}
-                                    value={quoteState.height}
-                                    parser={value => value.replace('px', '')}
-                                    formatter={value => `${value}px`} />
-                            </Form.Item>
-
-                        </Col>
-                        <Col xs={24} sm={18} md={11}>
-                            <Form.Item label='How many concepts do you want?'>
-                                <Slider
-                                    min={1}
-                                    marks={marks}
-                                    onAfterChange={value => handleQuoteChange({
-                                        concept_amount: value
-                                    })}
-                                    defaultValue={quoteState.concept_amount}
-                                    max={5} />
-
-                            </Form.Item>
-                            <Form.Item label='Upload at least 3 snapshots of your interface.'>
-                                <Upload
-
-                                    listType="picture-card"
-                                    beforeUpload={() => false}
-                                    onPreview={file => console.log(file)}
-                                >
-                                    <PlusOutlined />
-                                    <div className="ant-upload-text">Upload</div>
-
-                                </Upload>
-                            </Form.Item>
+                <Typography>
+                    <Title level={3}>Tell me about your project</Title>
+                </Typography>
 
 
-                        </Col>
-                    </Row>
 
-                    <Form.Item label='Description'>
-                        <Input.TextArea
-                            value={state.description}
-                            rows={8}
-                            onChange={e => setState({ ...state, description: e.target.value })}
-                        />
-                    </Form.Item>
-                    <Form.Item>
-                        <Button onClick={() => onClickNext()} type="primary">
-                            Next
+                <Row justify='space-between'>
+                    <Col md={11}>
+                        <Form.Item label="Project type">
+                            <Select
+                                onChange={value => handleQuoteChange({
+                                    project_type: value,
+                                    width: quoteState.default_width[value],
+                                    height: quoteState.default_height[value]
+                                })}
+                                value={quoteState.project_type}>
+                                {servicesState.map((x, i) =>
+                                    <Select.Option key={`services${i}`} value={x.name.toLowerCase()}>{x.name}</Select.Option>
+                                )}
+
+                            </Select>
+                        </Form.Item>
+
+
+                        <Form.Item label="Select colors">
+                            <Row>
+                                {quoteState.colors.map((o, i) => <ColorPick key={'color' + i} color={o} i={i} />)}
+                            </Row>
+
+                        </Form.Item>
+                    </Col>
+
+                    <Col md={11}>
+                        <Form.Item label='How many concepts do you want?'>
+                            <Slider
+                                min={1}
+                                marks={marks}
+                                onAfterChange={value => handleQuoteChange({
+                                    concept_amount: value
+                                })}
+                                defaultValue={quoteState.concept_amount}
+                                max={5} />
+
+                        </Form.Item>
+
+                        <Form.Item label="Project size (width x height)" >
+                            <InputNumber
+                                onChange={value => handleQuoteChange({ width: value })}
+                                value={quoteState.width}
+                                parser={value => value.replace('px', '')}
+                                formatter={value => `${value}px`} />
+
+                            <span> x </span>
+
+                            <InputNumber
+                                onChange={value => handleQuoteChange({ height: value })}
+                                value={quoteState.height}
+                                parser={value => value.replace('px', '')}
+                                formatter={value => `${value}px`} />
+                        </Form.Item>
+                    </Col>
+                </Row>
+                <Form.Item label='Description'>
+                    <Input.TextArea
+                        value={state.description}
+                        rows={8}
+                        onChange={e => setState({ ...state, description: e.target.value })}
+                    />
+                </Form.Item>
+                <Form.Item>
+                    <Button onClick={() => onClickNext()} type="primary">
+                        Next
                         </Button>
-                    </Form.Item>
-                </Col>
+                </Form.Item>
+
+
+
+
+
+
+
+
+
+
             </Form>
+
             <Modal
                 onCancel={() => setVisibleModal(false)}
                 onOk={() => onPickColor(false)}
@@ -193,7 +195,8 @@ function QuoteProjectForm(props) {
 
                 <SketchPicker width='96%' color={color} onChange={(color, event) => handleColorChange(color, event)} />
             </Modal>
-        </Row>
+        </>
+
     )
 }
 function mapStateToProps(state) {

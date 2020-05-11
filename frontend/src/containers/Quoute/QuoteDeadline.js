@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import {
     Layout,
@@ -27,6 +27,7 @@ function QuoteDeadline(props) {
         userState,
         handleQuoteChange,
         handleQuoteRequest,
+        handleProfileFetch,
         history,
     } = props;
 
@@ -174,13 +175,11 @@ function QuoteDeadline(props) {
             colors: quoteState.colors.join(','),
 
         });
-        handleQuoteChange({ current: 2 })
         if (userState.authenticated) {
-
-
-            return history.push('/get-quote/result')
-
+            handleProfileFetch()
         }
+
+
 
         return history.push('/get-quote/user')
 
@@ -200,7 +199,6 @@ function QuoteDeadline(props) {
     }
 
 
-
     return (
         <>
             <Content>
@@ -214,34 +212,30 @@ function QuoteDeadline(props) {
 
                 </Typography>
 
-                <Row justify='space-between'>
 
 
-                    <Col md={16}>
 
 
-                        <div>
-                            <Calendar
-                                dateFullCellRender={dataCellRender}
-                                fullscreen={true}
-                                defaultValue={cellDefaultValue()}
 
-                            />
-                        </div>
-                        <Row justify='space-between' className='mt-2'>
-                            <Col>
-                                <Space>
-                                    <Button className='btn-back' type='primary'><Link to='/get-quote'>Back</Link></Button>
-                                    <Button onClick={onClickNext} type='primary'>Next</Button>
-                                </Space>
-                            </Col>
-                            <Col>
-                                <Button onClick={onClickResetButton} type='danger'>Reset</Button>
-                            </Col>
-                        </Row>
+
+                <div>
+                    <Calendar
+                        dateFullCellRender={dataCellRender}
+                        fullscreen={true}
+                        defaultValue={cellDefaultValue()}
+
+                    />
+                </div>
+                <Row justify='space-between' className='mt-2'>
+                    <Col>
+                        <Space>
+                            <Button className='btn-back' type='primary'><Link to='/get-quote'>Back</Link></Button>
+                            <Button onClick={onClickNext} type='primary'>Next</Button>
+                        </Space>
                     </Col>
-
-
+                    <Col>
+                        <Button onClick={onClickResetButton} type='danger'>Reset</Button>
+                    </Col>
                 </Row>
 
             </Content>

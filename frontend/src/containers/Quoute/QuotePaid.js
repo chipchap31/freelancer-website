@@ -7,23 +7,28 @@ import { useLocation, Link } from "react-router-dom";
     * @description Module that inform user that their account has been created 
     */
 function QuotePaid(props) {
-    const { quoteState: { project_type }, quoteState } = props;
-    const { authenticated, account_new } = useLocation();
-
-
+    const { quoteState: { project_type } } = props;
+    const location = useLocation();
+    const { authenticated } = location.state
+    console.log(location);
 
 
     const RenderInfo = () => {
-        if (account_new) {
+        if (!authenticated) {
             return (
                 <Col md={15} className='text-center mb-10'>
                     <Typography.Text>
-                        Please check your email in order to obtain your login details.
+                        You have successfully purchase {project_type} design. Please check your email in order to obtain your login details.
                     </Typography.Text>
-
                     <Typography.Text>
                         Didn't get an email? <a href='#'>Resend email</a>
                     </Typography.Text>
+                    <div className='mt-4'>
+                        <Button type='primary' size='large'>
+                            <Link to='/login'>Login</Link>
+                        </Button>
+                    </div>
+
                 </Col>
             )
         }
@@ -31,10 +36,8 @@ function QuotePaid(props) {
             <Col md={15} className='text-center mb-10'>
                 <Typography.Text>
                     You have successfully purchase {project_type} design.
-                    Please login to your account in order to see the progress of your project. <Link to='/login'>Login Now</Link>
+                    Go back to <Link to='/dashboard'>Dashboard</Link>
                 </Typography.Text>
-
-
             </Col>
         )
     }
@@ -45,15 +48,11 @@ function QuotePaid(props) {
                     <Typography.Title level={2}>
                         Successful Payment
                     </Typography.Title>
-
-
                 </Col>
             </Row>
             <Row justify='center'>
                 <RenderInfo />
             </Row>
-
-
         </Layout.Content>
 
     )

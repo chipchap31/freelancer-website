@@ -7,7 +7,7 @@ import {
 
 /* Initialize a first ever state for getting the quote */
 const initState = {
-    company_name: '',
+    email: '',
     concept_amount: 1,
     deadline_date: null,
     meeting_date: null,

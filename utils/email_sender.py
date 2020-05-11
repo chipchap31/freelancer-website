@@ -53,5 +53,6 @@ class CustomEmail:
         plain_text_content = Content("text/plain", plain_text)
         message = Mail(from_email, to_email, subject,
                        plain_text_content, html_content)
-
-        return self.sendgrid_client.send(message=message)
+        response = self.sendgrid_client.send(message=message)
+        print(response.status_code)
+        return response

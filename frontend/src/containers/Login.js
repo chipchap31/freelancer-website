@@ -1,27 +1,25 @@
-import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { Row, Layout, Col, Form, Input, Typography, Button, Alert } from 'antd';
+import React, { useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Row, Layout, Form, Input, Typography, Button, Alert } from 'antd';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
 
 function Login(props) {
-    const { userState, history: { location } } = props;
-
-
-
-    const [state, setState] = React.useState({
-        username: '',
-        password: ''
-    })
+    const { userState, history } = props;
     const layout = {
         labelCol: {
             span: 24
         }
     }
-    const onSubmit = () => {
-        props.handleLogin(state, props.history)
+    const onSubmit = values => {
+        props.handleLogin(values)
     }
+    useEffect(() => {
+        if (userState.authenticated) {
+            history.push('/dashboard')
+        }
 
+    }, [userState.authenticated])
 
     return (
         <main>
@@ -39,7 +37,7 @@ function Login(props) {
                         {userState.error && <Alert message={userState.error} type="error" />}
 
                         <Form.Item
-                            name='email'
+                            name='username'
 
                             rules={[
                                 {
@@ -50,16 +48,14 @@ function Login(props) {
                             label='Email Address'>
                             <Input
                                 type='email'
-                                value={state.username}
-                                onChange={({ target: { value } }) =>
-                                    setState({ ...state, username: value })} />
+                            />
                         </Form.Item>
-                        <Form.Item label='Password'>
+                        <Form.Item
+                            name='password'
+                            label='Password'>
                             <Input
                                 type='password'
-                                value={state.password}
-                                onChange={({ target: { value } }) =>
-                                    setState({ ...state, password: value })} />
+                            />
                         </Form.Item>
                         <Form.Item>
                             <Button htmlType='submit' type='primary'>Login</Button>

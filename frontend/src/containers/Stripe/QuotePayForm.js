@@ -1,45 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { postRequest, postAuth } from '../../utils/requests';
-import { Form, Input, Typography, Button, Modal } from 'antd';
+import { Form, Input, Typography, Button } from 'antd';
 import { connect } from 'react-redux';
 import Spinner from '../../components/accessories';
 import * as actions from '../../actions';
 function QuotePayForm(props) {
+
+    // load stripe card elements
     const stripe = useStripe();
     const elements = useElements();
     const {
         quoteState,
         userState,
-
         history } = props;
-
-    useEffect(() => {
-        if (!userState.authenticated) {
-            const checkUserExist = postRequest({
-                url: '/api/user/check',
-                body: { email: quoteState.email }
-            })
-            checkUserExist.then(res => {
-                if (res) {
-                    setProcessingTo(false);
-
-                    return setTimeout(() => setModalState(true), 1000)
-                }
-            })
-        }
-
-    }, [])
+    const { authenticated } = userState;
 
     const [full_name, setFullName] = useState(`${quoteState.first_name || ''} ${quoteState.last_name || ''}`);
     const [isProcessing, setProcessingTo] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
-    const [loginState, setLoginState] = useState({
-        username: quoteState.email || '',
-        password: ''
-    })
-    const [modalState, setModalState] = useState(false)
+
 
 
 
@@ -48,37 +29,76 @@ function QuotePayForm(props) {
     };
     const onCheckoutComplete = async () => {
 
-        const { authenticated } = userState;
+
         const data = {
             ...quoteState,
-            deadline_date: quoteState.deadline_date ? quoteState.deadline_date.format('M/D/YYYY') : null,
-            meeting_date: quoteState.meeting_date ? quoteState.meeting_date.format('M/D/YYYY') : null,
+            deadline_date: quoteState.deadline_date ? quoteState.deadline_date.format('YYYY-MM-DD') : null,
+            meeting_date: quoteState.meeting_date ? quoteState.meeting_date.format('YYYY-MM-DD') : null,
             colors: quoteState.colors.join(','),
         }
 
 
-        let user;
-        if (!authenticated) {
-
-            // when the user is not logged in
-            try {
-                user = await postRequest({
-                    url: '/api/auth/register',
-                    body: quoteState
-                })
 
 
+        // when the user is not logged in
+        if (!userState.authenticated) {
+            const user = postRequest({
+                url: '/api/auth/register',
+                body: quoteState
+            })
 
-                await postAuth({
-                    token: user.token,
+            user.then(res => {
+                // when the user registration success 
+                // extract the token  
+                // create new order and token
+                console.log(res);
+
+                postAuth({
+                    token: res.token,
                     url: '/api/order/new',
                     body: data
                 })
-                return history.push('/get-quote/paid')
-            } catch (error) {
+                history.push({
+                    pathname: '/get-quote/paid',
+                    state: {
+                        authenticated: false
+                    }
+                })
+            }).catch(error => {
                 console.log(error);
-            }
+
+            })
         }
+        if (userState.authenticated) {
+
+
+            const order_new = postAuth({
+                token: sessionStorage.getItem('token'),
+                url: '/api/order/new',
+                body: data
+            })
+
+            order_new.then(res => {
+                if (res) {
+                    history.push({
+                        pathname: '/get-quote/paid',
+                        state: {
+                            authenticated: true
+                        }
+                    })
+                }
+            })
+        }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -152,12 +172,8 @@ function QuotePayForm(props) {
 
 
 
-    const onModalCancel = () => {
-        setModalState(false)
-    }
-    const onFinishLogin = () => {
-        props.handleLogin(loginState)
-    }
+
+
     return (
         <>
             {isProcessing && <Spinner tip="Don't leave until the payment is finished" />}
@@ -188,27 +204,7 @@ function QuotePayForm(props) {
                     Pay €{quoteState.quote_price}
                 </Button>
             </Form>
-            <Modal
-                title="Account Login"
-                visible={modalState}
-                onCancel={onModalCancel}
-                onOk={onFinishLogin}
-            >
-                <Form labelCol={{ span: 24 }}>
-                    <Form.Item label='Username'>
-                        <Input
-                            type='text'
-                            onChange={({ target: { value } }) => setLoginState({ ...loginState, username: value })}
-                            value={loginState.username} />
-                    </Form.Item>
-                    <Form.Item label='Password'>
-                        <Input
-                            onChange={({ target: { value } }) => setLoginState({ ...loginState, password: value })}
-                            type='password'
-                            value={loginState.password} />
-                    </Form.Item>
-                </Form>
-            </Modal>
+
         </>
     );
 }

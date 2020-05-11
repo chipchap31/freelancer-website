@@ -53,7 +53,7 @@ function QuoteRouter(props) {
         />
     );
     return (
-        <Content>
+        <Content className='mt-6'>
             <div className='container'>
                 <Switch>
                     <ProtectedRoute exact path={path} component={QuoteProjectForm} />
