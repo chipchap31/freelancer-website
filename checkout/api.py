@@ -1,11 +1,10 @@
-
 from utils import PriceCalculator
 from rest_framework.response import Response
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from services.serializers import ServicesSerializer
 from services.models import Services
 from projects.serializers import ProjectSerializer
-from rest_framework.generics import GenericAPIView, CreateAPIView
+
 from .serializers import OrderSerializer, OrderLineSerializer
 from django.shortcuts import get_object_or_404
 
@@ -21,7 +20,7 @@ stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 quote_price_estimate = PriceCalculator()
 
 
-class PaymentQuoteView(GenericAPIView):
+class PaymentQuoteView(generics.GenericAPIView):
     def post(self, request):
         service_name = request.data.get('project_type')
         service_data = get_object_or_404(Services, name=service_name)
@@ -31,7 +30,7 @@ class PaymentQuoteView(GenericAPIView):
         return Response({'quote_price': quote_price_estimate.get_total()})
 
 
-class PaymentIntentView(GenericAPIView):
+class PaymentIntentView(generics.GenericAPIView):
 
     def post(self, request):
         user_data = request.data
@@ -51,7 +50,7 @@ class PaymentIntentView(GenericAPIView):
         return Response({'client_secret': payment.client_secret}, status=status.HTTP_200_OK)
 
 
-class CreateOrderView(GenericAPIView):
+class CreateOrderView(generics.GenericAPIView):
     serializer_class = OrderLineSerializer
     permission_classes = [permissions.IsAuthenticated]
 
@@ -79,3 +78,4 @@ class CreateOrderView(GenericAPIView):
         order_line_serializer.save()
 
         return Response({}, status=status.HTTP_200_OK)
+

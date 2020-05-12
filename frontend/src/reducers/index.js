@@ -4,6 +4,7 @@ import projectConfigReducer from './projectConfigReducer';
 import servicesReducer from './servicesReducer';
 import profileReducer from './profileReducer';
 import userReducer from './userReducer';
+import projectsReducer from './projectsReducer'
 /** 
     * @function combineReducers
     * @returns { Object } i.e { quoteReducer: quoteReducer }
@@ -15,5 +16,6 @@ export default combineReducers({
     servicesReducer,
     projectConfigReducer,
     userReducer,
-    profileReducer
+    profileReducer,
+    projectsReducer
 })

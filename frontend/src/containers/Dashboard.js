@@ -1,8 +1,17 @@
-import React, { Profiler } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Typography } from 'antd'
+import { Typography, Row, Col } from 'antd'
+import { withRouter } from 'react-router-dom'
 function Dashboard(props) {
-    const { profileState } = props;
+    const {
+        profileState,
+        history
+    } = props;
+
+
+
+
+
 
 
     return (
@@ -12,12 +21,22 @@ function Dashboard(props) {
                     Welcome {profileState.first_name}
                 </Typography.Title>
 
+                <Row>
+
+                    <Col>
+
+                    </Col>
+                </Row>
             </div>
 
         </main>
     )
 }
+const mapStateToProps = state => {
+    return {
+        profileState: state.profileReducer,
+        projectsState: state.projectsReducer
+    }
+}
 
-
-export default connect(({ profileReducer }) =>
-    ({ profileState: profileReducer }))(Dashboard)
+export default connect(mapStateToProps)(withRouter(Dashboard))

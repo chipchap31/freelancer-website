@@ -27,7 +27,7 @@ function Header(props) {
 
                 <Row className='container' justify='space-between'>
                     <Col>
-                        <Link to='/'>Logo</Link>
+                        <Link to={authenticated ? '/dashboard' : '/'}>Logo</Link>
                     </Col>
                     <Col>
                         {authenticated && (

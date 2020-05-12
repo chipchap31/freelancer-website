@@ -5,21 +5,21 @@ import * as actions from '../actions'
 import { connect } from 'react-redux';
 
 function Login(props) {
-    const { userState, history } = props;
+    const { userState, history, profileState } = props;
     const layout = {
         labelCol: {
             span: 24
         }
     }
     const onSubmit = values => {
-        props.handleLogin(values)
-    }
-    useEffect(() => {
-        if (userState.authenticated) {
+        if (props.handleLogin(values)) {
+            // login success? run this block
+
+
             history.push('/dashboard')
         }
+    }
 
-    }, [userState.authenticated])
 
     return (
         <main>
@@ -66,6 +66,11 @@ function Login(props) {
         </main>
     )
 }
+const mapStateToProps = state => {
+    return {
+        userState: state.userReducer,
+        profileState: state.profileReducer
+    }
+}
 
-export default connect(({ userReducer }) =>
-    ({ userState: userReducer }), actions)(withRouter(Login));
+export default connect(mapStateToProps, actions)(withRouter(Login));

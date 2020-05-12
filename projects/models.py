@@ -21,4 +21,4 @@ class ProjectModel(models.Model):
         Services, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
-        return f"{self.project_type.name} by {self.owner}"
+        return f"{self.project_type.name} for {self.owner}"

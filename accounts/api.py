@@ -1,16 +1,17 @@
+from utils import CustomEmail
+import string
+import secrets
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from .models import ProfileModel
+from django.contrib.auth import authenticate, logout, login
 from checkout.views import quote
 from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required
 from knox.models import AuthToken
 from .serializers import LoginSerializer, UserSerializer, ProfileSerializer, RegisterSerializer
-from django.contrib.auth import authenticate, logout, login
-from .models import ProfileModel
-from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
-import secrets
-import string
-from utils import CustomEmail
+from .serializers import ChangePasswordSerializer
 email_sender = CustomEmail()
 
 
@@ -98,3 +99,34 @@ class CheckUserExist(generics.GenericAPIView):
 
         serializer = UserSerializer(obj, many=False)
         return Response(serializer.data)
+
+
+class ChangePasswordView(generics.GenericAPIView):
+    serializer_class = ChangePasswordSerializer
+    model = User
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def post(self, request):
+
+        user = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        password_old = serializer.data.get('password_old')
+        password_new = serializer.data.get('password_new')
+        print(user.check_password(password_old))
+
+        if not user.check_password(password_old):
+            return Response({'message': 'Old password is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(password_new)
+        user.save()
+
+        profile = ProfileModel.objects.get(owner=user)
+        profile.password_changed = 1
+        profile.save()
+        print(profile)
+
+        return Response({'message': True}, status=status.HTTP_200_OK)

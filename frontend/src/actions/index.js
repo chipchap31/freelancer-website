@@ -135,13 +135,14 @@ export const handleAuthentication = () => async dispatch => {
         const response = await getRequest({
             url: '/api/auth/user', auth: true
         });
-        return dispatch({
+        dispatch({
             type: USER_LOGGED_IN, payload: {
                 authenticated: true,
 
                 user: response
             }
         })
+        return true
     } catch (error) {
         return dispatch({ type: USER_LOGIN_ERROR, payload: { error: error.message } })
     }
@@ -171,7 +172,7 @@ export const handleLogin = data => async dispatch => {
     } catch (error) {
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('auth')
-        console.log(error);
+
 
         return dispatch({ type: USER_LOGIN_ERROR, payload: { error: error.message } })
     }
