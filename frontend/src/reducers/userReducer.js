@@ -1,14 +1,17 @@
 import {
     USER_LOGGING_IN,
     USER_LOGGED_IN,
-    USER_LOGIN_ERROR
+    USER_LOGIN_ERROR,
+    PROFILE_LOADED,
+    PASSWORD_CHANGE
 } from "../actions/types";
 
 const initState = {
     user: null,
     authenticated: JSON.parse(sessionStorage.getItem('auth')),
     isLoading: false,
-    error: ''
+    error: '',
+    password_changed: null
 }
 export default function (state = initState, action) {
 
@@ -22,7 +25,11 @@ export default function (state = initState, action) {
                 isLoading: true,
                 authenticated: false
             }
-
+        case PROFILE_LOADED:
+            return {
+                ...state,
+                password_changed: action.payload.password_changed
+            }
         case USER_LOGGED_IN:
 
             return {
@@ -31,6 +38,11 @@ export default function (state = initState, action) {
                 isLoading: false,
                 authenticated: true,
                 error: ''
+            }
+        case PASSWORD_CHANGE:
+            return {
+                ...state,
+                password_changed: '1'
             }
 
 

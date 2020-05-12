@@ -10,7 +10,7 @@ function QuotePaid(props) {
     const { quoteState: { project_type } } = props;
     const location = useLocation();
     const { authenticated } = location.state
-    console.log(location);
+
 
 
     const RenderInfo = () => {

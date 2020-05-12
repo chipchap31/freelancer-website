@@ -16,9 +16,11 @@ class ProjectModel(models.Model):
     description = models.TextField(blank=True)
     finished = models.BooleanField(default=False)
     order = models.ForeignKey(OrderModel, on_delete=models.CASCADE, null=False)
-    image = models.FileField(upload_to='image', null=True)
+    image = models.FileField(upload_to='media', null=True)
     project_type = models.ForeignKey(
         Services, on_delete=models.CASCADE, null=False)
+    project_name = models.CharField(max_length=40, null=True)
+    ordered_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return f"{self.project_type.name} for {self.owner}"

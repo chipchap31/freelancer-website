@@ -63,7 +63,10 @@ class CreateOrderView(generics.GenericAPIView):
             Services, name=request.data.get('project_type'))
 
         project_serializer = ProjectSerializer(
-            data={**request.data, 'project_type': service.id, 'order': int(order_serializer.data.get('id'))})
+            data={**request.data,
+                  'project_type': service.id,
+                  'project_name': service.name,
+                  'order': int(order_serializer.data.get('id'))})
         project_serializer.is_valid(raise_exception=True)
         project_serializer.save(owner=self.request.user)
 
@@ -78,4 +81,3 @@ class CreateOrderView(generics.GenericAPIView):
         order_line_serializer.save()
 
         return Response({}, status=status.HTTP_200_OK)
-

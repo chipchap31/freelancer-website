@@ -14,7 +14,8 @@ export default (state = [], action) => {
             return state
 
         case PROJECTS_LOADED:
-            return [...state, ...action.payload]
+            return [...action.payload]
+
         default:
             return state
     }

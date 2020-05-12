@@ -18,7 +18,8 @@ import {
     PROJECTS_ERROR,
     PROFILE_ERROR,
     PROFILE_LOADING,
-    PROFILE_LOADED
+    PROFILE_LOADED,
+    PASSWORD_CHANGE
 } from '../actions/types'
 import { postRequest, getRequest } from '../utils/requests';
 
@@ -214,4 +215,11 @@ export const handleProjectsFetch = () => async dispatch => {
     } catch (error) {
         dispatch({ type: PROJECTS_ERROR, payload: error });
     }
+}
+
+
+
+
+export const handleChangePassword = () => async dispatch => {
+    dispatch({ type: PASSWORD_CHANGE })
 }

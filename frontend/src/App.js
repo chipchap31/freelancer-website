@@ -18,11 +18,10 @@ import Header from './containers/Header';
 function App(props) {
 
     const { Footer } = Layout;
-    console.log(window.location.pathname);
-    const { authenticated, isLoading } = props.userState;
-    const { password_changed } = props.profileState;
-    const welcomePath = window.location.pathname === '/welcome'
-    console.log(password_changed);
+
+    const { authenticated, isLoading, password_changed } = props.userState;
+
+
 
     useEffect(() => {
         props.handleAuthentication();
@@ -40,21 +39,22 @@ function App(props) {
 
     }, [])
 
-    console.log(password_changed === '0');
 
-    const PrivateRoute = ({ component: Component, ...rest }) => (
+    const PrivateRoute = ({ component: Component, exempt, ...rest }) => (
+
         <Route
             {...rest}
+
             render={(props) => {
+
+
                 if (isLoading) {
                     return <Spinner size='large' />
                 } else if (!authenticated) {
                     return <Redirect to="/login" />;
 
-                } else if (welcomePath) {
-                    return <Component {...props} />
-                } else if (password_changed === '0') {
-                    return <Redirect to='/welcome' />;
+                } else if (!exempt && password_changed === '0') {
+                    return <Redirect to='/welcome' />
                 } else {
                     return <Component {...props} />;
                 }
@@ -76,8 +76,8 @@ function App(props) {
             <main style={{ minHeight: '83vh' }}>
                 <Switch>
 
-                    <PrivateRoute exact path='/dashboard' component={Dashboard} />
-                    <PrivateRoute path='/welcome' component={Welcome} />
+                    <PrivateRoute exempt={false} exact path='/dashboard' component={Dashboard} />
+                    <PrivateRoute exempt={true} path='/welcome' component={Welcome} />
                     <Route path='/get-quote' component={QuoteRouter} />
                     <Route path='/waiting-list' component={WaitingListPage} />
 

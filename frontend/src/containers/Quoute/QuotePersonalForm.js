@@ -22,7 +22,7 @@ function QuotePersonalForm(props) {
 
     const { Content } = Layout;
     const { Title } = Typography;
-    const { history, quoteState, userState } = props;
+    const { history, profileState, userState } = props;
 
 
     const layout = { labelCol: { span: 24 } };
@@ -47,14 +47,14 @@ function QuotePersonalForm(props) {
                         <Title level={2}>Personal Information</Title>
                         <Form
                             initialValues={{
-                                ['first_name']: quoteState.first_name || '',
-                                ['last_name']: quoteState.last_name || '',
-                                ['email']: quoteState.email || '',
-                                ['county']: quoteState.county || '',
-                                ['mobile']: quoteState.mobile || '',
-                                ['city']: quoteState.city || '',
-                                ['address_line1']: quoteState.address_line1 || '',
-                                ['address_line2']: quoteState.address_line2 || '',
+                                ['first_name']: profileState.first_name || '',
+                                ['last_name']: profileState.last_name || '',
+                                ['email']: profileState.email || '',
+                                ['county']: profileState.county || '',
+                                ['mobile']: profileState.mobile || '',
+                                ['city']: profileState.city || '',
+                                ['address_line1']: profileState.address_line1 || '',
+                                ['address_line2']: profileState.address_line2 || '',
 
                             }}
                             {...layout} onFinish={onFinish}>
@@ -136,8 +136,6 @@ function QuotePersonalForm(props) {
                                         label='City'
                                     >
                                         <Input
-
-
                                             type='text' />
                                     </Form.Item>
                                 </Col>
@@ -180,7 +178,8 @@ function QuotePersonalForm(props) {
 function mapStateToProps(state) {
     return {
         quoteState: state.quoteReducer,
-        userState: state.userReducer
+        userState: state.userReducer,
+        profileState: state.profileReducer
     }
 }
 QuotePersonalForm = connect(mapStateToProps, actions)(QuotePersonalForm)
