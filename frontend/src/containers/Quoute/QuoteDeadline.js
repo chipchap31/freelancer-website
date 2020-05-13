@@ -173,8 +173,9 @@ function QuoteDeadline(props) {
             meeting_date: quoteState.meeting_date ? quoteState.meeting_date.format('M/D/YYYY') : null,
             colors: quoteState.colors.join(','),
 
-        });
 
+        });
+        handleQuoteChange({ current: 2 })
 
 
 
@@ -246,6 +247,7 @@ function QuoteDeadline(props) {
                         meeting_date: quoteState.meeting_date ? quoteState.meeting_date.format('M/D/YYYY') : null,
                         colors: quoteState.colors.join(',')
                     });
+                    handleQuoteChange({ current: 2 })
                     history.push('/get-quote/user')
                 }}
                 okText='Yes'

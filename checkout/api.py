@@ -23,6 +23,7 @@ quote_price_estimate = PriceCalculator()
 class PaymentQuoteView(generics.GenericAPIView):
     def post(self, request):
         service_name = request.data.get('project_type')
+        print(service_name)
         service_data = get_object_or_404(Services, name=service_name)
 
         quote_price_estimate.process_data(service_data, user_data=request.data)

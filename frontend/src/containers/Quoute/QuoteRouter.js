@@ -55,17 +55,20 @@ function QuoteRouter(props) {
     return (
         <Content className='mt-6'>
             <div className='container'>
-                <Switch>
-                    <ProtectedRoute exact path={path} component={QuoteProjectForm} />
+                <div style={{ minHeight: '60vh' }}>
+                    <Switch>
+                        <ProtectedRoute exact path={path} component={QuoteProjectForm} />
 
-                    <ProtectedRoute path={`${url}/deadline`} component={QuoteDeadline} />
+                        <ProtectedRoute path={`${url}/deadline`} component={QuoteDeadline} />
 
-                    <ProtectedRoute path={`${url}/user`} component={QuotePersonalForm} />
+                        <ProtectedRoute path={`${url}/user`} component={QuotePersonalForm} />
 
-                    <ProtectedRoute path={`${url}/payment`} component={StripeMain} />
-                    <ProtectedRoute path={`${url}/result`} component={QuoteResult} />
-                    <ProtectedRoute path={`${url}/paid`} component={QuotePaid} />
-                </Switch>
+                        <ProtectedRoute path={`${url}/payment`} component={StripeMain} />
+                        <ProtectedRoute path={`${url}/result`} component={QuoteResult} />
+                        <ProtectedRoute path={`${url}/paid`} component={QuotePaid} />
+                    </Switch>
+                </div>
+
                 <div className='steps-wrapper mt-4'>
                     <Steps current={quoteState.current} size='small' style={{ margin: '30px 0' }}>
                         <Step title="Project info" icon={<ProjectOutlined />} />

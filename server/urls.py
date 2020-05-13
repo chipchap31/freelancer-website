@@ -12,7 +12,5 @@ urlpatterns = [
     path('api/', include('checkout.urls')),
     path('api/', include('services.urls')),
     path('api/', include('projects.urls')),
-    path('', include('frontend.urls'))
 
-    # re_path(r'^.*', TemplateView.as_view(template_name='index.html'))
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)+[re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]

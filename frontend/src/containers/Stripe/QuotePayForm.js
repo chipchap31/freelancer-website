@@ -12,12 +12,13 @@ function QuotePayForm(props) {
     const stripe = useStripe();
     const elements = useElements();
     const {
+        profileState,
         quoteState,
         userState,
         history } = props;
-    const { authenticated } = userState;
 
-    const [full_name, setFullName] = useState(`${quoteState.first_name || ''} ${quoteState.last_name || ''}`);
+
+    const [full_name, setFullName] = useState(`${profileState.first_name || ''} ${profileState.last_name || ''}`);
     const [isProcessing, setProcessingTo] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
 
@@ -177,7 +178,8 @@ function QuotePayForm(props) {
     return (
         <>
             {isProcessing && <Spinner tip="Don't leave until the payment is finished" />}
-            <Form labelCol={{ span: 24 }} onFinish={handleSubmit}>
+            <Form
+                labelCol={{ span: 24 }} onFinish={handleSubmit}>
 
                 <Form.Item label='Cardholder Name'>
                     <Input onChange={({ target: { value } }) => setFullName(value)} value={full_name} size='large' />
@@ -208,9 +210,11 @@ function QuotePayForm(props) {
         </>
     );
 }
-
-export default connect(({ quoteReducer, userReducer }) =>
-    ({
-        quoteState: quoteReducer,
-        userState: userReducer
-    }), actions)(withRouter(QuotePayForm));
+const mapStateToProps = state => {
+    return {
+        quoteState: state.quoteReducer,
+        userState: state.userReducer,
+        profileState: state.profileReducer
+    }
+}
+export default connect(mapStateToProps, actions)(withRouter(QuotePayForm));

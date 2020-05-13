@@ -90,8 +90,8 @@ function getDefaultDimensions(target, arr) {
     let newArr = arr;
     let obj = {};
     newArr = newArr.map((x, i) => {
-        const convertToLowerCase = x.name.toLowerCase();
-        obj[convertToLowerCase] = Number(x[target])
+
+        obj[x.name] = Number(x[target])
     })
 
     return obj

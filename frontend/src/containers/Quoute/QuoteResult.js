@@ -7,7 +7,7 @@ import {
     Button,
     Modal,
     Form,
-    Input
+    Input, Card
 } from 'antd'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -27,8 +27,8 @@ function QuoteResult(props) {
     const [loginState, setLoginState] = useState({
         username: quoteState.email || '',
         password: ''
-    })
-    console.log(loginState);
+    });
+
 
     const onClickButton = () => {
         if (!userState.authenticated) {
@@ -75,15 +75,19 @@ function QuoteResult(props) {
     return (
         <Layout.Content>
             <Row justify='center'>
+
                 <Col md={11} className='text-center border border-circle'>
-                    <Typography.Title level={3}>{title} Estimated Price</Typography.Title>
+                    <Card>
+                        <Typography.Title level={3}>{title} Estimated Price</Typography.Title>
 
-                    <Typography.Title level={1}>€{quoteState.quote_price}</Typography.Title>
+                        <Typography.Title level={1}>€{quoteState.quote_price}</Typography.Title>
 
-                    <Button onClick={onClickButton} size='large' type='primary'>
-                        Pay Now
+                        <Button onClick={onClickButton} size='large' type='primary'>
+                            Pay Now
                     </Button>
+                    </Card>
                 </Col>
+
             </Row>
             <Modal
                 title="Your account already exist"
@@ -92,7 +96,6 @@ function QuoteResult(props) {
                 onOk={onFinishLogin}
             >
                 <Form
-
 
                     labelCol={{ span: 24 }}>
                     <Form.Item

@@ -15,8 +15,11 @@ class ProjectModel(models.Model):
     colors = models.CharField(max_length=50)
     description = models.TextField(blank=True)
     finished = models.BooleanField(default=False)
-    order = models.ForeignKey(OrderModel, on_delete=models.CASCADE, null=False)
-    image = models.FileField(upload_to='media', null=True)
+    order = models.ForeignKey(
+        OrderModel, on_delete=models.SET_NULL, null=True)
+    image1 = models.FileField(upload_to='media', null=True)
+    image2 = models.FileField(upload_to='media', null=True, blank=True)
+    image3 = models.FileField(upload_to='media', null=True, blank=True)
     project_type = models.ForeignKey(
         Services, on_delete=models.CASCADE, null=False)
     project_name = models.CharField(max_length=40, null=True)

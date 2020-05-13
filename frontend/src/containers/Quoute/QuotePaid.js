@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Typography, Layout, Col, Button } from 'antd';
+import { Row, Typography, Layout, Col, Button, Card } from 'antd';
 import { connect } from 'react-redux';
 import { useLocation, Link } from "react-router-dom";
 /** 
@@ -33,26 +33,41 @@ function QuotePaid(props) {
             )
         }
         return (
-            <Col md={15} className='text-center mb-10'>
-                <Typography.Text>
-                    You have successfully purchase {project_type} design.
-                    Go back to <Link to='/dashboard'>Dashboard</Link>
+            <>
+                <Row justify='center' className='mb-4'>
+                    <Col md={15} className='text-center'>
+                        <Typography.Text>
+                            You have successfully purchase {project_type} design.
+                    Please click below to go back to your dashboard.
                 </Typography.Text>
-            </Col>
+
+                    </Col>
+
+                </Row >
+                <Row justify='center'>
+                    <Button type='primary'><Link to='/dashboard'>Dashboard</Link></Button>
+                </Row>
+            </>
         )
     }
     return (
         <Layout.Content className='container'>
-            <Row justify='center mt-10'>
-                <Col className='text-center'>
-                    <Typography.Title level={2}>
-                        Successful Payment
+            <Row justify='center'>
+                <Col md={14}>
+                    <Card className='mt-10'>
+                        <Row justify='center '>
+                            <Col className='text-center'>
+                                <Typography.Title level={1}>
+                                    Successful Payment
                     </Typography.Title>
+                            </Col>
+                        </Row>
+
+                        <RenderInfo />
+                    </Card>
                 </Col>
             </Row>
-            <Row justify='center'>
-                <RenderInfo />
-            </Row>
+
         </Layout.Content>
 
     )

@@ -56,7 +56,7 @@ function QuoteProjectForm(props) {
         colors: []
     })
     const onClickNext = () => {
-        handleQuoteChange({ description: state.description })
+        handleQuoteChange({ description: state.description, current: 1 })
         history.push('/get-quote/deadline');
 
     }
@@ -92,7 +92,7 @@ function QuoteProjectForm(props) {
             </div>
         )
     }
-    const marks = { 1: 'One', 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five' }
+    const marks = { 1: 'One', 2: 'Two', 3: 'Three' }
 
 
     return (
@@ -118,7 +118,7 @@ function QuoteProjectForm(props) {
                                 })}
                                 value={quoteState.project_type}>
                                 {servicesState.map((x, i) =>
-                                    <Select.Option key={`services${i}`} value={x.name.toLowerCase()}>{x.name}</Select.Option>
+                                    <Select.Option key={`services${i}`} value={x.name}>{x.name}</Select.Option>
                                 )}
 
                             </Select>
@@ -142,7 +142,7 @@ function QuoteProjectForm(props) {
                                     concept_amount: value
                                 })}
                                 defaultValue={quoteState.concept_amount}
-                                max={5} />
+                                max={3} />
 
                         </Form.Item>
 
