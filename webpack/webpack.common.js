@@ -12,7 +12,7 @@ module.exports = {
 
   output: {
     publicPath: '/',
-    path: path.resolve(__dirname, '..', 'frontend', 'static'),
+    path: path.resolve(__dirname, 'static'),
     filename: '[name].js'
   },
   module: {
