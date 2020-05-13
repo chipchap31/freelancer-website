@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "NODE_ENV=prod webpack",
+    "postinstall": "npm run build",
     "dev": "NODE_ENV=dev webpack-dev-server"
   },
   "author": "",
