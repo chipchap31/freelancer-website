@@ -7,7 +7,7 @@ module.exports = {
     entry: path.join(__dirname, '..', 'frontend', 'src', 'index.js'),
     output: {
         publicPath: '/static/',
-        path: path.resolve(__dirname, '..', 'frontend', 'static'),
+        path: path.resolve(__dirname, '..', 'build', 'static'),
         filename: '[name].js'
     },
     module: {
