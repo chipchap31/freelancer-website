@@ -11,13 +11,21 @@ function Login(props) {
             span: 24
         }
     }
-    const onSubmit = values => {
-        if (props.handleLogin(values)) {
-            // login success? run this block
-
-
+    useEffect(() => {
+        if (userState.authenticated) {
             history.push('/dashboard')
         }
+    }, [])
+    const onSubmit = values => {
+        const login_response = props.handleLogin(values);
+
+        login_response.then(user_id => {
+            if (user_id) {
+                props.handleProfileFetch(user_id)
+                history.push('/dashboard')
+            }
+
+        })
     }
 
 

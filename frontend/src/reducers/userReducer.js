@@ -3,7 +3,8 @@ import {
     USER_LOGGED_IN,
     USER_LOGIN_ERROR,
     PROFILE_LOADED,
-    PASSWORD_CHANGE
+    PASSWORD_CHANGE,
+    USER_LOGOUT
 } from "../actions/types";
 
 const initState = {
@@ -18,7 +19,13 @@ export default function (state = initState, action) {
 
     switch (action.type) {
 
+        case USER_LOGOUT:
+            return {
+                ...state,
+                isLoading: false,
+                authenticated: false
 
+            }
         case USER_LOGGING_IN:
             return {
                 ...state,

@@ -1,20 +1,18 @@
 import { hot } from "react-hot-loader";
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect, withRouter } from 'react-router-dom';
-
-import LandingPage from './pages/LandingPage';
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-router-dom';
 import WaitingListPage from './pages/WaitingListPage';
 import { connect } from 'react-redux';
 import * as actions from './actions'
 import { Layout } from "antd";
-
-
 import Login from "./containers/Login";
 import Dashboard from './containers/Dashboard';
 import Spinner from './components/accessories';
-import QuoteRouter from "./containers/Quoute/QuoteRouter";
+import QuoteRouter from "./containers/QuoteRouter";
 import Welcome from "./containers/Welcome";
 import Header from './containers/Header';
+import Projects from "./containers/ProjectIndex";
+import { PlusOutlined } from '@ant-design/icons';
 function App(props) {
 
     const { Footer } = Layout;
@@ -70,19 +68,29 @@ function App(props) {
 
 
 
+
     return (
         <Router>
-            <Header {...props.userState} />
+            <Header />
             <main style={{ minHeight: '83vh' }}>
                 <Switch>
 
                     <PrivateRoute exempt={false} exact path='/dashboard' component={Dashboard} />
+                    <PrivateRoute exempt={false} path='/projects' component={Projects} />
                     <PrivateRoute exempt={true} path='/welcome' component={Welcome} />
                     <Route path='/get-quote' component={QuoteRouter} />
                     <Route path='/waiting-list' component={WaitingListPage} />
 
                     <Route path='/login' component={Login} />
                 </Switch>
+                {authenticated && (
+                    <Link to='/get-quote'>
+                        <div className='widget'>
+                            <PlusOutlined />
+                        </div>
+                    </Link>
+                )}
+
             </main>
             <Footer>
                 <div className='container'>

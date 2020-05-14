@@ -14,7 +14,7 @@ import {
 
 } from 'antd';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import * as actions from '../actions';
 import { Link, withRouter } from 'react-router-dom';
 const { Content } = Layout;
 const { Title, Text } = Typography;

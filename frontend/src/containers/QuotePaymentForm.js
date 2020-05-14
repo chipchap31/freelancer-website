@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { postRequest, postAuth } from '../../utils/requests';
-import { Form, Input, Typography, Button } from 'antd';
+import { postRequest, postAuth } from '../utils/requests';
+import { Form, Input, Typography, Button, Modal } from 'antd';
 import { connect } from 'react-redux';
-import Spinner from '../../components/accessories';
-import * as actions from '../../actions';
+import Spinner from '../components/accessories';
+import * as actions from '../actions';
 function QuotePayForm(props) {
 
     // load stripe card elements
@@ -21,8 +21,11 @@ function QuotePayForm(props) {
     const [full_name, setFullName] = useState(`${profileState.first_name || ''} ${profileState.last_name || ''}`);
     const [isProcessing, setProcessingTo] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
-
-
+    const [modalState, setModalState] = useState(false);
+    const [loginState, setLoginState] = useState({
+        username: quoteState.email || '',
+        password: ''
+    });
 
 
     const handleCardDetailsChange = ev => {
@@ -137,6 +140,24 @@ function QuotePayForm(props) {
             }
 
 
+            if (!userState.authenticated) {
+                // promise to check if the user exist
+                const checkUserExist = postRequest({
+                    url: '/api/user/check',
+                    body: { email: quoteState.email }
+                })
+                checkUserExist.then(res => {
+                    if (res) {
+                        // then stop the payment process
+
+                        // prompt a login modal
+                        setProcessingTo(false);
+                        return setModalState(true);
+                    }
+                })
+
+            }
+
 
 
 
@@ -173,7 +194,13 @@ function QuotePayForm(props) {
 
 
 
+    const onModalCancel = () => {
+        setModalState(false)
+    }
+    const onFinishLogin = () => {
+        props.handleLogin(loginState)
 
+    }
 
     return (
         <>
@@ -196,17 +223,55 @@ function QuotePayForm(props) {
                     {paymentError && <Typography.Text type='danger'>{paymentError}</Typography.Text>}
 
                 </div>
-
+                <Button className='btn-back' onClick={() => history.goBack()} type='primary'>
+                    Back
+                        </Button>
                 <Button
                     htmlType="submit"
                     disabled={!elements || !stripe || isProcessing}
-                    className='mt-2'
-                    size="large"
+                    className='ml-2 mt-3'
+
                     type='primary'>
                     Pay €{quoteState.quote_price}
                 </Button>
             </Form>
+            <Modal
+                title="Your account already exist"
+                visible={modalState}
+                onCancel={onModalCancel}
+                onOk={onFinishLogin}
+            >
+                <Form
 
+                    labelCol={{ span: 24 }}>
+                    <Form.Item
+                        name='username'
+
+                        label='Email Address'>
+                        <Input
+                            defaultValue={quoteState.email || ''}
+                            type='email'
+                            onChange={({ target: { value } }) => setLoginState({
+                                ...loginState,
+                                username: value
+                            })}
+                            value={loginState.password}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name='password'
+                        label='Password'>
+                        <Input
+                            onChange={({ target: { value } }) => setLoginState({
+                                ...loginState,
+                                password: value
+                            })}
+                            value={loginState.password}
+                            type='password'
+                        />
+                    </Form.Item>
+                </Form>
+            </Modal>
         </>
     );
 }

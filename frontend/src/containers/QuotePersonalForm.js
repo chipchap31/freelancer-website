@@ -13,8 +13,8 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import * as actions from '../../actions';
-import { postRequest } from '../../utils/requests';
+import * as actions from '../actions';
+import { postRequest } from '../utils/requests';
 function QuotePersonalForm(props) {
 
     // Display this form after the deadline has been chosen
@@ -23,8 +23,6 @@ function QuotePersonalForm(props) {
     const { Content } = Layout;
     const { Title } = Typography;
     const { history, profileState, userState } = props;
-
-
     const layout = { labelCol: { span: 24 } };
 
 
@@ -32,9 +30,6 @@ function QuotePersonalForm(props) {
 
 
     const onFinish = async values => {
-
-
-
         props.handleQuoteChange({ ...values, current: 3 })
         return history.push('/get-quote/result')
     };

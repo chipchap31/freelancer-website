@@ -14,7 +14,6 @@ from .serializers import LoginSerializer, UserSerializer, ProfileSerializer, Reg
 from .serializers import ChangePasswordSerializer
 email_sender = CustomEmail()
 
-
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
@@ -130,3 +129,4 @@ class ChangePasswordView(generics.GenericAPIView):
         print(profile)
 
         return Response({'message': True}, status=status.HTTP_200_OK)
+

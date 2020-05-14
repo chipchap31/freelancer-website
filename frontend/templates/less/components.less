@@ -1,5 +1,46 @@
 .header {
     background-color: #ffb34f;
-    margin-bottom: 20px;
+
     border-bottom: @primary-color solid 2px;
+    padding: 10px 0;
+
+}
+
+
+
+
+
+.widget {
+    position: fixed;
+    background-color: @primary-color;
+    bottom: 80px;
+    right: 80px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    line-height: 60px;
+    text-align: center;
+    color: white;
+    transition: 200ms;
+
+    &:hover {
+        background-color: rgb(208, 104, 63);
+    }
+}
+
+
+.color-circle {
+
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.color-circle:not(:first-child) {
+    margin-left: 12px;
 }

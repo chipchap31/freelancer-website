@@ -19,9 +19,10 @@ import {
     PROFILE_ERROR,
     PROFILE_LOADING,
     PROFILE_LOADED,
-    PASSWORD_CHANGE
+    PASSWORD_CHANGE,
+    USER_LOGOUT
 } from '../actions/types'
-import { postRequest, getRequest } from '../utils/requests';
+import { postRequest, getRequest, postAuth } from '../utils/requests';
 
 
 /** 
@@ -114,21 +115,7 @@ export const handleQuoteRequest = data => async dispatch => {
     }
 }
 
-export const handleProfileFetch = user_id => async dispatch => {
-    dispatch({ type: 'PROFILE_LOADING' });
-    try {
-        const response = await getRequest({
-            url: `/api/profile/${user_id}`,
-            auth: true
-        })
 
-
-        dispatch({ type: 'PROFILE_LOADED', payload: response })
-    } catch (error) {
-        dispatch({ type: 'PROFILE_ERROR', payload: error })
-    }
-
-}
 
 export const handleAuthentication = () => async dispatch => {
     dispatch({ type: USER_LOGGING_IN });
@@ -148,7 +135,21 @@ export const handleAuthentication = () => async dispatch => {
         return dispatch({ type: USER_LOGIN_ERROR, payload: { error: error.message } })
     }
 }
+export const handleProfileFetch = user_id => async dispatch => {
+    dispatch({ type: 'PROFILE_LOADING' });
+    try {
+        const response = await getRequest({
+            url: `/api/profile/${user_id}`,
+            auth: true
+        })
 
+
+        dispatch({ type: 'PROFILE_LOADED', payload: response })
+    } catch (error) {
+        dispatch({ type: 'PROFILE_ERROR', payload: error })
+    }
+
+}
 export const handleLogin = data => async dispatch => {
     dispatch({ type: USER_LOGGING_IN })
 
@@ -169,7 +170,7 @@ export const handleLogin = data => async dispatch => {
 
             }
         })
-        return true
+        return response.user.id
     } catch (error) {
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('auth')
@@ -181,6 +182,21 @@ export const handleLogin = data => async dispatch => {
 
 }
 
+export const handleLogout = () => dispatch => {
+
+
+
+    postAuth({
+        url: '/api/auth/logout',
+        token: sessionStorage.getItem('token'),
+        body: null
+    })
+    dispatch({ type: USER_LOGOUT })
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('auth')
+
+
+}
 
 export const handleUserProfile = data => async dispatch => {
     dispatch({ type: QUOTE_REQUEST_LOAD })

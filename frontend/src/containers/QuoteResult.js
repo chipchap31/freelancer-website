@@ -11,8 +11,8 @@ import {
 } from 'antd'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
-import { postRequest } from '../../utils/requests'
+import * as actions from '../actions';
+import { postRequest } from '../utils/requests'
 /**
     * @module QuoteResult
     * @description this module shows the calculated price of the 
@@ -81,10 +81,12 @@ function QuoteResult(props) {
                         <Typography.Title level={3}>{title} Estimated Price</Typography.Title>
 
                         <Typography.Title level={1}>€{quoteState.quote_price}</Typography.Title>
-
-                        <Button onClick={onClickButton} size='large' type='primary'>
+                        <Button className='btn-back' onClick={() => history.goBack()} type='primary'>
+                            Back
+                        </Button>
+                        <Button className='ml-2' onClick={onClickButton} type='primary'>
                             Pay Now
-                    </Button>
+                        </Button>
                     </Card>
                 </Col>
 
@@ -94,6 +96,7 @@ function QuoteResult(props) {
                 visible={modalState}
                 onCancel={onModalCancel}
                 onOk={onFinishLogin}
+                okText='Login'
             >
                 <Form
 

@@ -10,6 +10,6 @@ urlpatterns = [
     path('profile/<pk>', ProfileView.as_view({'get': 'retrieve'})),
     path('auth/register', RegisterView.as_view()),
     path('user/check', CheckUserExist.as_view()),
-    path('password/change', ChangePasswordView.as_view())
-
+    path('password/change', ChangePasswordView.as_view()),
+    path('auth/logout', knox_views.LogoutView.as_view(), name='knox_logout')
 ]
