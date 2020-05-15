@@ -11,40 +11,13 @@
 @border-radius-base: 4px; // major border radius
 @border-color-base: #d9d9d9; // major border color
 @box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15); // major shadow for layers
+@color-blue: #364DFF;
 
 
 
 
 
 
-
-.cell {
-    height: 60px;
-    width: 95%;
-    border-top: 1px solid #FFB34F;
-    transition: 200ms;
-    transition-delay: 200ms;
-    border-bottom: 1px #eee solid;
-    background-color: rgba(255, 217, 92, 0.3);
-
-}
-
-
-
-.cell.disabled {
-    background-color: #eee;
-}
-
-
-.cell.meeting {
-    background-color: rgba(105, 255, 228, 0.3);
-}
-
-
-
-.cell.meeting.selected {
-    background-color: rgba(105, 255, 228, 1);
-}
 
 .steps-wrapper {
     max-width: 80%;
@@ -134,4 +107,10 @@
 
 .ant-select.dropdown {
     width: 100px;
+}
+
+
+
+.ant-picker-cell::before {
+    z-index: -1;
 }

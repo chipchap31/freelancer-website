@@ -39,13 +39,14 @@ function QuotePaid(props) {
                         <Typography.Text>
                             You have successfully purchase {project_type} design.
                     Please click below to go back to your dashboard.
-                </Typography.Text>
+                    </Typography.Text>
 
                     </Col>
 
                 </Row >
                 <Row justify='center'>
-                    <Button type='primary'><Link to='/dashboard'>Dashboard</Link></Button>
+                    <Button type='primary'><Link to='/projects'>Projects</Link></Button>
+                    <Button className='ml-2 btn-secondary' ><Link to='/dashboard'>Dashboard</Link></Button>
                 </Row>
             </>
         )

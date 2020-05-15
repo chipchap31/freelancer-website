@@ -81,12 +81,13 @@ function QuoteResult(props) {
                         <Typography.Title level={3}>{title} Estimated Price</Typography.Title>
 
                         <Typography.Title level={1}>€{quoteState.quote_price}</Typography.Title>
-                        <Button className='btn-back' onClick={() => history.goBack()} type='primary'>
-                            Back
-                        </Button>
-                        <Button className='ml-2' onClick={onClickButton} type='primary'>
+                        <Button onClick={onClickButton} type='primary'>
                             Pay Now
                         </Button>
+                        <Button className='btn-back ml-2' onClick={() => history.goBack()} type='primary'>
+                            Back
+                        </Button>
+
                     </Card>
                 </Col>
 

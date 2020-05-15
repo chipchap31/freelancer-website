@@ -150,8 +150,9 @@ function QuotePersonalForm(props) {
 
 
                             <Space>
-                                <Button className='btn-back' type='primary' onClick={() => history.goBack()}>Back</Button>
                                 <Button htmlType="submit" type='primary'>Next</Button>
+                                <Button className='btn-back' type='primary' onClick={() => history.goBack()}>Back</Button>
+
 
                             </Space>
                         </Form>

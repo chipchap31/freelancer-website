@@ -8,11 +8,11 @@ import { Layout } from "antd";
 import Login from "./containers/Login";
 import Dashboard from './containers/Dashboard';
 import Spinner from './components/accessories';
-import QuoteRouter from "./containers/QuoteRouter";
+import QuoteRouter from "./containers/QuoteIndex";
 import Welcome from "./containers/Welcome";
 import Header from './containers/Header';
 import Projects from "./containers/ProjectIndex";
-import { PlusOutlined } from '@ant-design/icons';
+
 function App(props) {
 
     const { Footer } = Layout;
@@ -83,13 +83,7 @@ function App(props) {
 
                     <Route path='/login' component={Login} />
                 </Switch>
-                {authenticated && (
-                    <Link to='/get-quote'>
-                        <div className='widget'>
-                            <PlusOutlined />
-                        </div>
-                    </Link>
-                )}
+
 
             </main>
             <Footer>

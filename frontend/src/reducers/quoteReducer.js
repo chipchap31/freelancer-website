@@ -10,7 +10,7 @@ const initState = {
     email: '',
     concept_amount: 1,
     deadline_date: null,
-    meeting_date: null,
+
     project_type: '',
     colors: ['#EEEE', '#EEEE', '#EEEE', '#EEEE', '#EEEE'],
     height: 0,

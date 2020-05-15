@@ -17,6 +17,7 @@ import {
     Tag
 } from 'antd';
 import * as actions from '../actions';
+import { WidgetButton } from '../components/buttons';
 function ProjectIndex(props) {
     const {
         profileState,
@@ -52,17 +53,15 @@ function ProjectIndex(props) {
             title: 'Deadline Date',
             dataIndex: 'deadline_date',
             key: 'deadline_date',
+
         },
 
-        {
-            title: 'Requested Date',
-            dataIndex: 'ordered_at',
-            key: 'ordered_at',
-        },
+
         {
             title: 'Status',
             key: 'finished',
             dataIndex: 'finished',
+
             render: finished => finished ? <Tag color="success">Success</Tag> : <Tag color="error">Unfinished</Tag>,
         }
 
@@ -92,9 +91,7 @@ function ProjectIndex(props) {
                                 <Select.Option value='All'>
                                     All
                                 </Select.Option>
-                                <Select.Option value='Finish'>
-                                    Finished
-                                </Select.Option>
+
                                 {servicesState.map((service, service_index) =>
                                     <Select.Option value={service.name} key={service_index}>
                                         {service.name}
@@ -116,6 +113,8 @@ function ProjectIndex(props) {
                 <Row>
                     <Col md={24}>
                         <Table
+                            size="small"
+                            rowKey={record => record.id}
                             onRow={(record, rowIndex) => {
                                 return {
                                     onClick: () => {
@@ -148,7 +147,7 @@ function ProjectIndex(props) {
                     </Row>
                 )}
             </div>
-
+            <WidgetButton />
         </main >
     )
 }

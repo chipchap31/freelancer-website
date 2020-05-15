@@ -37,7 +37,7 @@ function QuotePayForm(props) {
         const data = {
             ...quoteState,
             deadline_date: quoteState.deadline_date ? quoteState.deadline_date.format('YYYY-MM-DD') : null,
-            meeting_date: quoteState.meeting_date ? quoteState.meeting_date.format('YYYY-MM-DD') : null,
+
             colors: quoteState.colors.join(','),
         }
 
@@ -223,17 +223,18 @@ function QuotePayForm(props) {
                     {paymentError && <Typography.Text type='danger'>{paymentError}</Typography.Text>}
 
                 </div>
-                <Button className='btn-back' onClick={() => history.goBack()} type='primary'>
-                    Back
-                        </Button>
                 <Button
                     htmlType="submit"
                     disabled={!elements || !stripe || isProcessing}
-                    className='ml-2 mt-3'
+                    className='mt-3'
 
                     type='primary'>
                     Pay €{quoteState.quote_price}
                 </Button>
+                <Button className='btn-back ml-2 ' onClick={() => history.goBack()} type='primary'>
+                    Back
+                        </Button>
+
             </Form>
             <Modal
                 title="Your account already exist"
