@@ -85,6 +85,7 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
 if DEBUG:
 
     DATABASES = {
@@ -94,9 +95,10 @@ if DEBUG:
         }
     }
 else:
-    DATABASES = {'default': dj_database_url.parse(
-        os.environ.get('DATABASE_URL'))}
-
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+    }
+DATABASES['default']['TEST']['NAME'] = 'mytestdatabase'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
