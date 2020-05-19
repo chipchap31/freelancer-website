@@ -100,7 +100,15 @@ if DEBUG:
         }
     }
 elif TESTING:
-    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'TEST': {
+                'NAME': 'custom_test_database'
+            }
+
+        }
+    }
 else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
