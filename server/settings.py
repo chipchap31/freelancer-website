@@ -10,9 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+import sys
 import os
 import dj_database_url
 
+TESTING = False
+
+if 'test' in sys.argv or 'test_coverage' in sys.argv:
+    TESTING = True
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -94,11 +99,13 @@ if DEBUG:
             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
+elif TESTING:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
-DATABASES['default']['TEST']['NAME'] = 'mytestdatabase'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
