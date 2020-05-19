@@ -33,7 +33,10 @@ class PriceCalculator():
 
             multiplier = (24 - diff_in_days)
 
-            self.total = (multiplier * deadline_price_mult) + concept_price
+            if multiplier <= 0:
+                self.total = concept_price + deadline_price_mult
+            else:
+                self.total = (multiplier * deadline_price_mult) + concept_price
 
     def get_total(self):
         return self.total

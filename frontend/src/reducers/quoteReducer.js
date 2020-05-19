@@ -65,9 +65,6 @@ export default (state = initState, action) => {
             }
         case QUOTE_REQUEST_LOADED:
 
-
-
-
             return {
                 ...state, quote_price: Number(action.payload.quote_price)
             }

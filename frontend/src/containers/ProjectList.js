@@ -18,7 +18,7 @@ import {
 } from 'antd';
 import * as actions from '../actions';
 import { WidgetButton } from '../components/buttons';
-function ProjectIndex(props) {
+function ProjectList(props) {
     const {
         profileState,
         history,
@@ -113,6 +113,7 @@ function ProjectIndex(props) {
                 <Row>
                     <Col md={24}>
                         <Table
+                            className='hoverable'
                             size="small"
                             rowKey={record => record.id}
                             onRow={(record, rowIndex) => {
@@ -160,4 +161,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, actions)(withRouter(ProjectIndex))
+export default connect(mapStateToProps, actions)(withRouter(ProjectList))

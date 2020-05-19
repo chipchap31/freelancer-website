@@ -18,7 +18,8 @@ function QuotePayForm(props) {
         history } = props;
 
 
-    const [full_name, setFullName] = useState(`${profileState.first_name || ''} ${profileState.last_name || ''}`);
+    const [full_name, setFullName] = useState(`${profileState.first_name || quoteState.first_name ||
+        ''} ${profileState.last_name || quoteState.last_name || ''}`);
     const [isProcessing, setProcessingTo] = useState(false);
     const [paymentError, setPaymentError] = useState(null);
     const [modalState, setModalState] = useState(false);

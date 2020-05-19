@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['jomari-designs-app.herokuapp.com', 'localhost']
 
@@ -156,8 +156,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'build/static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR)
-MEDIA_URL = '/media/'
-
-
 MEDIAFILES_LOCATION = 'media'
 DEFAUL_FILE_STORAGE = 'custom_storages.MediaStorage'
+
+if DEBUG:
+    MEDIA_URL = '/media/'
+else:
+    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)

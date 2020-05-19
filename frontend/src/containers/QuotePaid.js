@@ -7,7 +7,7 @@ import { useLocation, Link } from "react-router-dom";
     * @description Module that inform user that their account has been created 
     */
 function QuotePaid(props) {
-    const { quoteState: { project_type } } = props;
+    const { quoteState } = props;
     const location = useLocation();
     const { authenticated } = location.state
 
@@ -16,20 +16,23 @@ function QuotePaid(props) {
     const RenderInfo = () => {
         if (!authenticated) {
             return (
-                <Col md={15} className='text-center mb-10'>
-                    <Typography.Text>
-                        You have successfully purchase {project_type} design. Please check your email in order to obtain your login details.
+                <Row justify='center'>
+                    <Col md={16} className='text-center '>
+                        <Typography.Text>
+                            You have successfully purchase {quoteState.project_type} design. Please check your email {" "}
+                            <Typography.Text underline>{quoteState.email}</Typography.Text> in order to obtain your login details.
                     </Typography.Text>
-                    <Typography.Text>
-                        Didn't get an email? <a href='#'>Resend email</a>
-                    </Typography.Text>
-                    <div className='mt-4'>
-                        <Button type='primary' size='large'>
-                            <Link to='/login'>Login</Link>
-                        </Button>
-                    </div>
+                        <Typography.Text>
+                            Didn't get an email? <a href='#'>Resend email</a>
+                        </Typography.Text>
+                        <div className='mt-4'>
+                            <Button type='primary' size='large'>
+                                <Link to='/login'>Login</Link>
+                            </Button>
+                        </div>
 
-                </Col>
+                    </Col>
+                </Row>
             )
         }
         return (
@@ -54,7 +57,7 @@ function QuotePaid(props) {
     return (
         <Layout.Content className='container'>
             <Row justify='center'>
-                <Col md={14}>
+                <Col md={16}>
                     <Card className='mt-10'>
                         <Row justify='center '>
                             <Col className='text-center'>

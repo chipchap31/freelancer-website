@@ -13,11 +13,11 @@ import {
     Popconfirm,
     InputNumber,
     Button,
-
     Input,
     Slider
 } from 'antd';
 import { PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import TextArea from 'antd/lib/input/TextArea';
 
 /** 
     * @module QuoteHome 
@@ -26,6 +26,7 @@ import { PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 function QuoteProjectForm(props) {
     const {
         quoteState,
+        profileState,
         servicesState,
         handleQuoteChange,
         history } = props;
@@ -36,30 +37,29 @@ function QuoteProjectForm(props) {
     const [colorTarget, setColorTarget] = useState(0)
 
     const handleColorChange = (color, event) => setColor(color.hex);
+    const [state, setState] = useState({
+        description: '',
+        colors: ['#EEEE', '#EEEE', '#EEEE', '#EEEE', '#EEEE'],
+        width: quoteState.width,
+        height: quoteState.height
 
+    })
     const onPickColor = () => {
-        let colorMutation = [...quoteState.colors]
+        let colorMutation = [...state.colors]
         colorMutation.splice(colorTarget, 1, color)
 
-        handleQuoteChange({ colors: colorMutation });
+        setState({ colors: colorMutation });
         setVisibleModal(false)
     }
     const onColorDelete = i => {
         // removes the color from the color copy via index
         // the copy then becomes the new color array
-        let colorMutation = [...quoteState.colors];
+        let colorMutation = [...state.colors];
         colorMutation.splice(i, 1, '#EEEE');
-        handleQuoteChange({ colors: colorMutation })
+        setState({ colors: colorMutation })
     }
-    const [state, setState] = useState({
-        description: '',
-        colors: []
-    })
-    const onClickNext = () => {
-        handleQuoteChange({ description: state.description, current: 1 })
-        history.push('/get-quote/deadline');
 
-    }
+
 
 
     const ColorPick = props => {
@@ -73,7 +73,7 @@ function QuoteProjectForm(props) {
                 >
                     <div
                         className='color-circle'
-                        style={{ backgroundColor: quoteState.colors[props.i] }} >
+                        style={{ backgroundColor: state.colors[props.i] }} >
                     </div>
                 </Popconfirm>
             )
@@ -86,18 +86,36 @@ function QuoteProjectForm(props) {
                 }
                 }
                 className='color-circle'
-                style={{ backgroundColor: quoteState.colors[props.i] }} >
+                style={{ backgroundColor: state.colors[props.i] }} >
                 <PlusCircleOutlined />
 
             </div>
         )
     }
-    const marks = { 1: 'One', 2: 'Two', 3: 'Three' }
+    const marks = { 1: '1', 2: '2', 3: '3' }
 
+    const onFinish = values => {
+
+        const data = {
+            ...values,
+            ...state
+        }
+
+
+        handleQuoteChange({ ...data, current: 1 })
+        history.push('/get-quote/deadline');
+
+    }
 
     return (
         <>
-            <Form {...layout}>
+            <Form
+                initialValues={{
+                    ['project_type']: servicesState.length > 0 ? servicesState[0].name : null,
+                    ['concept_amount']: 1
+                }}
+                onFinish={onFinish}
+                {...layout}>
                 <Row justify='center'>
                     <Col md={15}>
 
@@ -106,17 +124,12 @@ function QuoteProjectForm(props) {
                         </Typography>
 
 
-
                         <Row justify='space-between'>
                             <Col md={11}>
-                                <Form.Item label="Project type">
+                                <Form.Item name='project_type' label="Project type">
                                     <Select
-                                        onChange={value => handleQuoteChange({
-                                            project_type: value,
-                                            width: quoteState.default_width[value],
-                                            height: quoteState.default_height[value]
-                                        })}
-                                        value={quoteState.project_type}>
+
+                                        value={state.project_type}>
                                         {servicesState.map((x, i) =>
                                             <Select.Option key={`services${i}`} value={x.name}>{x.name}</Select.Option>
                                         )}
@@ -125,55 +138,64 @@ function QuoteProjectForm(props) {
                                 </Form.Item>
 
 
-                                <Form.Item label="Select colors">
+                                <Form.Item
+                                    name='colors'
+                                    label="Select colors">
                                     <Row>
-                                        {quoteState.colors.map((o, i) => <ColorPick key={'color' + i} color={o} i={i} />)}
+                                        {state.colors.map((o, i) => <ColorPick
+                                            key={'color' + i}
+                                            color={o} i={i} />)}
                                     </Row>
 
                                 </Form.Item>
                             </Col>
 
                             <Col md={11}>
-                                <Form.Item label='How many concepts do you want?'>
+                                <Form.Item
+                                    name="concept_amount"
+                                    label='How many concepts do you want?'>
                                     <Slider
                                         min={1}
                                         marks={marks}
-                                        onAfterChange={value => handleQuoteChange({
-                                            concept_amount: value
-                                        })}
-                                        defaultValue={quoteState.concept_amount}
                                         max={3} />
 
                                 </Form.Item>
 
-                                <Form.Item label="Project size (width x height)" >
+                                <Form.Item
+
+                                    label="Project size (width x height)" >
                                     <InputNumber
-                                        onChange={value => handleQuoteChange({ width: value })}
-                                        value={quoteState.width}
+                                        value={state.width}
+                                        onChange={
+                                            value => setState({ ...state, width: value })
+                                        }
                                         parser={value => value.replace('px', '')}
                                         formatter={value => `${value}px`} />
 
                                     <span> x </span>
 
                                     <InputNumber
-                                        onChange={value => handleQuoteChange({ height: value })}
-                                        value={quoteState.height}
+                                        onChange={
+                                            value => setState({ ...state, height: value })
+                                        }
+                                        value={state.height}
                                         parser={value => value.replace('px', '')}
                                         formatter={value => `${value}px`} />
                                 </Form.Item>
                             </Col>
                         </Row>
-                        <Form.Item label='Description'>
-                            <Input.TextArea
-                                value={state.description}
+                        <Form.Item
+                            name='description'
+                            label='Description'>
+                            <TextArea
+
                                 rows={8}
-                                onChange={e => setState({ ...state, description: e.target.value })}
                             />
                         </Form.Item>
                         <Form.Item>
-                            <Button onClick={() => onClickNext()} type="primary">
+                            <Button htmlType='submit' type="primary">
                                 Next
-    </Button>
+                            </Button>
                         </Form.Item>
 
 

@@ -11,7 +11,8 @@ import Spinner from './components/accessories';
 import QuoteRouter from "./containers/QuoteIndex";
 import Welcome from "./containers/Welcome";
 import Header from './containers/Header';
-import Projects from "./containers/ProjectIndex";
+import ProjectList from "./containers/ProjectList";
+import ProjectView from "./containers/ProjectView";
 
 function App(props) {
 
@@ -76,7 +77,8 @@ function App(props) {
                 <Switch>
 
                     <PrivateRoute exempt={false} exact path='/dashboard' component={Dashboard} />
-                    <PrivateRoute exempt={false} path='/projects' component={Projects} />
+                    <PrivateRoute exempt={false} exact path='/projects' component={ProjectList} />
+                    <PrivateRoute exempt={false} path='/projects/:id' component={ProjectView} />
                     <PrivateRoute exempt={true} path='/welcome' component={Welcome} />
                     <Route path='/get-quote' component={QuoteRouter} />
                     <Route path='/waiting-list' component={WaitingListPage} />

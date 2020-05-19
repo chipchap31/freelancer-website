@@ -23868,24 +23868,6 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-upload-list-rtl.ant-upload-list-picture-card .ant-upload-list-item-info {
   padding: 0;
 }
-.cell {
-  height: 60px;
-  width: 95%;
-  border-top: 1px solid #FFB34F;
-  transition: 200ms;
-  transition-delay: 200ms;
-  border-bottom: 1px #eee solid;
-  background-color: rgba(255, 217, 92, 0.3);
-}
-.cell.disabled {
-  background-color: #eee;
-}
-.cell.meeting {
-  background-color: rgba(105, 255, 228, 0.3);
-}
-.cell.meeting.selected {
-  background-color: #69ffe4;
-}
 .steps-wrapper {
   max-width: 80%;
   margin: 0 auto;
@@ -23924,17 +23906,6 @@ div.ant-typography-edit-content.ant-typography-rtl {
   justify-content: center;
   align-items: center;
 }
-.color-circle {
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.color-circle:not(:first-child) {
-  margin-left: 12px;
-}
 .ant-alert-message {
   color: grey;
 }
@@ -23956,6 +23927,12 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-select.dropdown {
   width: 100px;
+}
+.ant-picker-cell::before {
+  z-index: -1;
+}
+.ant-table-wrapper.hoverable .ant-table-row {
+  cursor: pointer;
 }
 .m-1 {
   margin: 10px;
@@ -24397,9 +24374,66 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .flex {
   display: flex;
 }
+.content-center {
+  align-items: center;
+}
 .header {
   background-color: #ffb34f;
-  margin-bottom: 20px;
   border-bottom: #FF7642 solid 2px;
+  padding: 10px 0;
+}
+.widget {
+  position: fixed;
+  background-color: #FF7642;
+  bottom: 80px;
+  right: 80px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  line-height: 60px;
+  text-align: center;
+  color: white;
+  transition: 200ms;
+  z-index: 99;
+}
+.widget:hover {
+  background-color: #d0683f;
+}
+.color-circle {
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.color-circle:not(:first-child) {
+  margin-left: 12px;
+}
+.btn-secondary {
+  background-color: #364DFF;
+  border: #364DFF solid 2px;
+  color: white;
+}
+.btn-secondary:hover {
+  background-color: #1f37f0;
+  color: white;
+  border: #1f37f0 solid 2px;
+}
+.cell {
+  height: 60px;
+  width: 95%;
+  border-top: 1px solid #FFB34F;
+  transition: 200ms;
+  transition-delay: 200ms;
+  border-bottom: 1px #eee solid;
+  background-color: rgba(255, 217, 92, 0.3);
+  z-index: 2;
+}
+.cell.disabled {
+  background-color: #eee;
+}
+.cell.deadline.selected {
+  background-color: #69ffe4;
 }
 
