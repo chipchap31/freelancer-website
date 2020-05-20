@@ -4,16 +4,22 @@ import { useParams } from 'react-router-dom';
 import { getRequest } from '../utils/requests';
 import Spinner from '../components/accessories';
 import moment from 'moment';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver'
+
+
 function ProjectView(props) {
     const { id } = useParams();
     const [project, setProject] = useState(null);
+
+
     useEffect(() => {
         getRequest({
             auth: true,
             url: `/api/projects/${id}`
         }).then(res => {
             if (res) {
-                console.log(res);
+
                 setProject(res)
             }
         })
@@ -23,6 +29,7 @@ function ProjectView(props) {
     if (!project) {
         return <Spinner size='large' />
     }
+    console.log(project);
 
 
     const color_list = project.colors.split(',');
@@ -33,6 +40,7 @@ function ProjectView(props) {
 
 
     for (var i = 0; i < concept_amount; i++) {
+        i++
         table_data.push({
             img_url: project[`image${i}`],
             size: `${Number(project.width)}px x  ${Number(project.height)}px`
@@ -55,12 +63,56 @@ function ProjectView(props) {
             title: 'Actions',
             dataIndex: "img_url",
             key: "img_url",
-            render: text => <a href={text} download>Download</a>
+            render: text => <Button disabled={!text}><a href={text} download>Download</a></Button>
         }
 
     ];
-    console.log(table_data);
 
+    const onDownloadAll = async () => {
+        // reuse the table_data
+        let zip = new JSZip();
+        const img = zip.folder("concepts");
+        for (let obj of table_data) {
+
+
+            try {
+                const res = await fetch(obj.img_url);
+                const res_to_blob = await res.blob();
+
+                const file_name = obj.img_url.split('/').pop()
+
+
+                img.file(file_name, res_to_blob, { base64: true })
+            } catch (error) {
+                console.log(error);
+
+            }
+
+
+        }
+        const content = await zip.generateAsync({ type: 'blob' });
+
+        saveAs(content, `${project.project_name}s - ${project.ordered_at}.zip`)
+        // fetch('https://jomari-designs-2020.s3.amazonaws.com/media/media/icon.png')       // 1) fetch the url
+        //     .then(function (response) {                       // 2) filter on 200 OK
+        //         if (response.status === 200 || response.status === 0) {
+        //             return Promise.resolve(response.blob());
+        //         } else {
+        //             return Promise.reject(new Error(response.statusText));
+        //         }
+        //     })
+        //     .then(res => {
+        //         const zip = new JSZip();
+        //         const img = zip.folder("concepts");
+        //         img.file("picture.png", res, { base64: true })
+        //         zip.generateAsync({ type: "blob" })
+        //             .then(content => {
+        //                 saveAs(content, "designs.zip")
+        //             })
+        //     })
+        //     /
+
+    }
     return (
         <main>
             <div className='container'>
@@ -77,7 +129,7 @@ function ProjectView(props) {
                                 {color_list.map((color, index) => <div className='color-circle' style={{ backgroundColor: color }}></div>)}
                             </div>
 
-                            <Button type='primary' disabled={!project.finished}><a >Download</a></Button>
+                            <Button type='primary' onClick={onDownloadAll} ><a >Download all</a></Button>
 
                         </Row>
 

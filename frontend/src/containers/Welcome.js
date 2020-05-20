@@ -16,7 +16,7 @@ function Welcome(props) {
     const { profileState, history, handleChangePassword } = props;
     const [state, setState] = useState('')
     const onPasswordChange = values => {
-        console.log(values)
+
         const token = sessionStorage.getItem('token')
 
         postAuth({

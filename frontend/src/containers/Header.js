@@ -76,7 +76,7 @@ function Header(props) {
                         {!userState.authenticated && (
 
                             <Button type='primary'>
-                                <Link to='/get-quote'>Get Quote</Link>
+                                <Link to='/get-quote'>Get started</Link>
                             </Button>
 
                         )}
