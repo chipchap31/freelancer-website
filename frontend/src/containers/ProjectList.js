@@ -69,7 +69,7 @@ function ProjectList(props) {
     ]
 
     return (
-        <main>
+        <>
             <div className='container'>
                 <Row className='mb-3'>
                     <Col md={10}>
@@ -79,8 +79,6 @@ function ProjectList(props) {
 
                     </Col>
                 </Row>
-
-
                 <Row justify='end'>
                     <div className='flex'>
                         <Form.Item label='Filter'>
@@ -149,7 +147,7 @@ function ProjectList(props) {
                 )}
             </div>
             <WidgetButton />
-        </main >
+        </ >
     )
 }
 const mapStateToProps = state => {

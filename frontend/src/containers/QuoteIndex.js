@@ -71,9 +71,9 @@ function QuoteRouter(props) {
 
                 <div className='steps-wrapper mt-4'>
                     <Steps current={quoteState.current} size='small' style={{ margin: '30px 0' }}>
-                        <Step title="Project info" icon={<ProjectOutlined />} />
+                        <Step title="Project" icon={<ProjectOutlined />} />
                         <Step title="Deadline" icon={<ClockCircleOutlined />} />
-                        <Step title="Personal Info" icon={<UserOutlined />} />
+                        <Step title="Personal" icon={<UserOutlined />} />
                         <Step title="Result" icon={<EuroCircleOutlined />} />
                         <Step title="Payment" icon={<EuroCircleOutlined />} />
                         <Step title="Done" icon={<SmileOutlined />} />

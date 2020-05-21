@@ -102,7 +102,7 @@ function Dashboard(props) {
         return moment(init_deadline_date)
     }
     return (
-        <main>
+        <>
             <WidgetButton />
             <div className='container'>
                 <Typography.Title level={1}>
@@ -126,7 +126,7 @@ function Dashboard(props) {
                     <Col md={7}>
 
                         <Typography.Title level={3}>
-                            Your top projects
+                            Top Projects
                         </Typography.Title>
                         <Card>
                             <DashCarousel data={[]} />
@@ -165,7 +165,7 @@ function Dashboard(props) {
                     )}
                 />
             </Modal>
-        </main >
+        </ >
     )
 }
 const mapStateToProps = state => {

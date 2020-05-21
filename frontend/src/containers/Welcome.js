@@ -36,107 +36,107 @@ function Welcome(props) {
 
     }
     return (
-        <main>
-            <section id='welcome'>
-                <div className='container'>
-                    <Row justify='center'>
-                        <Card className=' p-2 mt-10' md={10}>
-                            <div className='text-center'>
-                                <Typography.Title level={1}>
-                                    Welcome {profileState.first_name}
-                                </Typography.Title>
-                                <Typography.Text>
-                                    Before you continue, please change your password with your own.
+
+        <section id='welcome'>
+            <div className='container'>
+                <Row justify='center'>
+                    <Card className=' p-2 mt-10' md={10}>
+                        <div className='text-center'>
+                            <Typography.Title level={1}>
+                                Welcome {profileState.first_name}
+                            </Typography.Title>
+                            <Typography.Text>
+                                Before you continue, please change your password with your own.
                         </Typography.Text>
-                            </div>
-                            <Form
+                        </div>
+                        <Form
 
-                                onFinish={onPasswordChange}
-                                className='mt-2' labelCol={{ span: 24 }}>
-                                <Form.Item
+                            onFinish={onPasswordChange}
+                            className='mt-2' labelCol={{ span: 24 }}>
+                            <Form.Item
 
-                                    validateStatus={state ? 'error' : null}
-                                    name='password_old'
-                                    label='Old Password'
-                                    help={state ? state : null}
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please enter your old password!'
+                                validateStatus={state ? 'error' : null}
+                                name='password_old'
+                                label='Old Password'
+                                help={state ? state : null}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter your old password!'
+                                    }
+                                ]}>
+
+                                <Input onChange={() => setState('')} type='password' />
+                            </Form.Item>
+
+
+
+                            <Form.Item
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter a new password!'
+                                    },
+                                    () => ({
+                                        validator(rule, value) {
+
+                                            if (!value || value.length < 7) {
+
+                                                return Promise.reject('Password must be at least 7 characters!')
+                                            }
+
+                                            return Promise.resolve()
                                         }
-                                    ]}>
-
-                                    <Input onChange={() => setState('')} type='password' />
-                                </Form.Item>
+                                    })
 
 
+                                ]}
+                                name='password_new'
+                                label='New Password'>
+                                <Input type='password' />
+                            </Form.Item>
 
-                                <Form.Item
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please enter a new password!'
-                                        },
-                                        () => ({
-                                            validator(rule, value) {
 
-                                                if (!value || value.length < 7) {
 
-                                                    return Promise.reject('Password must be at least 7 characters!')
-                                                }
+                            <Form.Item
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter confirm new password!'
+                                    },
+                                    ({ getFieldValue }) => ({
+                                        validator(rule, value) {
 
-                                                return Promise.resolve()
+                                            if (!value || getFieldValue('password_new') !== value) {
+
+                                                return Promise.reject('Passwords does not match!')
                                             }
-                                        })
 
+                                            return Promise.resolve()
+                                        }
+                                    })
 
-                                    ]}
-                                    name='password_new'
-                                    label='New Password'>
-                                    <Input type='password' />
-                                </Form.Item>
+                                ]}
+                                name='password_confirm'
+                                label='Confirm Password'>
+                                <Input type='password' />
+                            </Form.Item>
 
-
-
-                                <Form.Item
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Please enter confirm new password!'
-                                        },
-                                        ({ getFieldValue }) => ({
-                                            validator(rule, value) {
-
-                                                if (!value || getFieldValue('password_new') !== value) {
-
-                                                    return Promise.reject('Passwords does not match!')
-                                                }
-
-                                                return Promise.resolve()
-                                            }
-                                        })
-
-                                    ]}
-                                    name='password_confirm'
-                                    label='Confirm Password'>
-                                    <Input type='password' />
-                                </Form.Item>
-
-                                <Form.Item >
-                                    <Button htmlType='submit' type='primary'>
-                                        Change Password
+                            <Form.Item >
+                                <Button htmlType='submit' type='primary'>
+                                    Change Password
                                     </Button>
-                                </Form.Item>
-                            </Form>
-                        </Card>
+                            </Form.Item>
+                        </Form>
+                    </Card>
 
-                    </Row>
+                </Row>
 
-                </div>
-            </section>
+            </div>
+        </section>
 
 
-        </main >
+
     )
 }
 

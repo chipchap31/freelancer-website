@@ -13,14 +13,11 @@ import Welcome from "./containers/Welcome";
 import Header from './containers/Header';
 import ProjectList from "./containers/ProjectList";
 import ProjectView from "./containers/ProjectView";
-
+import Footer from './containers/Footer';
+import LandingView from "./containers/LandingView";
 function App(props) {
 
-    const { Footer } = Layout;
-
     const { authenticated, isLoading, password_changed } = props.userState;
-
-
 
     useEffect(() => {
         props.handleAuthentication();
@@ -37,7 +34,6 @@ function App(props) {
         }
 
     }, [])
-
 
     const PrivateRoute = ({ component: Component, exempt, ...rest }) => (
 
@@ -72,27 +68,23 @@ function App(props) {
 
     return (
         <Router>
-            <Header />
-            <main style={{ minHeight: '83vh' }}>
-                <Switch>
+            <>
+                <Header />
+                <main style={{ minHeight: '83vh' }}>
+                    <Switch>
+                        <Route exact path='/' component={LandingView} />
+                        <PrivateRoute exempt={false} exact path='/dashboard' component={Dashboard} />
+                        <PrivateRoute exempt={false} exact path='/projects' component={ProjectList} />
+                        <PrivateRoute exempt={false} path='/projects/:id' component={ProjectView} />
+                        <PrivateRoute exempt={true} path='/welcome' component={Welcome} />
+                        <Route path='/get-quote' component={QuoteRouter} />
+                        <Route path='/waiting-list' component={WaitingListPage} />
 
-                    <PrivateRoute exempt={false} exact path='/dashboard' component={Dashboard} />
-                    <PrivateRoute exempt={false} exact path='/projects' component={ProjectList} />
-                    <PrivateRoute exempt={false} path='/projects/:id' component={ProjectView} />
-                    <PrivateRoute exempt={true} path='/welcome' component={Welcome} />
-                    <Route path='/get-quote' component={QuoteRouter} />
-                    <Route path='/waiting-list' component={WaitingListPage} />
-
-                    <Route path='/login' component={Login} />
-                </Switch>
-
-
-            </main>
-            <Footer>
-                <div className='container'>
-                    Footer
-                </div>
-            </Footer>
+                        <Route path='/login' component={Login} />
+                    </Switch>
+                </main>
+                <Footer />
+            </>
         </Router >
 
     )

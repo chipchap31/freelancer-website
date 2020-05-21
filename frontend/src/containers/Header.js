@@ -11,7 +11,8 @@ import {
     Spin
 } from 'antd';
 import { connect } from 'react-redux';
-import * as actions from '../actions'
+import * as actions from '../actions';
+import logo from '../../templates/images/drawing.svg'
 function Header(props) {
 
     const { profileState, userState } = props;
@@ -55,11 +56,14 @@ function Header(props) {
                     </Row>
                 </div>
             </aside>)}
-            <header className="header mb-4">
+            <header className="header">
 
                 <Row className='container' justify='space-between d-flex content-center'>
                     <Col>
-                        <Link to={userState.authenticated ? '/dashboard' : '/'}>Logo</Link>
+                        <Link to={userState.authenticated ? '/dashboard' : '/'}>
+
+                            <img src={logo} />
+                        </Link>
                         {userState.authenticated && (
                             <>
                                 <Link

@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Typography, Layout, Col, Button, Card } from 'antd';
 import { connect } from 'react-redux';
 import { useLocation, Link } from "react-router-dom";
+import Spinner from '../components/accessories';
 /** 
     * @module AccountCreated
     * @description Module that inform user that their account has been created 
@@ -9,11 +10,15 @@ import { useLocation, Link } from "react-router-dom";
 function QuotePaid(props) {
     const { quoteState } = props;
     const location = useLocation();
+
+
     const { authenticated } = location.state
+    if (!quoteState) {
+        return <Spinner size='large' />
+    }
 
 
-
-    const RenderInfo = () => {
+    const RenderInfo = (props) => {
         if (!authenticated) {
             return (
                 <Row justify='center'>
@@ -40,7 +45,7 @@ function QuotePaid(props) {
                 <Row justify='center' className='mb-4'>
                     <Col md={15} className='text-center'>
                         <Typography.Text>
-                            You have successfully purchase {project_type} design.
+                            You have successfully purchase {quoteState.project_type} design.
                     Please click below to go back to your dashboard.
                     </Typography.Text>
 
@@ -77,6 +82,9 @@ function QuotePaid(props) {
     )
 }
 
-
-export default connect(({ quoteReducer }) =>
-    ({ quoteState: quoteReducer }))(QuotePaid);
+const mapStateToProps = state => {
+    return {
+        quoteState: state.quoteReducer
+    }
+}
+export default connect(mapStateToProps)(QuotePaid);

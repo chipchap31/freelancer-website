@@ -5,17 +5,17 @@ function Register(props) {
 
     })
     return (
-        <main>
-            <section id='register'>
-                <div className='container'>
-                    <div className='col-6'>
-                        <form>
 
-                        </form>
-                    </div>
+        <section id='register'>
+            <div className='container'>
+                <div className='col-6'>
+                    <form>
+
+                    </form>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
+
     )
 }
 

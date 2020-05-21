@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Row, Layout, Form, Input, Typography, Button, Alert } from 'antd';
+import { Row, Layout, Form, Input, Typography, Button, Alert, Col } from 'antd';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
 
@@ -30,10 +30,10 @@ function Login(props) {
 
 
     return (
-        <main>
-            <Layout.Content id='login' className='container'>
-                <Row>
 
+        <section id='login' className='container'>
+            <Row justify='center' className='pt-3'>
+                <Col md={13}>
                     <Form {...layout} onFinish={onSubmit}>
 
                         <Typography.Title level={2}>
@@ -69,9 +69,11 @@ function Login(props) {
                             <Button htmlType='submit' type='primary'>Login</Button>
                         </Form.Item>
                     </Form>
-                </Row>
-            </Layout.Content>
-        </main>
+                </Col>
+
+            </Row>
+        </section>
+
     )
 }
 const mapStateToProps = state => {

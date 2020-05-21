@@ -29,6 +29,7 @@ function QuoteDeadline(props) {
         handleQuoteRequest,
         history,
     } = props;
+    console.log(quoteState);
 
     const startOfFreeDays = moment().add(14, 'days');
     const { deadline_date } = quoteState;

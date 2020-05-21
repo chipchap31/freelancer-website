@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Typography, Empty, Col, Badge, Card, Button, Table } from 'antd';
+import {
+    Row,
+    Typography,
+    Empty,
+    Col,
+    Badge,
+    Card,
+    Button,
+    Table,
+    Carousel
+} from 'antd';
 import { useParams } from 'react-router-dom';
 import { getRequest } from '../utils/requests';
 import Spinner from '../components/accessories';
@@ -40,9 +50,9 @@ function ProjectView(props) {
 
 
     for (var i = 0; i < concept_amount; i++) {
-        i++
+
         table_data.push({
-            img_url: project[`image${i}`],
+            img_url: project[`image${i + 1}`],
             size: `${Number(project.width)}px x  ${Number(project.height)}px`
 
         })
@@ -68,53 +78,37 @@ function ProjectView(props) {
 
     ];
 
-    const onDownloadAll = async () => {
-        // reuse the table_data
+    const onDownloadAll = () => {
+
         let zip = new JSZip();
-        const img = zip.folder("concepts");
-        for (let obj of table_data) {
+        let img = zip.folder("concepts");
+        Promise.all(table_data.map(img =>
+            fetch(img.img_url)
+
+                .then(res => res.blob())
+                .catch(error => {
+                    console.log(error);
+
+                })
+        )).then(data => {
+
+            data.map((x, i) => {
+                const file_name = table_data[i].img_url.split('/').pop();
+
+                img.file(file_name, x, { base64: true })
+            })
+            zip.generateAsync({ type: 'blob' }).then(content => {
+                saveAs(content, `${project.project_name}s - ${project.ordered_at}.zip`)
+
+            })
+        })
 
 
-            try {
-                const res = await fetch(obj.img_url);
-                const res_to_blob = await res.blob();
 
-                const file_name = obj.img_url.split('/').pop()
-
-
-                img.file(file_name, res_to_blob, { base64: true })
-            } catch (error) {
-                console.log(error);
-
-            }
-
-
-        }
-        const content = await zip.generateAsync({ type: 'blob' });
-
-        saveAs(content, `${project.project_name}s - ${project.ordered_at}.zip`)
-        // fetch('https://jomari-designs-2020.s3.amazonaws.com/media/media/icon.png')       // 1) fetch the url
-        //     .then(function (response) {                       // 2) filter on 200 OK
-        //         if (response.status === 200 || response.status === 0) {
-        //             return Promise.resolve(response.blob());
-        //         } else {
-        //             return Promise.reject(new Error(response.statusText));
-        //         }
-        //     })
-        //     .then(res => {
-        //         const zip = new JSZip();
-        //         const img = zip.folder("concepts");
-        //         img.file("picture.png", res, { base64: true })
-        //         zip.generateAsync({ type: "blob" })
-        //             .then(content => {
-        //                 saveAs(content, "designs.zip")
-        //             })
-        //     })
-        //     /
 
     }
     return (
-        <main>
+        <section id='project-veiw' className='mt-2' >
             <div className='container'>
                 <Row>
                     <Col md={24}>
@@ -132,9 +126,11 @@ function ProjectView(props) {
                             <Button type='primary' onClick={onDownloadAll} ><a >Download all</a></Button>
 
                         </Row>
-
-                        <ImageCarousel finished={project.finished} />
-
+                        <Row className='mt-3' justify='center'>
+                            <Col md={17}>
+                                <ImageCarousel carousel_data={table_data} finished={project.finished} />
+                            </Col>
+                        </Row>
 
 
 
@@ -146,14 +142,12 @@ function ProjectView(props) {
 
 
 
-                        <div className='mt-2'>
-                            {project.description ? project.description : "This project does not have any description!"}
-                        </div>
+
                     </Col>
                 </Row>
 
             </div>
-        </main>
+        </section>
     )
 
 
@@ -170,10 +164,24 @@ export default ProjectView;
 
 function ImageCarousel(props) {
     if (!props.finished) {
-        return (<Card className='mt-2'><Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description="It's empty here!"
-        /></Card>)
-    }
+        return (
 
+            <Card className='mt-2'><Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                description="It's empty here!"
+            /></Card>
+
+
+        )
+    }
+    return (
+        <Card className='project-view-card'>
+            <Carousel autoplay className='project-view-carousel'>
+                {props.carousel_data.map(x =>
+                    <img src={x.img_url} />
+                )}
+
+            </Carousel>
+        </Card>
+    )
 }
