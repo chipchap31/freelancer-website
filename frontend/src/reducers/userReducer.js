@@ -4,7 +4,8 @@ import {
     USER_LOGIN_ERROR,
     PROFILE_LOADED,
     PASSWORD_CHANGE,
-    USER_LOGOUT
+    USER_LOGOUT,
+    USER_DELETE
 } from "../actions/types";
 
 const initState = {

@@ -136,7 +136,7 @@ export const handleAuthentication = () => async dispatch => {
     }
 }
 export const handleProfileFetch = user_id => async dispatch => {
-    dispatch({ type: 'PROFILE_LOADING' });
+    dispatch({ type: PROFILE_LOADING });
     try {
         const response = await getRequest({
             url: `/api/profile/${user_id}`,
@@ -144,9 +144,9 @@ export const handleProfileFetch = user_id => async dispatch => {
         })
 
 
-        dispatch({ type: 'PROFILE_LOADED', payload: response })
+        dispatch({ type: PROFILE_LOADED, payload: response })
     } catch (error) {
-        dispatch({ type: 'PROFILE_ERROR', payload: error })
+        dispatch({ type: PROFILE_ERROR, payload: error })
     }
 
 }
@@ -182,6 +182,24 @@ export const handleLogin = data => async dispatch => {
 
 }
 
+export const handleAccountDelete = (history) => async dispatch => {
+    dispatch({ type: USER_LOGGING_IN });
+
+    try {
+        await postAuth(
+            {
+                token: sessionStorage.getItem('token'),
+                url: '/api/user/delete',
+                body: {}
+            }
+        )
+        dispatch({ type: USER_LOGOUT })
+        history.push('/')
+    } catch (error) {
+        console.log(error);
+
+    }
+}
 export const handleLogout = () => dispatch => {
 
 
@@ -239,3 +257,5 @@ export const handleProjectsFetch = () => async dispatch => {
 export const handleChangePassword = () => async dispatch => {
     dispatch({ type: PASSWORD_CHANGE })
 }
+
+

@@ -7,7 +7,8 @@ import {
     Button,
     Modal,
     Form,
-    Input, Card
+    Input,
+    Card
 } from 'antd'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -22,6 +23,7 @@ import { postRequest } from '../utils/requests'
 
 function QuoteResult(props) {
     const { quoteState, history, userState } = props;
+
 
     const [modalState, setModalState] = useState(false);
     const [loginState, setLoginState] = useState({
@@ -65,10 +67,15 @@ function QuoteResult(props) {
     const onModalCancel = () => {
         setModalState(false)
     }
-    const onFinishLogin = () => {
-        if (props.handleLogin(loginState)) {
-            history.push('/get-quote/payment')
+    const onFinishLogin = async () => {
+
+        const user_id = await props.handleLogin(loginState);
+
+        if (user_id) {
+            props.handleProfileFetch(user_id)
+            history.push('/get-quote/payment');
         }
+
     }
 
     const title = quoteState.project_type.charAt(0).toUpperCase() + quoteState.project_type.slice(1)

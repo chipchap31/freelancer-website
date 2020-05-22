@@ -42,14 +42,14 @@ function QuotePersonalForm(props) {
                         <Title level={2}>Personal Information</Title>
                         <Form
                             initialValues={{
-                                ['first_name']: profileState.first_name || '',
-                                ['last_name']: profileState.last_name || '',
-                                ['email']: profileState.email || '',
-                                ['county']: profileState.county || '',
-                                ['mobile']: profileState.mobile || '',
-                                ['city']: profileState.city || '',
-                                ['address_line1']: profileState.address_line1 || '',
-                                ['address_line2']: profileState.address_line2 || '',
+                                first_name: profileState.first_name || '',
+                                last_name: profileState.last_name || '',
+                                email: profileState.email || '',
+                                county: profileState.county || '',
+                                mobile: profileState.mobile || '',
+                                city: profileState.city || '',
+                                address_line1: profileState.address_line1 || '',
+                                address_line2: profileState.address_line2 || '',
 
                             }}
                             {...layout} onFinish={onFinish}>

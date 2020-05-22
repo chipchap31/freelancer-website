@@ -15,6 +15,7 @@ import ProjectList from "./containers/ProjectList";
 import ProjectView from "./containers/ProjectView";
 import Footer from './containers/Footer';
 import LandingView from "./containers/LandingView";
+import ProfileView from "./containers/ProfileView";
 function App(props) {
 
     const { authenticated, isLoading, password_changed } = props.userState;
@@ -77,6 +78,7 @@ function App(props) {
                         <PrivateRoute exempt={false} exact path='/projects' component={ProjectList} />
                         <PrivateRoute exempt={false} path='/projects/:id' component={ProjectView} />
                         <PrivateRoute exempt={true} path='/welcome' component={Welcome} />
+                        <PrivateRoute exempt={true} path='/profile' component={ProfileView} />
                         <Route path='/get-quote' component={QuoteRouter} />
                         <Route path='/waiting-list' component={WaitingListPage} />
 

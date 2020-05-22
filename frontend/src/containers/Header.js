@@ -16,6 +16,7 @@ import logo from '../../templates/images/drawing.svg'
 function Header(props) {
 
     const { profileState, userState } = props;
+    console.log(profileState);
 
 
 

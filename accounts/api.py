@@ -14,6 +14,7 @@ from .serializers import LoginSerializer, UserSerializer, ProfileSerializer, Reg
 from .serializers import ChangePasswordSerializer
 email_sender = CustomEmail()
 
+
 class LoginView(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
@@ -130,3 +131,15 @@ class ChangePasswordView(generics.GenericAPIView):
 
         return Response({'message': True}, status=status.HTTP_200_OK)
 
+
+class DeleteAccount(generics.GenericAPIView):
+    model = User
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def post(self, request):
+        user = self.get_object()
+        user.delete()
+        return Response({}, status=status.HTTP_200_OK)

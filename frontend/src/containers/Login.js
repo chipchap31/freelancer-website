@@ -53,9 +53,9 @@ function Login(props) {
                                     message: 'Email is required!',
                                 },
                             ]}
-                            label='Email Address'>
+                            label='Username'>
                             <Input
-                                type='email'
+                                type='text'
                             />
                         </Form.Item>
                         <Form.Item

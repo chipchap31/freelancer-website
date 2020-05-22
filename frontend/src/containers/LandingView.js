@@ -36,10 +36,13 @@ function LandingView(props) {
                 </div>
             </section>
 
-            <section id='services-view' className='mt-2'>
+            <section id='services-view' className='mt-5'>
                 <div className='container'>
-                    <Typography.Title level={2}>Services</Typography.Title>
-                    <Typography.Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography.Text>
+                    <div className='text-center'>
+                        <Typography.Title level={2}>Services</Typography.Title>
+                        <Typography.Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Typography.Text>
+                    </div>
+
                     <Row justify='space-between' className='my-4'>
                         {servicesState.map((service, index) =>
                             <Col className='text-center p-1' key={index} md={24 / 3}>
@@ -61,6 +64,18 @@ function LandingView(props) {
                                 </Typography.Text>
                             </Col>
                         )}
+
+                    </Row>
+                </div>
+            </section>
+
+            <section id='projects'>
+                <div className='container'>
+                    <Row>
+                        <Typography.Title level={2}>Projects</Typography.Title>
+                    </Row>
+
+                    <Row>
 
                     </Row>
                 </div>

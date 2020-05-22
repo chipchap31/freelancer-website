@@ -52,6 +52,7 @@ function ProjectView(props) {
     for (var i = 0; i < concept_amount; i++) {
 
         table_data.push({
+            id: `table_data${i}`,
             img_url: project[`image${i + 1}`],
             size: `${Number(project.width)}px x  ${Number(project.height)}px`
 
@@ -73,7 +74,7 @@ function ProjectView(props) {
             title: 'Actions',
             dataIndex: "img_url",
             key: "img_url",
-            render: text => <Button disabled={!text}><a href={text} download>Download</a></Button>
+            render: text => <Button disabled={!text}><a href={text}>View</a></Button>
         }
 
     ];
@@ -102,9 +103,9 @@ function ProjectView(props) {
 
             })
         })
+    }
 
-
-
+    const onAccept = () => {
 
     }
     return (
@@ -120,10 +121,14 @@ function ProjectView(props) {
 
                         <Row justify='space-between mt-1 content-center'>
                             <div className='flex'>
-                                {color_list.map((color, index) => <div className='color-circle' style={{ backgroundColor: color }}></div>)}
+                                {color_list.map((color, index) => <div className='color-circle' key={index} style={{ backgroundColor: color }}></div>)}
+                            </div>
+                            <div>
+
+                                <Button type='primary' onClick={onAccept} ><a >Accept Design</a></Button>
+                                <Button className='ml-1'>Request Changes</Button>
                             </div>
 
-                            <Button type='primary' onClick={onDownloadAll} ><a >Download all</a></Button>
 
                         </Row>
                         <Row className='mt-3' justify='center'>
@@ -135,6 +140,7 @@ function ProjectView(props) {
 
 
                         <Table
+                            rowKey={record => record.id}
                             className='mt-2'
                             pagination={false}
                             columns={columns}
@@ -177,8 +183,8 @@ function ImageCarousel(props) {
     return (
         <Card className='project-view-card'>
             <Carousel autoplay className='project-view-carousel'>
-                {props.carousel_data.map(x =>
-                    <img src={x.img_url} />
+                {props.carousel_data.map((x, i) =>
+                    <img key={i} alt="carousel-image" src={x.img_url} />
                 )}
 
             </Carousel>

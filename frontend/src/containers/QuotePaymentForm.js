@@ -17,7 +17,7 @@ function QuotePayForm(props) {
         userState,
         history } = props;
 
-    console.log(quoteState);
+
 
     const [full_name, setFullName] = useState(`${profileState.first_name || quoteState.first_name ||
         ''} ${profileState.last_name || quoteState.last_name || ''}`);
