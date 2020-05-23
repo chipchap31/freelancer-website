@@ -48,6 +48,8 @@ function QuotePayForm(props) {
 
         // when the user is not logged in
         if (!userState.authenticated) {
+            console.log(quoteState);
+
             const user = postRequest({
                 url: '/api/auth/register',
                 body: quoteState

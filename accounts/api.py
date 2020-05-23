@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from knox.models import AuthToken
 from .serializers import LoginSerializer, UserSerializer, ProfileSerializer, RegisterSerializer
 from .serializers import ChangePasswordSerializer
+import sys
 email_sender = CustomEmail()
 
 
@@ -73,7 +74,6 @@ class RegisterView(generics.GenericAPIView):
 
         # save profile
         # change the mobile phone if starts with 0
-        mobile_number = request.data.get('mobile')
 
         profile_serializer = ProfileSerializer(data=request.data)
         profile_serializer.is_valid(raise_exception=True)
@@ -82,7 +82,8 @@ class RegisterView(generics.GenericAPIView):
         email_sender.receiver = user.username
 
         # using the send_user_info method send the email and the raw password
-        email_sender.send_user_info(user.username, password)
+        if not 'test' in sys.argv:
+            email_sender.send_user_info(user.username, password)
 
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
@@ -116,18 +117,16 @@ class ChangePasswordView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         password_old = serializer.data.get('password_old')
         password_new = serializer.data.get('password_new')
-        print(user.check_password(password_old))
 
         if not user.check_password(password_old):
             return Response({'message': 'Old password is invalid'}, status=status.HTTP_400_BAD_REQUEST)
 
         user.set_password(password_new)
         user.save()
-
+        print(user)
         profile = ProfileModel.objects.get(owner=user)
         profile.password_changed = 1
         profile.save()
-        print(profile)
 
         return Response({'message': True}, status=status.HTTP_200_OK)
 
