@@ -259,3 +259,19 @@ export const handleChangePassword = () => async dispatch => {
 }
 
 
+export const handleProfileUpdate = data => async dispatch => {
+    dispatch({ type: PROFILE_LOADING })
+    try {
+        const res = await postAuth({
+            token: sessionStorage.getItem('token'),
+            body: data,
+            url: `/api/profile/update/${sessionStorage.getItem('auth')}`
+        });
+
+        dispatch({ type: PROFILE_LOADED, payload: res })
+        return true
+    } catch (error) {
+        console.log(error);
+        return false
+    }
+}

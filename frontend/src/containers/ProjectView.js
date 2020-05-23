@@ -125,8 +125,8 @@ function ProjectView(props) {
                             </div>
                             <div>
 
-                                <Button type='primary' onClick={onAccept} ><a >Accept Design</a></Button>
-                                <Button className='ml-1'>Request Changes</Button>
+                                <Button type='primary' onClick={onAccept} disabled={!project.finished}><a >Accept Design</a></Button>
+                                <Button className='ml-1' disabled={!project.finished}>Request Changes</Button>
                             </div>
 
 

@@ -38,7 +38,7 @@ function QuotePersonalForm(props) {
         <>
             <Content>
                 <Row justify='center'>
-                    <Col md={15}>
+                    <Col md={16}>
                         <Title level={2}>Personal Information</Title>
                         <Form
                             initialValues={{
@@ -58,21 +58,16 @@ function QuotePersonalForm(props) {
                                 <Col md={11}>
                                     <Form.Item
                                         name='first_name'
-                                        label='First name'>
+                                        label='First Name'>
                                         <Input
-
                                             type='text'
-
-
                                         />
                                     </Form.Item>
                                 </Col>
                                 <Col md={11}>
-                                    <Form.Item name='last_name' label='Last name'>
+                                    <Form.Item name='last_name' label='Last Name'>
                                         <Input
                                             type='text'
-
-
                                         />
                                     </Form.Item>
                                 </Col>
@@ -94,7 +89,6 @@ function QuotePersonalForm(props) {
                                 </Col>
                                 <Col md={11}>
                                     <Form.Item
-
                                         name="mobile"
                                         label="Phone Number"
 

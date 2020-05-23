@@ -142,14 +142,11 @@ function QuoteDeadline(props) {
             return startOfFreeDays;
         }
     }
-
-
-
     return (
         <>
             <Content>
                 <Row justify='center'>
-                    <Col md={15}>
+                    <Col md={16}>
                         <Typography>
                             <Title level={2}>
                                 {quoteState.project_type.charAt(0).toUpperCase()

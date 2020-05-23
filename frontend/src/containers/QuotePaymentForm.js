@@ -250,10 +250,10 @@ function QuotePayForm(props) {
                     <Form.Item
                         name='username'
 
-                        label='Email Address'>
+                        label='Username'>
                         <Input
                             defaultValue={quoteState.email || ''}
-                            type='email'
+                            type='text'
                             onChange={({ target: { value } }) => setLoginState({
                                 ...loginState,
                                 username: value

@@ -143,3 +143,15 @@ class DeleteAccount(generics.GenericAPIView):
         user = self.get_object()
         user.delete()
         return Response({}, status=status.HTTP_200_OK)
+
+
+class UpdateProfile(generics.GenericAPIView):
+    serializer_class = ProfileSerializer
+
+    def post(self, request, id):
+        profile = get_object_or_404(ProfileModel, owner=id)
+
+        serializer = self.get_serializer(profile, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)

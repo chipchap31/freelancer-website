@@ -6,7 +6,9 @@ import {
     Row,
     Col,
     Button,
-    Modal
+    Modal,
+    message,
+    notification
 } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -16,6 +18,33 @@ function ProfileView(props) {
 
 
     const [modal_state, setModalState] = React.useState(false);
+    let changed = [];
+    const onFinish = values => {
+
+        for (let [key, value] of Object.entries(values)) {
+
+            if (props.profileState[key] !== value) {
+                changed.push({ key, from: props.profileState[key], to: value })
+            }
+        }
+        if (changed.length <= 0) {
+            return message.info('You have no changes!');
+        }
+        if (!props.handleProfileUpdate(values)) {
+            return notification.open({
+                message: 'Profile Update Error',
+                description:
+                    'You failed to update your profile',
+
+            });
+        }
+        return notification.open({
+            message: 'Profile Update Success',
+            description: changed.map((obj, index) => <div className='mt-1' key={index}>{`You have changed your ${obj.key} from ${obj.from} to ${obj.to}`}</div>),
+
+        });
+
+    }
     return (
         <>
             <section id='profile-view' className='my-4'>
@@ -26,6 +55,7 @@ function ProfileView(props) {
 
 
                             <Form
+                                onFinish={onFinish}
                                 initialValues={props.profileState}
                                 labelCol={{ span: 24 }}>
                                 <Row justify='space-between'>
@@ -95,9 +125,9 @@ function ProfileView(props) {
                                         </Form.Item>
                                     </Col>
                                 </Row>
-                                <Form.Item>
+                                <Form.Item className='mt-2'>
                                     <Row justify='space-between'>
-                                        <Button type="primary">Save Changes</Button>
+                                        <Button htmlType='submit' type="primary">Save Changes</Button>
                                         <Button type='danger' onClick={() => setModalState(true)}>Delete Account</Button>
                                     </Row>
 

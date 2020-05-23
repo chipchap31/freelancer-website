@@ -50,7 +50,7 @@ function Login(props) {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Email is required!',
+                                    message: 'Username is required!',
                                 },
                             ]}
                             label='Username'>

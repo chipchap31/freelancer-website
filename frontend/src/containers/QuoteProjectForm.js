@@ -117,7 +117,7 @@ function QuoteProjectForm(props) {
                 onFinish={onFinish}
                 {...layout}>
                 <Row justify='center'>
-                    <Col md={15}>
+                    <Col md={16}>
 
                         <Typography>
                             <Title level={1}>Project Details</Title>
