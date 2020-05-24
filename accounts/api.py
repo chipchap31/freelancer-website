@@ -123,7 +123,7 @@ class ChangePasswordView(generics.GenericAPIView):
 
         user.set_password(password_new)
         user.save()
-        print(user)
+
         profile = ProfileModel.objects.get(owner=user)
         profile.password_changed = 1
         profile.save()
