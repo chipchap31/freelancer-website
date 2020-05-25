@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from .models import ProfileModel
 from django.contrib.auth import authenticate, logout, login
-from checkout.views import quote
+
 from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from django.contrib.auth.decorators import login_required

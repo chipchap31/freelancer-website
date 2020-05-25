@@ -15,7 +15,7 @@ class OrderModel(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.first_name} ordered  at {self.ordered_at}"
+        return f"{self.first_name} ordered at {self.ordered_at}"
 
 
 class OrderLineModel(models.Model):

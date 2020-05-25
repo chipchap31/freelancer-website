@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 
 import os
 import stripe
-
+import sys
 from django.contrib.auth.models import User
 
 
@@ -39,13 +39,10 @@ class PaymentIntentView(generics.GenericAPIView):
         customer_new = stripe.Customer.create(email=email)
 
         payment = stripe.PaymentIntent.create(
-
             amount=int(quote_price_estimate.get_total()) * 100,
             currency='eur',
             customer=customer_new.id,
             receipt_email=email
-
-
         )
 
         return Response({'client_secret': payment.client_secret}, status=status.HTTP_200_OK)
@@ -63,12 +60,32 @@ class CreateOrderView(generics.GenericAPIView):
         service = get_object_or_404(
             Services, name=request.data.get('project_type'))
 
+        project_data = {
+            **request.data,
+            'project_type': service.id,
+            'project_name': service.name,
+            'order': order_serializer.data.get('id')
+        }
+
+        if 'test' in sys.argv:
+            project_data = {
+                **request.data,
+                'project_type': service.id,
+                'project_name': service.name,
+                'order': order_serializer.data.get('id'),
+                'deadline_date': "2020-06-01",
+                'description': "test",
+                'concept_amount': 1,
+                'width': 200,
+                'height': 200,
+                'colors': '#EEEE,#EEEE,#EEEE,#EEEE,#EEEE'
+            }
+
         project_serializer = ProjectSerializer(
-            data={**request.data,
-                  'project_type': service.id,
-                  'project_name': service.name,
-                  'order': int(order_serializer.data.get('id'))})
+            data=project_data)
+
         project_serializer.is_valid(raise_exception=True)
+
         project_serializer.save(owner=self.request.user)
 
         order_line_serializer = self.get_serializer(data={

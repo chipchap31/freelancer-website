@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.test import TestCase, Client
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
-from rest_framework.test import APITestCase, APIClient, RequestsClient
+from rest_framework.test import APITestCase, APIClient
 from rest_framework import status
 from .serializers import RegisterSerializer, LoginSerializer, ProfileSerializer
 from django.apps import apps
@@ -33,6 +33,10 @@ class AccountRegistration(APITestCase):
         }
         url = reverse('account_register')
         response = self.client.post(url, data=self.data)
+
+    def test_app(self):
+        self.assertEqual("accounts", AccountsConfig.name)
+        self.assertEqual("accounts", apps.get_app_config("accounts").name)
 
     def test_account_registration_is_successful(self):
         username = self.email

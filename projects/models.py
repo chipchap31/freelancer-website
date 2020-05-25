@@ -17,7 +17,7 @@ class ProjectModel(models.Model):
     finished = models.BooleanField(default=False)
     order = models.ForeignKey(
         OrderModel, on_delete=models.SET_NULL, null=True)
-    image1 = models.FileField(upload_to='media', null=True)
+    image1 = models.FileField(upload_to='media', null=True, blank=True)
     image2 = models.FileField(upload_to='media', null=True, blank=True)
     image3 = models.FileField(upload_to='media', null=True, blank=True)
     project_type = models.ForeignKey(

@@ -39,16 +39,16 @@ function QuotePayForm(props) {
         const data = {
             ...quoteState,
             deadline_date: quoteState.deadline_date ? quoteState.deadline_date.format('YYYY-MM-DD') : null,
-
             colors: quoteState.colors.join(','),
         }
+        console.log(data);
 
 
 
 
         // when the user is not logged in
         if (!userState.authenticated) {
-            console.log(quoteState);
+
 
             const user = postRequest({
                 url: '/api/auth/register',
@@ -59,7 +59,6 @@ function QuotePayForm(props) {
                 // when the user registration success 
                 // extract the token  
                 // create new order and token
-                console.log(res);
 
                 postAuth({
                     token: res.token,
