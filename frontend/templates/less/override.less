@@ -48,15 +48,6 @@ body {
 
 // buttons 
 
-.btn-back {
-    background-color: grey;
-    border: none;
-}
-
-.btn-back:hover {
-    background-color: rgb(91, 91, 91);
-    border: none;
-}
 
 
 .spinner-wrapper {
@@ -70,7 +61,13 @@ body {
     align-items: center;
 }
 
+.ant-rate .ant-rate-star:not(:first-child) {
+    margin-left: 30px;
+}
 
+.ant-rate.large .ant-rate-star svg {
+    font-size: calc(7vw * 0.8);
+}
 
 
 
@@ -134,5 +131,16 @@ body {
     display: flex;
     justify-content: center;
     max-height: 300px;
+
+}
+
+.ant-modal.image-modal .ant-modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 200px;
+    }
 
 }

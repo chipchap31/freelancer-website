@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from checkout.models import OrderModel
 from services.models import Services
+
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 
@@ -24,6 +26,31 @@ class ProjectModel(models.Model):
         Services, on_delete=models.CASCADE, null=False)
     project_name = models.CharField(max_length=40, null=True)
     ordered_at = models.DateField(auto_now=True)
+    approved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.project_type.name} for {self.owner}"
+
+
+class PublicProjectModel(models.Model):
+    # custon model for the projects that are accepted by the clients
+    image_url = models.CharField(max_length=50, null=True)
+    description = models.TextField(blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    owner_name = models.CharField(max_length=50, null=False)
+    rate = models.FloatField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)])
+    published_at = models.DateField(auto_now=True)
+    project_name = models.CharField(max_length=50, null=False)
+    feedback = models.TextField(blank=True)
+    project_id = models.OneToOneField(
+        ProjectModel,
+        on_delete=models.CASCADE,
+        related_name='project_related_to',
+        null=True,
+        unique=True
+    )
+
+    def __str__(self):
+
+        return f"{self.project_name}-{self.published_at}"

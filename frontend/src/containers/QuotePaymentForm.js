@@ -152,7 +152,6 @@ function QuotePayForm(props) {
                 checkUserExist.then(res => {
                     if (res) {
                         // then stop the payment process
-
                         // prompt a login modal
                         setProcessingTo(false);
                         return setModalState(true);
@@ -239,15 +238,18 @@ function QuotePayForm(props) {
                         </Button>
 
             </Form>
-            <Modal
-                title="Your account already exist"
-                visible={modalState}
-                onCancel={onModalCancel}
-                onOk={onFinishLogin}
-            >
-                <Form
+            <Form
+                labelCol={{ span: 24 }}>
+                <Modal
+                    title="Your account already exist"
+                    visible={modalState}
+                    onCancel={onModalCancel}
+                    onOk={onFinishLogin}
+                    okButtonProps={{ htmlType: 'submit' }}
+                >
 
-                    labelCol={{ span: 24 }}>
+
+
                     <Form.Item
                         name='username'
 
@@ -274,8 +276,9 @@ function QuotePayForm(props) {
                             type='password'
                         />
                     </Form.Item>
-                </Form>
-            </Modal>
+
+                </Modal>
+            </Form>
         </>
     );
 }

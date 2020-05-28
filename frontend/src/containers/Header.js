@@ -16,11 +16,6 @@ import logo from '../../templates/images/drawing.svg'
 function Header(props) {
 
     const { profileState, userState } = props;
-    console.log(profileState);
-
-
-
-
     const first_name = profileState.first_name;
     const last_name = profileState.last_name;
     const menu = (

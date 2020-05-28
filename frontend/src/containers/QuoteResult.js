@@ -99,16 +99,17 @@ function QuoteResult(props) {
                 </Col>
 
             </Row>
-            <Modal
-                title="Your account already exist"
-                visible={modalState}
-                onCancel={onModalCancel}
-                onOk={onFinishLogin}
-                okText='Login'
-            >
-                <Form
+            <Form
 
-                    labelCol={{ span: 24 }}>
+                labelCol={{ span: 24 }}>
+                <Modal
+                    title="Your account already exist"
+                    visible={modalState}
+                    onCancel={onModalCancel}
+                    onOk={onFinishLogin}
+                    okText='Login'
+                >
+
                     <Form.Item
                         name='username'
 
@@ -135,8 +136,9 @@ function QuoteResult(props) {
                             type='password'
                         />
                     </Form.Item>
-                </Form>
-            </Modal>
+
+                </Modal>
+            </Form>
         </Layout.Content>
     )
 }

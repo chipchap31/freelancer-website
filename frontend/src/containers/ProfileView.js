@@ -8,7 +8,9 @@ import {
     Button,
     Modal,
     message,
-    notification
+    notification,
+
+
 } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,7 +30,7 @@ function ProfileView(props) {
             }
         }
         if (changed.length <= 0) {
-            return message.info('You have no changes!');
+            return message.info('Hold on, you did not change anything!');
         }
         if (!props.handleProfileUpdate(values)) {
             return notification.open({
@@ -52,14 +54,12 @@ function ProfileView(props) {
                     <Row justify='center'>
                         <Col md={16}>
                             <Typography.Title level={1}>Profile</Typography.Title>
-
-
                             <Form
                                 onFinish={onFinish}
                                 initialValues={props.profileState}
                                 labelCol={{ span: 24 }}>
                                 <Row justify='space-between'>
-                                    <Col md={11}>
+                                    <Col xs={24} md={11}>
                                         <Form.Item
                                             name='first_name'
                                             label='First Name'>
@@ -68,7 +68,7 @@ function ProfileView(props) {
 
                                     </Col>
 
-                                    <Col md={11}>
+                                    <Col xs={24} md={11}>
                                         <Form.Item
                                             name='last_name'
                                             label='Last Name'>
@@ -77,7 +77,7 @@ function ProfileView(props) {
                                     </Col>
                                 </Row>
                                 <Row justify='space-between'>
-                                    <Col md={11}>
+                                    <Col xs={24} md={11}>
                                         <Form.Item
                                             name='email'
                                             label='Email Address'>
@@ -86,7 +86,7 @@ function ProfileView(props) {
 
                                     </Col>
 
-                                    <Col md={11}>
+                                    <Col xs={24} md={11}>
                                         <Form.Item
                                             name='mobile'
                                             label='Mobile Number'>
@@ -108,7 +108,7 @@ function ProfileView(props) {
                                 </Form.Item>
 
                                 <Row justify='space-between'>
-                                    <Col md={11}>
+                                    <Col xs={24} md={11}>
                                         <Form.Item
                                             name='city'
                                             label='City'>
@@ -117,7 +117,7 @@ function ProfileView(props) {
 
                                     </Col>
 
-                                    <Col md={11}>
+                                    <Col xs={24} md={11}>
                                         <Form.Item
                                             name='county'
                                             label='County'>

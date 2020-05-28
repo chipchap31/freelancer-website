@@ -275,3 +275,21 @@ export const handleProfileUpdate = data => async dispatch => {
         return false
     }
 }
+
+
+
+
+
+export const handlePublicProjectAdd = data => async dispatch => {
+    try {
+        const response = await postAuth({
+            token: sessionStorage.getItem('token'),
+            url: '/api/projects/public/add',
+            body: data
+        })
+        return true
+    } catch (error) {
+        console.log(error);
+
+    }
+}

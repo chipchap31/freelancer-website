@@ -38,7 +38,13 @@ function ProjectList(props) {
 
     const columns = [
         {
-            title: 'Name',
+            title: 'Request Date',
+            dataIndex: 'ordered_at',
+            key: 'ordered_at',
+
+        },
+        {
+            title: 'Type',
             dataIndex: 'project_name',
             key: 'project_name',
             render: text => <span>{text}</span>,
@@ -71,7 +77,7 @@ function ProjectList(props) {
     return (
         <>
             <div className='container'>
-                <Row className='mb-3'>
+                <Row className='mb-3 mt-4'>
                     <Col md={10}>
                         <Typography.Title level={1}>
                             Projects

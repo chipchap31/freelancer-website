@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import moment from 'moment';
 import { WidgetButton } from '../components/buttons';
+import Spinner from '../components/accessories'
 import {
     Typography,
     Row,
@@ -23,12 +24,7 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 
 function Dashboard(props) {
     const {
-        profileState,
-        history,
         projectsState,
-        userState,
-        servicesState
-
     } = props;
     console.log(projectsState);
 
@@ -101,11 +97,14 @@ function Dashboard(props) {
         const init_deadline_date = projectsState.length > 0 ? projectsState[0].deadline_date : null;
         return moment(init_deadline_date)
     }
+    if (projectsState.length <= 0) {
+        return <Spinner size='large' />
+    }
     return (
         <>
             <WidgetButton />
-            <div className='container'>
-                <Typography.Title level={1}>
+            <div className='container' >
+                <Typography.Title level={1} className='mt-4' >
                     My Dashboard
                 </Typography.Title>
                 <Typography.Text>

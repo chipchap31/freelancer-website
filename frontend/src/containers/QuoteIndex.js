@@ -53,9 +53,9 @@ function QuoteRouter(props) {
         />
     );
     return (
-        <Content className='mt-6'>
+        <Content className='mt-2'>
             <div className='container'>
-                <div style={{ minHeight: '60vh' }}>
+                <div style={{ minHeight: '60vh' }} >
                     <Switch>
                         <ProtectedRoute exact path={path} component={QuoteProjectForm} />
 

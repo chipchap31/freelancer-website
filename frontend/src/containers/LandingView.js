@@ -7,13 +7,18 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import Spinner from '../components/accessories';
-
+import { Link } from 'react-router-dom';
 
 function LandingView(props) {
-    const { servicesState } = props;
-    console.log(servicesState);
+    const { servicesState, projectState } = props;
+
     if (servicesState.length <= 0) {
         return <Spinner size='large' />
+    }
+    let placeholder = [];
+
+    for (var i = 0; i <= 6; i++) {
+        placeholder.push(i)
     }
 
     return (
@@ -27,7 +32,7 @@ function LandingView(props) {
                             Nam faucibus lacinia congue. Mauris vehicula nibh leo, quis ornare est cursus non.
                             Fusce feugiat pretium diam vel tempus.</Typography.Text>
                             <div className='mt-4'>
-                                <Button size='large' type='primary'>CHECK OUT MY WORK</Button>
+                                <Button size='large' type='primary'><Link to='/get-quote'>Get Started Now</Link></Button>
                             </div>
 
                         </Col>

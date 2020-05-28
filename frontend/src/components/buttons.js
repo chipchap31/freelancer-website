@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 
 
 export const WidgetButton = () => {
@@ -17,6 +17,16 @@ export const WidgetButton = () => {
 }
 
 
+function ButtonBack(props) {
+    const { history } = props;
+    return (
+        <div className='btn-icon btn-back' onClick={() => history.goBack()}>
+            <ArrowLeftOutlined />
+        </div>
+    )
+}
+ButtonBack = withRouter(ButtonBack)
+export { ButtonBack };
 
 
 

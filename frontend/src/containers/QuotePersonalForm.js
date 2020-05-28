@@ -22,7 +22,7 @@ function QuotePersonalForm(props) {
 
     const { Content } = Layout;
     const { Title } = Typography;
-    const { history, profileState, userState } = props;
+    const { history, profileState } = props;
     const layout = { labelCol: { span: 24 } };
 
 
@@ -55,7 +55,7 @@ function QuotePersonalForm(props) {
                             {...layout} onFinish={onFinish}>
 
                             <Row justify='space-between'>
-                                <Col md={11}>
+                                <Col xs={24} md={11}>
                                     <Form.Item
                                         name='first_name'
                                         label='First Name'>
@@ -64,7 +64,7 @@ function QuotePersonalForm(props) {
                                         />
                                     </Form.Item>
                                 </Col>
-                                <Col md={11}>
+                                <Col xs={24} md={11}>
                                     <Form.Item name='last_name' label='Last Name'>
                                         <Input
                                             type='text'
@@ -74,7 +74,7 @@ function QuotePersonalForm(props) {
                             </Row>
 
                             <Row justify='space-between'>
-                                <Col md={11}>
+                                <Col xs={24} md={11}>
                                     <Form.Item
                                         name='email'
 
@@ -87,10 +87,10 @@ function QuotePersonalForm(props) {
                                         />
                                     </Form.Item>
                                 </Col>
-                                <Col md={11}>
+                                <Col xs={24} md={11}>
                                     <Form.Item
                                         name="mobile"
-                                        label="Phone Number"
+                                        label="Mobile Number"
 
                                     >
                                         <Input
@@ -119,7 +119,7 @@ function QuotePersonalForm(props) {
 
                             </Form.Item>
                             <Row justify='space-between'>
-                                <Col md={11}>
+                                <Col xs={24} md={11}>
                                     <Form.Item
                                         name='city'
                                         label='City'
@@ -128,7 +128,7 @@ function QuotePersonalForm(props) {
                                             type='text' />
                                     </Form.Item>
                                 </Col>
-                                <Col md={11}>
+                                <Col xs={24} md={11}>
                                     <Form.Item
                                         name="county"
                                         label="County"

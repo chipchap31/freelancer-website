@@ -5,24 +5,33 @@ import {
     Empty,
     Col,
     Badge,
+    notification,
     Card,
     Button,
     Table,
-    Carousel
+    Carousel,
+    Modal,
+    Select,
+    Space,
+    Form,
+    Input
 } from 'antd';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getRequest } from '../utils/requests';
 import Spinner from '../components/accessories';
 import moment from 'moment';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver'
+import { ButtonBack } from '../components/buttons';
 
 
 function ProjectView(props) {
     const { id } = useParams();
     const [project, setProject] = useState(null);
-
-
+    const [on_accept_modal, setAcceptModal] = useState(false);
+    const [image_source_modal, setImageSource] = useState(null)
+    const [change_state, setChangeState] = useState(null)
+    // fetch projects when the document is fully loaded
     useEffect(() => {
         getRequest({
             auth: true,
@@ -36,14 +45,15 @@ function ProjectView(props) {
     }, [])
 
 
+
     if (!project) {
         return <Spinner size='large' />
     }
-    console.log(project);
 
 
     const color_list = project.colors.split(',');
-    const due_date = moment(project.deadline_date).format('DD/MM/YYYY')
+
+    const ordered_at = moment(project.ordered_at).format('DD/MM/YYYY')
 
     const concept_amount = Number(project.concept_amount);
     let table_data = []
@@ -54,8 +64,8 @@ function ProjectView(props) {
         table_data.push({
             id: `table_data${i}`,
             img_url: project[`image${i + 1}`],
-            size: `${Number(project.width)}px x  ${Number(project.height)}px`
-
+            size: `${Number(project.width)}px x  ${Number(project.height)}px`,
+            name: 'Concept ' + (i + 1)
         })
     }
     const columns = [
@@ -63,7 +73,7 @@ function ProjectView(props) {
             title: 'Name',
             dataIndex: 'img_url',
             key: 'img_url',
-            render: () => <span>Image</span>,
+            render: (text, record) => <span>{record.name}</span>,
         },
         {
             title: 'Size',
@@ -74,7 +84,15 @@ function ProjectView(props) {
             title: 'Actions',
             dataIndex: "img_url",
             key: "img_url",
-            render: text => <Button disabled={!text}><a href={text}>View</a></Button>
+            render: (text, record) => {
+                return (
+                    <>
+                        <Button disabled={!text} onClick={() => setImageSource(record)}>View</Button>
+                        <Button className='ml-1' type='primary' disabled={!text}><Link to={`/projects/accept/${id}`}>Accept</Link></Button>
+
+                    </>
+                )
+            }
         }
 
     ];
@@ -89,7 +107,6 @@ function ProjectView(props) {
                 .then(res => res.blob())
                 .catch(error => {
                     console.log(error);
-
                 })
         )).then(data => {
 
@@ -104,56 +121,114 @@ function ProjectView(props) {
             })
         })
     }
-
     const onAccept = () => {
+        notification.open({
+            message: "Notification",
+            description: "You download should start in a few seconds",
+        });
 
     }
+
     return (
-        <section id='project-veiw' className='mt-2' >
-            <div className='container'>
-                <Row>
-                    <Col md={24}>
+        <>
+            <Modal
+                title='Accept Designs'
+                onOk={onAccept}
+                onCancel={() => setAcceptModal(false)}
+                visible={on_accept_modal}>
+                Are you sure you want to accept this design?
+            </Modal>
+            <Modal
+                title={image_source_modal ? image_source_modal.name : null}
+                className='image-modal'
+                onOk={() => setImageSource(null)}
+                onCancel={() => setImageSource(null)}
+                visible={image_source_modal}>
+                {image_source_modal && <img src={image_source_modal.img_url} alt='current-image-target' />}
+            </Modal>
+
+            <Modal
+                title="Request Changes"
+                visible={change_state}
+                okText="Submit Request"
+                onCancel={() => setChangeState(false)}
+            >
+                <Form
+                    labelCol={{ span: 24 }}>
+                    <Form.Item label="Which concept would you like to make changes?">
+                        <Select defaultValue={1}>
+                            {table_data.map((data, index) =>
+                                <Select.Option key={index} value={1}>
+                                    {data.name}
+                                </Select.Option>
+                            )}
+
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label='Describe the change you want to make.'
+                    >
+                        <Input.TextArea
+                            rows={6}
+                        >
+
+                        </Input.TextArea>
+                    </Form.Item>
 
 
-                        <Typography.Title level={1}>{project.project_name} Design</Typography.Title>
-                        <Typography.Text>Deadline date:  {due_date}</Typography.Text>
+                </Form>
+            </Modal>
+
+            <section id='project-veiw' >
+                <div className='container'>
+                    <ButtonBack className='mt-5' />
+                    <Row>
+                        <Col md={24}>
 
 
-                        <Row justify='space-between mt-1 content-center'>
-                            <div className='flex'>
-                                {color_list.map((color, index) => <div className='color-circle' key={index} style={{ backgroundColor: color }}></div>)}
-                            </div>
-                            <div>
-
-                                <Button type='primary' onClick={onAccept} disabled={!project.finished}><a >Accept Design</a></Button>
-                                <Button className='ml-1' disabled={!project.finished}>Request Changes</Button>
-                            </div>
+                            <Typography.Title className='mt-2' level={1}>{project.project_name} Design</Typography.Title>
+                            <Typography.Text>Ordered at {ordered_at}</Typography.Text>
 
 
-                        </Row>
-                        <Row className='mt-3' justify='center'>
-                            <Col md={17}>
-                                <ImageCarousel carousel_data={table_data} finished={project.finished} />
-                            </Col>
-                        </Row>
+                            <Row justify='space-between content-center'>
+
+                                <div className='flex mt-1'>
+                                    {color_list.map((color, index) => <div className='color-circle' key={index} style={{ backgroundColor: color }}></div>)}
+                                </div>
+                                <div className='mt-1'>
+
+                                    <Button onClick={() => setChangeState(true)} disabled={!project.finished}>Request Changes</Button>
+                                </div>
 
 
-
-                        <Table
-                            rowKey={record => record.id}
-                            className='mt-2'
-                            pagination={false}
-                            columns={columns}
-                            dataSource={table_data} />
+                            </Row>
+                            <Row className='mt-3' justify='center'>
+                                <Col md={17}>
+                                    <ImageCarousel
+                                        carousel_data={table_data}
+                                        deadline={project.deadline_date}
+                                        finished={project.finished} />
+                                </Col>
+                            </Row>
 
 
 
+                            <Table
+                                rowKey={record => record.id}
+                                className='mt-2'
+                                pagination={false}
+                                columns={columns}
+                                dataSource={table_data} />
 
-                    </Col>
-                </Row>
 
-            </div>
-        </section>
+
+
+                        </Col>
+                    </Row>
+
+                </div>
+            </section>
+        </>
     )
 
 
@@ -169,12 +244,13 @@ export default ProjectView;
 
 
 function ImageCarousel(props) {
+    const deadline = props.deadline ? `Due ${moment(props.deadline).fromNow()}` : "No deadline"
     if (!props.finished) {
         return (
 
             <Card className='mt-2'><Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
-                description="It's empty here!"
+                description={deadline}
             /></Card>
 
 

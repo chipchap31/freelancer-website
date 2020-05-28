@@ -20,7 +20,7 @@ const init = {
 }
 
 export default (state = init, action) => {
-    console.log(action);
+
 
     switch (action.type) {
         case PROFILE_LOADING:
