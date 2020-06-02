@@ -54,3 +54,11 @@ class PublicProjectModel(models.Model):
     def __str__(self):
 
         return f"{self.project_name}-{self.published_at}"
+
+
+class ProjectChanges(models.Model):
+    description = models.TextField(blank=True)
+    created_at = models.DateField(auto_now=True)
+    project_id = models.ForeignKey(
+        ProjectModel, on_delete=models.CASCADE, related_name="project_changes", null=True)
+    concept_number = models.DecimalField(max_digits=5,  decimal_places=1)

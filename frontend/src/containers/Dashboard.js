@@ -26,7 +26,7 @@ function Dashboard(props) {
     const {
         projectsState,
     } = props;
-    console.log(projectsState);
+
 
 
     const [modal_data, setModalData] = useState([]);
@@ -143,23 +143,14 @@ function Dashboard(props) {
                 cancelText='close'
                 visible={Boolean(modal_data.length)}>
                 <List
-
-
                     dataSource={modal_data}
                     renderItem={item => (
                         <List.Item>
-
                             <Typography.Text strong>
                                 {item.project_name} Design
                             </Typography.Text>
-
-
-
-                            {item.finished ? <Tag color='success'>Finished</Tag> : <Tag color='error'>Unfinished</Tag>}
-
+                            {item.finished ? <Tag color='success'>Accepted</Tag> : <Tag color='warning'>In progress</Tag>}
                             <Link to={`/projects/${item.id}`}>View</Link>
-
-
                         </List.Item>
                     )}
                 />
@@ -177,10 +168,6 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, actions)(withRouter(Dashboard));
-
-
-
-
 
 
 function DashCarousel({ data }) {

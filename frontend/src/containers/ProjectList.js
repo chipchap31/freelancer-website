@@ -61,14 +61,13 @@ function ProjectList(props) {
             key: 'deadline_date',
 
         },
-
-
         {
             title: 'Status',
             key: 'finished',
             dataIndex: 'finished',
 
-            render: finished => finished ? <Tag color="success">Success</Tag> : <Tag color="error">Unfinished</Tag>,
+            render: (text, record) => text || record.approved ?
+                <Tag color="success">Approved</Tag> : <Tag color="warning">In progress</Tag>,
         }
 
 

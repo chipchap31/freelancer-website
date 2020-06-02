@@ -8,12 +8,15 @@ import {
     Modal,
     Form,
     Input,
-    Card
+    Card,
+    Space
 } from 'antd'
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { postRequest } from '../utils/requests'
+import { QuoteButtonBack } from '../components/buttons';
+
 /**
     * @module QuoteResult
     * @description this module shows the calculated price of the 
@@ -51,12 +54,14 @@ function QuoteResult(props) {
                 // if caugth any error means the user does not exist 
                 // continue with the payment process
                 if (error) {
+                    props.handleQuoteChange({ current: quoteState.current + 1 })
                     history.push('/get-quote/payment')
                 }
             })
 
         }
         if (userState.authenticated) {
+            props.handleQuoteChange({ current: quoteState.current + 1 })
             history.push('/get-quote/payment')
         }
 
@@ -88,12 +93,19 @@ function QuoteResult(props) {
                         <Typography.Title level={3}>{title} Estimated Price</Typography.Title>
 
                         <Typography.Title level={1}>€{quoteState.quote_price}</Typography.Title>
-                        <Button onClick={onClickButton} type='primary'>
-                            Pay Now
+                        <Space>
+                            <Button onClick={onClickButton} type='primary'>
+                                Pay Now
                         </Button>
-                        <Button className='btn-back ml-2' onClick={() => history.goBack()} type='primary'>
-                            Back
-                        </Button>
+
+                            <QuoteButtonBack
+                                current={quoteState.current}
+                                handleQuoteChange={props.handleQuoteChange}
+                                link='/get-quote/user' />
+
+                        </Space>
+
+
 
                     </Card>
                 </Col>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import {
     Layout,
@@ -8,67 +8,48 @@ import {
     Form,
     Input,
     Button,
-    Space,
-    Modal
+    Space
 } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../actions';
-import { postRequest } from '../utils/requests';
+import { QuoteButtonBack } from '../components/buttons';
+
 function QuotePersonalForm(props) {
 
     // Display this form after the deadline has been chosen
 
-
     const { Content } = Layout;
-    const { Title } = Typography;
-    const { history, profileState } = props;
     const layout = { labelCol: { span: 24 } };
-
-
-
-
-
+    const { quoteState } = props;
     const onFinish = async values => {
         props.handleQuoteChange({ ...values, current: 3 })
-        return history.push('/get-quote/result')
+        return props.history.push('/get-quote/result')
     };
+
 
     return (
         <>
             <Content>
                 <Row justify='center'>
                     <Col md={16}>
-                        <Title level={2}>Personal Information</Title>
+                        <Typography.Title level={1}>Personal Information</Typography.Title >
                         <Form
-                            initialValues={{
-                                first_name: profileState.first_name || '',
-                                last_name: profileState.last_name || '',
-                                email: profileState.email || '',
-                                county: profileState.county || '',
-                                mobile: profileState.mobile || '',
-                                city: profileState.city || '',
-                                address_line1: profileState.address_line1 || '',
-                                address_line2: profileState.address_line2 || '',
-
-                            }}
-                            {...layout} onFinish={onFinish}>
+                            initialValues={props.profileState}
+                            {...layout}
+                            onFinish={onFinish}>
 
                             <Row justify='space-between'>
                                 <Col xs={24} md={11}>
                                     <Form.Item
                                         name='first_name'
                                         label='First Name'>
-                                        <Input
-                                            type='text'
-                                        />
+                                        <Input type='text' />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} md={11}>
                                     <Form.Item name='last_name' label='Last Name'>
-                                        <Input
-                                            type='text'
-                                        />
+                                        <Input type='text' />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -80,11 +61,7 @@ function QuotePersonalForm(props) {
 
                                         label='email'
                                         rules={[{ required: true, message: 'Please enter an email!' }]} label='Email Address'>
-                                        <Input
-
-                                            type='email'
-
-                                        />
+                                        <Input type='email' />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} md={11}>
@@ -93,9 +70,7 @@ function QuotePersonalForm(props) {
                                         label="Mobile Number"
 
                                     >
-                                        <Input
-                                            type='text'
-                                        />
+                                        <Input type='text' />
                                     </Form.Item>
                                 </Col>
                             </Row>
@@ -103,19 +78,13 @@ function QuotePersonalForm(props) {
                             <Form.Item
                                 name='address_line1'
                                 label='Address Line'>
-                                <Input
-                                    type='text'
-
-                                />
+                                <Input type='text' />
 
                             </Form.Item>
                             <Form.Item
                                 name='address_line2'
                                 label='Address Line 2 (Optional)'>
-                                <Input
-
-
-                                />
+                                <Input type='text' />
 
                             </Form.Item>
                             <Row justify='space-between'>
@@ -124,8 +93,7 @@ function QuotePersonalForm(props) {
                                         name='city'
                                         label='City'
                                     >
-                                        <Input
-                                            type='text' />
+                                        <Input type='text' />
                                     </Form.Item>
                                 </Col>
                                 <Col xs={24} md={11}>
@@ -133,21 +101,17 @@ function QuotePersonalForm(props) {
                                         name="county"
                                         label="County"
                                     >
-                                        <Input
-
-                                            type='text' />
+                                        <Input type='text' />
                                     </Form.Item>
                                 </Col>
                             </Row>
 
-
-
-
                             <Space>
                                 <Button htmlType="submit" type='primary'>Next</Button>
-                                <Button className='btn-back' type='primary' onClick={() => history.goBack()}>Back</Button>
-
-
+                                <QuoteButtonBack
+                                    current={quoteState.current}
+                                    handleQuoteChange={props.handleQuoteChange}
+                                    link='/get-quote/deadline' />
                             </Space>
                         </Form>
 

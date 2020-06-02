@@ -23868,6 +23868,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-upload-list-rtl.ant-upload-list-picture-card .ant-upload-list-item-info {
   padding: 0;
 }
+body {
+  font-family: "Roboto Mono", sans-serif !important;
+}
 .steps-wrapper {
   max-width: 80%;
   margin: 0 auto;
@@ -23888,14 +23891,6 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .ant-form-item-label label {
   color: rgba(0, 0, 0, 0.65);
 }
-.btn-back {
-  background-color: grey;
-  border: none;
-}
-.btn-back:hover {
-  background-color: #5b5b5b;
-  border: none;
-}
 .spinner-wrapper {
   position: fixed;
   top: 0;
@@ -23905,6 +23900,12 @@ div.ant-typography-edit-content.ant-typography-rtl {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.ant-rate .ant-rate-star:not(:first-child) {
+  margin-left: 30px;
+}
+.ant-rate.large .ant-rate-star svg {
+  font-size: calc(7vw * 0.8);
 }
 .ant-alert-message {
   color: grey;
@@ -23933,6 +23934,22 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .ant-table-wrapper.hoverable .ant-table-row {
   cursor: pointer;
+}
+.slick-slider.project-view-carousel img {
+  max-width: 60% !important;
+}
+.slick-slide div {
+  display: flex;
+  justify-content: center;
+  max-height: 300px;
+}
+.ant-modal.image-modal .ant-modal-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ant-modal.image-modal .ant-modal-body img {
+  width: 200px;
 }
 .m-1 {
   margin: 10px;
@@ -24377,6 +24394,9 @@ div.ant-typography-edit-content.ant-typography-rtl {
 .content-center {
   align-items: center;
 }
+.color-white {
+  color: white !important;
+}
 .header {
   background-color: #ffb34f;
   border-bottom: #FF7642 solid 2px;
@@ -24386,7 +24406,7 @@ div.ant-typography-edit-content.ant-typography-rtl {
   position: fixed;
   background-color: #FF7642;
   bottom: 80px;
-  right: 80px;
+  right: 5vw;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -24420,6 +24440,24 @@ div.ant-typography-edit-content.ant-typography-rtl {
   color: white;
   border: #1f37f0 solid 2px;
 }
+.btn-back {
+  background-color: grey;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.btn-back:hover {
+  background-color: #5b5b5b;
+  border: none;
+}
+.btn-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  line-height: 30px;
+  text-align: center;
+  background-color: ;
+}
 .cell {
   height: 60px;
   width: 95%;
@@ -24435,5 +24473,14 @@ div.ant-typography-edit-content.ant-typography-rtl {
 }
 .cell.deadline.selected {
   background-color: #69ffe4;
+}
+#landing-view {
+  background-image: url(/2b4ca16eab2529640069a963f6ef8af8.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 70vh;
+}
+#landing-view h1 {
+  font-size: 50px;
 }
 

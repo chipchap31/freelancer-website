@@ -4,7 +4,7 @@ import {
     Typography,
     Empty,
     Col,
-    Badge,
+    Alert,
     notification,
     Card,
     Button,
@@ -12,7 +12,7 @@ import {
     Carousel,
     Modal,
     Select,
-    Space,
+
     Form,
     Input
 } from 'antd';
@@ -88,7 +88,7 @@ function ProjectView(props) {
                 return (
                     <>
                         <Button disabled={!text} onClick={() => setImageSource(record)}>View</Button>
-                        <Button className='ml-1' type='primary' disabled={!text}><Link to={`/projects/accept/${id}`}>Accept</Link></Button>
+                        <Button className='ml-1' type='primary' disabled={!text || project.approved}><Link to={`/projects/accept/${id}`}>Accept</Link></Button>
 
                     </>
                 )
@@ -128,6 +128,7 @@ function ProjectView(props) {
         });
 
     }
+    console.log(project);
 
     return (
         <>
@@ -180,16 +181,23 @@ function ProjectView(props) {
             </Modal>
 
             <section id='project-veiw' >
+
                 <div className='container'>
-                    <ButtonBack className='mt-5' />
+                    {project.approved && <Alert
+                        className='my-2'
+                        message="You can no longer ask for changes for this project, as you already accepted it"
+                        type="warning"
+                        closable
+
+                    />}
+                    <div className='mt-1'>
+                        <ButtonBack />
+                    </div>
+
                     <Row>
                         <Col md={24}>
-
-
                             <Typography.Title className='mt-2' level={1}>{project.project_name} Design</Typography.Title>
                             <Typography.Text>Ordered at {ordered_at}</Typography.Text>
-
-
                             <Row justify='space-between content-center'>
 
                                 <div className='flex mt-1'>
@@ -197,7 +205,7 @@ function ProjectView(props) {
                                 </div>
                                 <div className='mt-1'>
 
-                                    <Button onClick={() => setChangeState(true)} disabled={!project.finished}>Request Changes</Button>
+                                    <Button onClick={() => setChangeState(true)} disabled={!project.finished || project.approved}>Request Changes</Button>
                                 </div>
 
 
@@ -219,10 +227,6 @@ function ProjectView(props) {
                                 pagination={false}
                                 columns={columns}
                                 dataSource={table_data} />
-
-
-
-
                         </Col>
                     </Row>
 

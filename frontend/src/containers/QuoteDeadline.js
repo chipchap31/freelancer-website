@@ -19,7 +19,7 @@ import { Link, withRouter } from 'react-router-dom';
 const { Content } = Layout;
 const { Title, Text } = Typography;
 import { ClockCircleOutlined } from '@ant-design/icons';
-
+import { QuoteButtonBack } from '../components/buttons';
 function QuoteDeadline(props) {
     const [modalVisible, setModalVisible] = useState(false);
     const {
@@ -29,10 +29,10 @@ function QuoteDeadline(props) {
         handleQuoteRequest,
         history,
     } = props;
-    console.log(quoteState);
+
 
     const startOfFreeDays = moment().add(14, 'days');
-    const { deadline_date } = quoteState;
+    const { deadline_date, current } = quoteState;
     const renderMessage = () => message.error('You cannot select this date!');
 
     const Cell = props => {
@@ -142,16 +142,16 @@ function QuoteDeadline(props) {
             return startOfFreeDays;
         }
     }
+
     return (
         <>
             <Content>
                 <Row justify='center'>
                     <Col md={16}>
                         <Typography>
-                            <Title level={2}>
-                                {quoteState.project_type.charAt(0).toUpperCase()
-                                    + quoteState.project_type.slice(1) + ' '}
-                        project timeline.</Title>
+                            <Title level={1}>
+
+                                Project Deadline.</Title>
                             <Text>Please select a suitable deadline for your project.</Text>
 
 
@@ -169,7 +169,10 @@ function QuoteDeadline(props) {
                             <Col>
                                 <Space>
                                     <Button onClick={onClickNext} type='primary'>Next</Button>
-                                    <Button className='btn-back' type='primary'><Link to='/get-quote'>Back</Link></Button>
+                                    <QuoteButtonBack
+                                        current={current}
+                                        handleQuoteChange={handleQuoteChange}
+                                        link='/get-quote' />
 
                                 </Space>
                             </Col>

@@ -13,10 +13,9 @@ import {
     Popconfirm,
     InputNumber,
     Button,
-    Input,
     Slider
 } from 'antd';
-import { PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 
 /** 
@@ -111,8 +110,8 @@ function QuoteProjectForm(props) {
         <>
             <Form
                 initialValues={{
-                    ['project_type']: servicesState.length > 0 ? servicesState[0].name : null,
-                    ['concept_amount']: 1
+                    project_type: servicesState.length > 0 ? servicesState[0].name : null,
+                    concept_amount: 1
                 }}
                 onFinish={onFinish}
                 {...layout}>

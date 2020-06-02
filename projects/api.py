@@ -12,15 +12,13 @@ class ProjectView(viewsets.ModelViewSet):
 
     @action(detail=False, permissions=[permissions.IsAuthenticated])
     def list(self, request):
-        queryset = self.request.user.projects.all()
+        queryset = self.request.user.projects.all().order_by('-ordered_at')
         serializer = self.get_serializer(queryset, many=True)
-
         return Response(serializer.data)
 
     @action(detail=True, permissions=[permissions.IsAuthenticated])
     def retrieve(self, request, pk):
         queryset = get_object_or_404(ProjectModel, pk=pk)
-
         serializer = self.get_serializer(queryset)
         return Response(serializer.data)
 

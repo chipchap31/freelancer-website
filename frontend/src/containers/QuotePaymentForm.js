@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { postRequest, postAuth } from '../utils/requests';
-import { Form, Input, Typography, Button, Modal } from 'antd';
+import { Form, Input, Typography, Button, Modal, Space } from 'antd';
 import { connect } from 'react-redux';
 import Spinner from '../components/accessories';
 import * as actions from '../actions';
+import { QuoteButtonBack } from '../components/buttons';
+
 function QuotePayForm(props) {
 
     // load stripe card elements
@@ -41,7 +43,7 @@ function QuotePayForm(props) {
             deadline_date: quoteState.deadline_date ? quoteState.deadline_date.format('YYYY-MM-DD') : null,
             colors: quoteState.colors.join(','),
         }
-        console.log(data);
+
 
 
 
@@ -96,21 +98,7 @@ function QuotePayForm(props) {
                 }
             })
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        props.handleQuoteChange({ current: quoteState.current + 1 })
     }
     const handleSubmit = async () => {
         if (!stripe || !elements) {
@@ -160,9 +148,6 @@ function QuotePayForm(props) {
 
             }
 
-
-
-
             const opt = {
                 url: '/api/payment/intent',
                 body: { email: quoteState.email }
@@ -197,10 +182,10 @@ function QuotePayForm(props) {
 
 
     const onModalCancel = () => {
-        setModalState(false)
+        setModalState(false);
     }
     const onFinishLogin = () => {
-        props.handleLogin(loginState)
+        props.handleLogin(loginState);
 
     }
 
@@ -225,17 +210,22 @@ function QuotePayForm(props) {
                     {paymentError && <Typography.Text type='danger'>{paymentError}</Typography.Text>}
 
                 </div>
-                <Button
-                    htmlType="submit"
-                    disabled={!elements || !stripe || isProcessing}
-                    className='mt-3'
 
-                    type='primary'>
-                    Pay €{quoteState.quote_price}
-                </Button>
-                <Button className='btn-back ml-2 ' onClick={() => history.goBack()} type='primary'>
-                    Back
-                        </Button>
+                <Space className='mt-3'>
+                    <Button
+                        htmlType="submit"
+                        disabled={!elements || !stripe || isProcessing}
+
+
+                        type='primary'>
+                        Pay €{quoteState.quote_price}
+                    </Button>
+                    <QuoteButtonBack
+                        current={quoteState.current}
+                        handleQuoteChange={props.handleQuoteChange}
+                        link='/get-quote/result' />
+                </Space>
+
 
             </Form>
             <Form
