@@ -293,3 +293,17 @@ export const handlePublicProjectAdd = data => async dispatch => {
 
     }
 }
+
+export const handlePublicProjectFetch = () => async dispatch => {
+    try {
+        const response = await getRequest({
+            url: '/api/projects/public/fetch',
+            auth: false
+        })
+        console.log(response);
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}

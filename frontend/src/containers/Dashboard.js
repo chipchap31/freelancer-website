@@ -105,7 +105,7 @@ function Dashboard(props) {
             <WidgetButton />
             <div className='container' >
                 <Typography.Title level={1} className='mt-4' >
-                    My Dashboard
+                    Dashboard
                 </Typography.Title>
                 <Typography.Text>
                     Overview of all your projects.
@@ -125,7 +125,7 @@ function Dashboard(props) {
                     <Col md={7}>
 
                         <Typography.Title level={3}>
-                            Top Projects
+                            Recent Projects
                         </Typography.Title>
                         <Card>
                             <DashCarousel data={[]} />

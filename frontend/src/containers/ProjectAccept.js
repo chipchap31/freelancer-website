@@ -28,6 +28,7 @@ function ProjectAccept(props) {
             project_name: state.project_name,
             ...values
         }
+
         if (props.handlePublicProjectAdd(data)) {
             props.history.push('/projects')
         }
@@ -47,9 +48,7 @@ function ProjectAccept(props) {
                         </Typography.Text>
 
                         <Form
-                            initialValues={
-                                { rate: 0 }
-                            }
+                            initialValues={{ rate: 0 }}
                             onFinish={onFinish}
                             className='mt-3' labelCol={{ span: 24 }}>
                             <Form.Item
@@ -61,9 +60,7 @@ function ProjectAccept(props) {
                             <Form.Item
                                 name='feedack'
                                 label='Feedback'>
-                                <Input.TextArea
-
-                                    rows={6}>
+                                <Input.TextArea rows={6}>
 
                                 </Input.TextArea>
                             </Form.Item>

@@ -6,7 +6,10 @@ function Footer(props) {
 
         <Layout.Footer >
             <div className='container'>
-                <Typography.Text>dgsfd</Typography.Text>
+                <div className='my-3'>
+                    <Typography.Text>Site created by <a href='https://github.com/chipchap31'>Jomari Alang</a></Typography.Text>
+                </div>
+
             </div>
         </Layout.Footer>
 

@@ -12,35 +12,46 @@ import {
     Carousel,
     Modal,
     Select,
-
     Form,
     Input
 } from 'antd';
 import { useParams, Link } from 'react-router-dom';
-import { getRequest } from '../utils/requests';
+import { getRequest, postAuth } from '../utils/requests';
 import Spinner from '../components/accessories';
 import moment from 'moment';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver'
 import { ButtonBack } from '../components/buttons';
+import { CloseOutlined } from '@ant-design/icons';
 
 
 function ProjectView(props) {
     const { id } = useParams();
     const [project, setProject] = useState(null);
-    const [on_accept_modal, setAcceptModal] = useState(false);
-    const [image_source_modal, setImageSource] = useState(null)
-    const [change_state, setChangeState] = useState(null)
+    const [image_source_modal, setImageSource] = useState(null);
+    const [change_state, setChangeState] = useState(null);
+    const [change_list, setChangeList] = useState([]);
+    const [form] = Form.useForm();
+
     // fetch projects when the document is fully loaded
     useEffect(() => {
         getRequest({
             auth: true,
             url: `/api/projects/${id}`
         }).then(res => {
-            if (res) {
-
-                setProject(res)
+            if (!res) {
+                return
             }
+            return setProject(res)
+        });
+
+        getRequest({
+            url: `/api/projects/change/${id}/list`,
+            auth: true
+        }).then(res => {
+
+            if (!res) {
+                return
+            }
+            setChangeList(res)
         })
     }, [])
 
@@ -52,11 +63,9 @@ function ProjectView(props) {
 
 
     const color_list = project.colors.split(',');
-
     const ordered_at = moment(project.ordered_at).format('DD/MM/YYYY')
-
     const concept_amount = Number(project.concept_amount);
-    let table_data = []
+    let table_data = [];
 
 
     for (var i = 0; i < concept_amount; i++) {
@@ -96,49 +105,44 @@ function ProjectView(props) {
         }
 
     ];
-
-    const onDownloadAll = () => {
-
-        let zip = new JSZip();
-        let img = zip.folder("concepts");
-        Promise.all(table_data.map(img =>
-            fetch(img.img_url)
-
-                .then(res => res.blob())
-                .catch(error => {
-                    console.log(error);
-                })
-        )).then(data => {
-
-            data.map((x, i) => {
-                const file_name = table_data[i].img_url.split('/').pop();
-
-                img.file(file_name, x, { base64: true })
+    const onOk = async () => {
+        const form_values = await form.validateFields();
+        try {
+            const response = await postAuth({
+                token: sessionStorage.getItem('token'),
+                url: `/api/projects/change/${id}`,
+                body: form_values
             })
-            zip.generateAsync({ type: 'blob' }).then(content => {
-                saveAs(content, `${project.project_name}s - ${project.ordered_at}.zip`)
+            setChangeState(false);
 
-            })
+            setChangeList([...change_list, response])
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const onClickDeleteChange = change_id => {
+        // we run this code when user wants to delete a change.
+        let change_list_duplicate = [...change_list];
+        change_list_duplicate = change_list_duplicate.filter(obj => obj.id !== change_id);
+        getRequest({
+            url: `/api/projects/change/${change_id}/destroy`,
+            auth: true
+        }).then(res => {
+            console.log(res);
+
+        }).catch(error => {
+            console.log(error);
         })
-    }
-    const onAccept = () => {
-        notification.open({
-            message: "Notification",
-            description: "You download should start in a few seconds",
-        });
+        return setChangeList(change_list_duplicate);
 
     }
-    console.log(project);
+
+    console.log(project)
 
     return (
         <>
-            <Modal
-                title='Accept Designs'
-                onOk={onAccept}
-                onCancel={() => setAcceptModal(false)}
-                visible={on_accept_modal}>
-                Are you sure you want to accept this design?
-            </Modal>
+
             <Modal
                 title={image_source_modal ? image_source_modal.name : null}
                 className='image-modal'
@@ -152,14 +156,22 @@ function ProjectView(props) {
                 title="Request Changes"
                 visible={change_state}
                 okText="Submit Request"
+                onOk={onOk}
                 onCancel={() => setChangeState(false)}
             >
                 <Form
+                    form={form}
+                    initialValues={{
+                        concept_number: 1
+                    }}
                     labelCol={{ span: 24 }}>
-                    <Form.Item label="Which concept would you like to make changes?">
-                        <Select defaultValue={1}>
+                    <Form.Item
+
+                        name='concept_number'
+                        label="Which concept would you like to make changes?">
+                        <Select>
                             {table_data.map((data, index) =>
-                                <Select.Option key={index} value={1}>
+                                <Select.Option key={index} value={index + 1}>
                                     {data.name}
                                 </Select.Option>
                             )}
@@ -167,6 +179,7 @@ function ProjectView(props) {
                         </Select>
                     </Form.Item>
                     <Form.Item
+                        name='description'
                         label='Describe the change you want to make.'
                     >
                         <Input.TextArea
@@ -219,14 +232,36 @@ function ProjectView(props) {
                                 </Col>
                             </Row>
 
-
-
                             <Table
                                 rowKey={record => record.id}
                                 className='mt-2'
                                 pagination={false}
                                 columns={columns}
                                 dataSource={table_data} />
+                            <div className='my-3'>
+                                <Typography.Title level={2}>
+                                    Changes Request
+                                </Typography.Title>
+                                {change_list.map((change, index) =>
+                                    (
+                                        <Card className='mt-1' key={`change_${index}`}>
+
+                                            <Row justify='space-between'>
+                                                <Typography.Title level={3}>
+                                                    {index + 1}. Concept {Number(change.concept_number)}
+                                                </Typography.Title>
+                                                <CloseOutlined className='clickable' onClick={() => onClickDeleteChange(change.id)} />
+                                            </Row>
+                                            <Typography.Text>Requested  {moment(change.requested_at).fromNow()} </Typography.Text>
+                                            <div className='mt-1'>
+                                                <Typography.Text>{change.description}</Typography.Text>
+                                            </div>
+
+                                        </Card>
+                                    ))
+                                }
+                            </div>
+
                         </Col>
                     </Row>
 
@@ -234,7 +269,6 @@ function ProjectView(props) {
             </section>
         </>
     )
-
 
 }
 

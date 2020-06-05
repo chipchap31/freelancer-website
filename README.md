@@ -1,4 +1,4 @@
-# Jomari Designs - Code Institure 4th Milestone
+# Jomari Designs - Code Institure 4th Milestone [![Build Status](https://travis-ci.org/chipchap31/freelancer-website.svg?branch=develop)](https://travis-ci.org/chipchap31/freelancer-website)
 
 An E-commerece web application where business owner's can buy the affordable graphic designs.
 Most of the times when you look for graphic designs such as logos, it can be a frustrating task. 

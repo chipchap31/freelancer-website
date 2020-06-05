@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Row, Layout, Form, Input, Typography, Button, Alert, Col } from 'antd';
+import { Row, Form, Input, Typography, Button, Alert, Col } from 'antd';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
 
@@ -37,10 +37,8 @@ function Login(props) {
                     <Form {...layout} onFinish={onSubmit}>
 
                         <Typography.Title level={2}>
-                            Login To Your Account
-                            </Typography.Title>
-
-
+                            Login
+                        </Typography.Title>
 
                         {userState.error && <Alert message={userState.error} type="error" />}
 
@@ -54,13 +52,18 @@ function Login(props) {
                                 },
                             ]}
                             label='Username'>
-                            <Input
-                                type='text'
-                            />
+                            <Input type='text' />
                         </Form.Item>
                         <Form.Item
                             name='password'
-                            label='Password'>
+                            label='Password'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Password is required!',
+                                },
+                            ]}
+                        >
                             <Input
                                 type='password'
                             />

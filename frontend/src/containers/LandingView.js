@@ -31,8 +31,15 @@ function LandingView(props) {
                             <Typography.Text className='color-white'>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             Nam faucibus lacinia congue. Mauris vehicula nibh leo, quis ornare est cursus non.
                             Fusce feugiat pretium diam vel tempus.</Typography.Text>
+
                             <div className='mt-4'>
-                                <Button size='large' type='primary'><Link to='/get-quote'>Get Started Now</Link></Button>
+                                <Button
+                                    size='large'
+                                    type='primary'>
+                                    <Link to='/get-quote'>
+                                        Get Started Now
+                                </Link>
+                                </Button>
                             </div>
 
                         </Col>

@@ -29,7 +29,7 @@ class ProjectModel(models.Model):
     approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.project_type.name} for {self.owner}"
+        return f"{self.ordered_at}-{self.project_type.name} for {self.owner}"
 
 
 class PublicProjectModel(models.Model):
@@ -56,7 +56,7 @@ class PublicProjectModel(models.Model):
         return f"{self.project_name}-{self.published_at}"
 
 
-class ProjectChanges(models.Model):
+class ProjectChangesModel(models.Model):
     description = models.TextField(blank=True)
     created_at = models.DateField(auto_now=True)
     project_id = models.ForeignKey(

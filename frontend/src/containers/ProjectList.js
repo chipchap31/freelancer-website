@@ -23,16 +23,11 @@ function ProjectList(props) {
         profileState,
         history,
         projectsState,
-
         servicesState
-
     } = props;
-    console.log(projectsState);
 
     useEffect(() => {
         props.handleProjectsFetch()
-
-
     }, [])
 
 
@@ -66,8 +61,16 @@ function ProjectList(props) {
             key: 'finished',
             dataIndex: 'finished',
 
-            render: (text, record) => text || record.approved ?
-                <Tag color="success">Approved</Tag> : <Tag color="warning">In progress</Tag>,
+            render: (text, record) => {
+                if (record.approved) {
+                    return <Tag color='success'>Approved</Tag>
+                } else if (record.finished) {
+                    return <Tag color='error'>Finished</Tag>
+                }
+                else {
+                    return <Tag color="warning">In progress</Tag>
+                }
+            },
         }
 
 

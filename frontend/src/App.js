@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Switch, Route, Redirect, Link } from 'react-ro
 import WaitingListPage from './pages/WaitingListPage';
 import { connect } from 'react-redux';
 import * as actions from './actions'
-import { Layout } from "antd";
 import Login from "./containers/Login";
 import Dashboard from './containers/Dashboard';
 import Spinner from './components/accessories';
@@ -25,14 +24,12 @@ function App(props) {
         props.handleAuthentication();
         props.handleAcceptingProject();
         props.handleServicesFetch();
-
+        props.handlePublicProjectFetch();
 
         if (authenticated && !isLoading) {
             props.handleProjectsFetch();
-            // get user profile using the the id stored n session storage
+            // get user profile using the the id stored  session storage
             props.handleProfileFetch(sessionStorage.getItem('auth'))
-
-
         }
 
     }, [])
