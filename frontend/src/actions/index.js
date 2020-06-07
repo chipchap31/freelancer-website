@@ -20,7 +20,9 @@ import {
     PROFILE_LOADING,
     PROFILE_LOADED,
     PASSWORD_CHANGE,
-    USER_LOGOUT
+    USER_LOGOUT,
+    PUBLIC_PROJECT_LOADED,
+    PUBLIC_PROJECT_LOADING
 } from '../actions/types'
 import { postRequest, getRequest, postAuth } from '../utils/requests';
 
@@ -295,14 +297,19 @@ export const handlePublicProjectAdd = data => async dispatch => {
 }
 
 export const handlePublicProjectFetch = () => async dispatch => {
+    dispatch({ type: PUBLIC_PROJECT_LOADING })
     try {
+
         const response = await getRequest({
             url: '/api/projects/public/fetch',
             auth: false
         })
-        console.log(response);
+        dispatch({ type: PUBLIC_PROJECT_LOADED, payload: response })
+
+
 
     } catch (error) {
+        debugger
         console.log(error);
 
     }

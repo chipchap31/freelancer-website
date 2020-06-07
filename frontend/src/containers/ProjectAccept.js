@@ -8,11 +8,11 @@ import { getRequest } from '../utils/requests';
 
 function ProjectAccept(props) {
     const [state, setState] = React.useState(null);
-    const { id } = useParams();
+    const { project_id, concept_id } = useParams();
     React.useEffect(() => {
         getRequest({
             auth: true,
-            url: `/api/projects/${id}`
+            url: `/api/projects/${project_id}`
         }).then(res => {
             if (res) {
                 setState(res)
@@ -22,10 +22,11 @@ function ProjectAccept(props) {
 
 
     const onFinish = values => {
-        console.log(values);
         const data = {
-            project_id: id,
+            project_id,
             project_name: state.project_name,
+            // use concept_id to point the image url to the right source
+            image: state[`image${concept_id}`],
             ...values
         }
 

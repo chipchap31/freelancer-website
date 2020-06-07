@@ -60,11 +60,6 @@ function App(props) {
         return <Spinner size='large' />
     }
 
-
-
-
-
-
     return (
         <Router>
             <>
@@ -77,10 +72,9 @@ function App(props) {
                         <PrivateRoute exempt={false} exact path='/projects/:id' component={ProjectView} />
                         <PrivateRoute exempt={true} path='/welcome' component={Welcome} />
                         <PrivateRoute exempt={true} path='/profile' component={ProfileView} />
-                        <PrivateRoute exempt={true} path='/projects/accept/:id' component={ProjectAccept} />
+                        <PrivateRoute exempt={true} path='/projects/accept/:project_id/concept/:concept_id' component={ProjectAccept} />
                         <Route path='/get-quote' component={QuoteRouter} />
                         <Route path='/waiting-list' component={WaitingListPage} />
-
                         <Route path='/login' component={Login} />
                     </Switch>
                 </main>

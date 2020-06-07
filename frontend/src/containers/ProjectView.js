@@ -71,7 +71,7 @@ function ProjectView(props) {
     for (var i = 0; i < concept_amount; i++) {
 
         table_data.push({
-            id: `table_data${i}`,
+            id: i,
             img_url: project[`image${i + 1}`],
             size: `${Number(project.width)}px x  ${Number(project.height)}px`,
             name: 'Concept ' + (i + 1)
@@ -97,7 +97,7 @@ function ProjectView(props) {
                 return (
                     <>
                         <Button disabled={!text} onClick={() => setImageSource(record)}>View</Button>
-                        <Button className='ml-1' type='primary' disabled={!text || project.approved}><Link to={`/projects/accept/${id}`}>Accept</Link></Button>
+                        <Button className='ml-1' type='primary' disabled={!text || project.approved}><Link to={`/projects/accept/${id}/concept/${record.id + 1}`}>Accept</Link></Button>
 
                     </>
                 )

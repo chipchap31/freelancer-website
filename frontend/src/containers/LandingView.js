@@ -10,16 +10,20 @@ import Spinner from '../components/accessories';
 import { Link } from 'react-router-dom';
 
 function LandingView(props) {
-    const { servicesState, projectState } = props;
+    const { servicesState, projectPublicState } = props;
+    console.log(projectPublicState);
 
-    if (servicesState.length <= 0) {
+    if (servicesState.length <= 0 || !projectPublicState) {
         return <Spinner size='large' />
     }
+    const project_public_len = projectPublicState.length;
     let placeholder = [];
 
-    for (var i = 0; i <= 6; i++) {
-        placeholder.push(i)
+    for (var i = 0; i < (6 - project_public_len); i++) {
+
+        placeholder.push(i);
     }
+
 
     return (
         <>
@@ -83,13 +87,31 @@ function LandingView(props) {
 
             <section id='projects'>
                 <div className='container'>
-                    <Row>
-                        <Typography.Title level={2}>Projects</Typography.Title>
-                    </Row>
 
-                    <Row>
 
+                    <Typography.Title level={2}>Projects</Typography.Title>
+                    <Typography.Text>Collection of previous projects.</Typography.Text>
+                    <Row className='mt-2' justify='space-between'>
+                        {projectPublicState.map((data, index) =>
+                            <div className='placeholder'>
+                                project
+                            </div>
+                        )}
+                        {placeholder.map(() =>
+                            <div className='placeholder'>
+
+                            </div>
+                        )}
                     </Row>
+                </div>
+            </section>
+
+            <section
+                id='get-quote-helper'
+                className='py-5'
+            >
+                <div className='container'>
+                    <Typography.Title level={4}>Are you ready to get your first graphic design?</Typography.Title>
                 </div>
             </section>
         </>
@@ -97,7 +119,8 @@ function LandingView(props) {
 }
 const mapStateToProps = state => {
     return {
-        servicesState: state.servicesReducer
+        servicesState: state.servicesReducer,
+        projectPublicState: state.projectsPublicReducer
     }
 }
 export default connect(mapStateToProps)(LandingView);
