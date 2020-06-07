@@ -35,7 +35,6 @@ function Login(props) {
             <Row justify='center' className='pt-3'>
                 <Col md={13}>
                     <Form {...layout} onFinish={onSubmit}>
-
                         <Typography.Title level={2}>
                             Login
                         </Typography.Title>
@@ -44,7 +43,6 @@ function Login(props) {
 
                         <Form.Item
                             name='username'
-
                             rules={[
                                 {
                                     required: true,
@@ -64,9 +62,7 @@ function Login(props) {
                                 },
                             ]}
                         >
-                            <Input
-                                type='password'
-                            />
+                            <Input type='password' />
                         </Form.Item>
                         <Form.Item>
                             <Button htmlType='submit' type='primary'>Login</Button>
