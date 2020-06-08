@@ -34,7 +34,7 @@ class ProjectModel(models.Model):
 
 class PublicProjectModel(models.Model):
     # custon model for the projects that are accepted by the clients
-    image_url = models.CharField(max_length=50, null=True)
+    image_url = models.CharField(max_length=90, null=True)
     description = models.TextField(blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     owner_name = models.CharField(max_length=50, null=False)

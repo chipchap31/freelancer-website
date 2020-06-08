@@ -6,7 +6,7 @@ import {
 
 
 export default (state = null, action) => {
-    console.log(action);
+
 
 
     switch (action.type) {
@@ -14,7 +14,7 @@ export default (state = null, action) => {
             return state
 
         case PUBLIC_PROJECT_LOADED:
-            console.log('add')
+
 
             return [...action.payload]
 

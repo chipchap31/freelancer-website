@@ -260,6 +260,11 @@ function ProjectView(props) {
                                         </Card>
                                     ))
                                 }
+                                {change_list.length <= 0 && (
+                                    <Empty
+                                        description='No request here!'
+                                    ></Empty>
+                                )}
                             </div>
 
                         </Col>

@@ -26,9 +26,10 @@ function ProjectAccept(props) {
             project_id,
             project_name: state.project_name,
             // use concept_id to point the image url to the right source
-            image: state[`image${concept_id}`],
+            image_url: state[`image${concept_id}`],
             ...values
         }
+        console.log(data);
 
         if (props.handlePublicProjectAdd(data)) {
             props.history.push('/projects')

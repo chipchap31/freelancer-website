@@ -9,8 +9,6 @@ import {
     Row,
     Col,
     Card,
-    Empty,
-    Carousel,
     Calendar,
     Badge,
     Modal,
@@ -23,9 +21,7 @@ import * as actions from '../actions';
 import { ClockCircleOutlined } from '@ant-design/icons';
 
 function Dashboard(props) {
-    const {
-        projectsState,
-    } = props;
+    const { projectsState } = props;
 
 
 
@@ -100,6 +96,8 @@ function Dashboard(props) {
     if (projectsState.length <= 0) {
         return <Spinner size='large' />
     }
+    console.log(props.projectsPublicState);
+
     return (
         <>
             <WidgetButton />
@@ -128,7 +126,17 @@ function Dashboard(props) {
                             Recent Projects
                         </Typography.Title>
                         <Card>
-                            <DashCarousel data={[]} />
+                            <List
+                                itemLayout="horizontal"
+                                dataSource={props.projectsPublicState.slice(0, 2).sort((a, b) =>
+                                    new Date(b.published_at) - new Date(a.published_at))}
+                                renderItem={item => (
+                                    <List.Item>
+                                        {item.project_name} {moment(item.published_at).fromNow()}
+                                        {" "}<Link to={`project/public/${item.id}`} className='ml-2'>View</Link>
+                                    </List.Item>
+                                )}
+                            />
                         </Card>
                     </Col>
                 </Row>
@@ -163,37 +171,12 @@ const mapStateToProps = state => {
         profileState: state.profileReducer,
         projectsState: state.projectsReducer,
         userState: state.userReducer,
-        servicesState: state.servicesReducer
+        servicesState: state.servicesReducer,
+        projectsPublicState: state.projectsPublicReducer
     }
 }
 
 export default connect(mapStateToProps, actions)(withRouter(Dashboard));
 
 
-function DashCarousel({ data }) {
-    if (data.length <= 0) {
-        return (
-            <>
-                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='You have no accepted projects yet'>
 
-                </Empty>
-            </>
-        )
-    }
-    return (
-        <Carousel autoplay>
-            <Card>
-                <h3>1</h3>
-            </Card>
-            <div>
-                <h3>2</h3>
-            </div>
-            <div>
-                <h3>3</h3>
-            </div>
-            <div>
-                <h3>4</h3>
-            </div>
-        </Carousel>
-    )
-}

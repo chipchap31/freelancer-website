@@ -1,15 +1,17 @@
 import React from 'react'
-import { Typography, Layout } from 'antd'
+import { Typography, Layout, Row } from 'antd';
 
 function Footer(props) {
     return (
 
         <Layout.Footer >
             <div className='container'>
-                <div className='my-3'>
-                    <Typography.Text>Site created by <a href='https://github.com/chipchap31'>Jomari Alang</a></Typography.Text>
-                </div>
-
+                <Row justify='center'>
+                    <Typography.Text>Site created by
+                        <a href='https://github.com/chipchap31'
+                            target='_blank'
+                        > Jomari Alang</a></Typography.Text>
+                </Row>
             </div>
         </Layout.Footer>
 
@@ -17,4 +19,4 @@ function Footer(props) {
 }
 
 
-export default Footer;
+export default (Footer);

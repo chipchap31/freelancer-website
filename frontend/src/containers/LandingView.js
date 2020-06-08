@@ -103,15 +103,12 @@ function LandingView(props) {
                     <Typography.Text>Collection of previous projects.</Typography.Text>
                     <Row className='mt-2' justify='space-between'>
                         {projectPublicState.map((data, index) =>
-                            <div className='project-placeholder'>
-                                project
-                            </div>
-                        )}
-                        {placeholder.map(() =>
-                            <div className='project-placeholder'>
+                            <div style={{ backgroundImage: `url(${data.image_url})` }}
+                                className='project-public'>
 
                             </div>
                         )}
+                        {placeholder.map(() => <div className='project-placeholder'></div>)}
                     </Row>
                 </div>
             </section>
