@@ -77,7 +77,7 @@ function QuotePersonalForm(props) {
 
                             <Form.Item
                                 name='address_line1'
-                                label='Address Line'>
+                                label='Address Line 1'>
                                 <Input type='text' />
 
                             </Form.Item>

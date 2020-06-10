@@ -54,7 +54,7 @@ function ProjectList(props) {
             title: 'Deadline Date',
             dataIndex: 'deadline_date',
             key: 'deadline_date',
-
+            render: text => <span>{text ? text : "No Deadline"}</span>,
         },
         {
             title: 'Status',

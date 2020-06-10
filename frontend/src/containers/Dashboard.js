@@ -22,11 +22,9 @@ import { ClockCircleOutlined } from '@ant-design/icons';
 
 function Dashboard(props) {
     const { projectsState } = props;
-
-
-
     const [modal_data, setModalData] = useState([]);
     const [date_curr, setCurrDate] = useState(null);
+
     useEffect(() => {
         props.handleProjectsFetch()
     }, [])
@@ -96,7 +94,6 @@ function Dashboard(props) {
     if (projectsState.length <= 0) {
         return <Spinner size='large' />
     }
-    console.log(props.projectsPublicState);
 
     return (
         <>
@@ -109,19 +106,14 @@ function Dashboard(props) {
                     Overview of all your projects.
                 </Typography.Text>
                 <Row justify='space-between' className='mb-3'>
-
                     <Col md={15}>
-
                         <Calendar
                             dateFullCellRender={dataCellRender}
                             fullscreen={false}
                             defaultValue={cellDefaultValue()}
                         />
-
                     </Col>
-
                     <Col md={7}>
-
                         <Typography.Title level={3}>
                             Recent Projects
                         </Typography.Title>
@@ -132,8 +124,11 @@ function Dashboard(props) {
                                     new Date(b.published_at) - new Date(a.published_at))}
                                 renderItem={item => (
                                     <List.Item>
-                                        {item.project_name} {moment(item.published_at).fromNow()}
-                                        {" "}<Link to={`project/public/${item.id}`} className='ml-2'>View</Link>
+                                        <div className=''>
+                                            <Typography.Text strong>{item.project_name}</Typography.Text> {moment(item.published_at).fromNow()}
+                                        </div>
+
+                                        <Link to={`project/public/${item.id}`}>View</Link>
                                     </List.Item>
                                 )}
                             />

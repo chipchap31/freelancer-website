@@ -5,7 +5,7 @@ import {
 } from '../actions/types';
 
 
-export default (state = null, action) => {
+export default (state = [], action) => {
 
 
 

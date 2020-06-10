@@ -103,10 +103,10 @@ function LandingView(props) {
                     <Typography.Text>Collection of previous projects.</Typography.Text>
                     <Row className='mt-2' justify='space-between'>
                         {projectPublicState.map((data, index) =>
-                            <div style={{ backgroundImage: `url(${data.image_url})` }}
+                            <Col style={{ backgroundImage: `url(${data.image_url})` }}
                                 className='project-public'>
 
-                            </div>
+                            </Col>
                         )}
                         {placeholder.map(() => <div className='project-placeholder'></div>)}
                     </Row>
@@ -120,7 +120,7 @@ function LandingView(props) {
                 <div className='container  flex content-center'>
                     <Typography.Title level={4}>Are you ready to get your first design?</Typography.Title>
 
-                    <Button type='primary' className='ml-3'><Link to='/get-quote'>Get a quote</Link></Button>
+                    <Button type='primary' className='ml-3'><Link to='/get-quote'>GET A QUOTE</Link></Button>
                 </div>
             </section>
 

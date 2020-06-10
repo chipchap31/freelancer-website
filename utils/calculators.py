@@ -38,6 +38,9 @@ class PriceCalculator():
                 self.total = concept_price + deadline_price_mult
             else:
                 self.total = (multiplier * deadline_price_mult) + concept_price
+        # since the user did not set the deadline just
+        # set total to the sum of deadline price multiplier and concept price.
+        self.total = deadline_price_mult + concept_price
 
     def get_total(self):
         if 'test' in sys.argv:

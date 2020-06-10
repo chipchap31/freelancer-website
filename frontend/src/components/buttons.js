@@ -2,10 +2,11 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { PlusOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-
-
-export const WidgetButton = () => {
-
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+function WidgetButton(props) {
+    console.log(props);
+    props.handleQuoteChange({ current: 0 })
     return (
 
         <Link to='/get-quote'>
@@ -16,6 +17,7 @@ export const WidgetButton = () => {
 
     )
 }
+WidgetButton = connect(null, actions)(WidgetButton);
 
 
 function ButtonBack(props) {
@@ -48,5 +50,5 @@ function QuoteButtonBack(props) {
 }
 
 QuoteButtonBack = withRouter(QuoteButtonBack);
-export { QuoteButtonBack, ButtonBack };
+export { QuoteButtonBack, ButtonBack, WidgetButton };
 

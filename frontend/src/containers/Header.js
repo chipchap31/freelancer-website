@@ -36,7 +36,6 @@ function Header(props) {
         return (
             <Dropdown overlay={menu}>
                 <Avatar size='large'>
-
                     {first_name.charAt(0) + last_name.charAt(0)}
                 </Avatar>
             </Dropdown>
@@ -66,10 +65,14 @@ function Header(props) {
                                     className='ml-3'
                                     to='/dashboard'>Dashboard</Link>
                                 <Link
-                                    className='m-2'
+                                    className='ml-2'
                                     to='/projects'>Projects</Link>
+
                             </>
                         )}
+                        <Link
+                            className='ml-2'
+                            to='/works'>Works</Link>
                     </Col>
                     <Col>
 

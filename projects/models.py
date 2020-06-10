@@ -8,7 +8,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class ProjectModel(models.Model):
-    deadline_date = models.DateField(null=False)
+    deadline_date = models.DateField(null=True)
     owner = models.ForeignKey(
         User, related_name="projects", on_delete=models.CASCADE, null=True)
     width = models.DecimalField(max_digits=5, decimal_places=2)

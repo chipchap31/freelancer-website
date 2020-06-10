@@ -7,10 +7,9 @@ function Footer(props) {
         <Layout.Footer >
             <div className='container'>
                 <Row justify='center'>
-                    <Typography.Text>Site created by
-                        <a href='https://github.com/chipchap31'
-                            target='_blank'
-                        > Jomari Alang</a></Typography.Text>
+                    <Typography.Text>Site created by <a href='https://github.com/chipchap31'
+                        target='_blank'
+                    >Jomari Alang</a></Typography.Text>
                 </Row>
             </div>
         </Layout.Footer>
