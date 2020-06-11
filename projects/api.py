@@ -41,7 +41,7 @@ class PublicProjectView(viewsets.ModelViewSet):
         project = get_object_or_404(
             ProjectModel, pk=request.data.get('project_id'))
         project.approved = True
-        project.save()
+        project.save(owner=self.request.user)
         return Response(data=public_project_new.data)
 
     @action(detail=False)

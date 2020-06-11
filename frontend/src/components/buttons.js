@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 function WidgetButton(props) {
-    console.log(props);
+
     props.handleQuoteChange({ current: 0 })
     return (
 

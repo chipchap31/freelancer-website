@@ -113,7 +113,7 @@ function Dashboard(props) {
                             defaultValue={cellDefaultValue()}
                         />
                     </Col>
-                    <Col md={7}>
+                    <Col xs={24} sm={7} md={7}>
                         <Typography.Title level={3}>
                             Recent Projects
                         </Typography.Title>
@@ -128,7 +128,10 @@ function Dashboard(props) {
                                             <Typography.Text strong>{item.project_name}</Typography.Text> {moment(item.published_at).fromNow()}
                                         </div>
 
-                                        <Link to={`project/public/${item.id}`}>View</Link>
+                                        <Link to={{
+                                            pathname: `/works/${item.id}`,
+                                            state: item
+                                        }}>View</Link>
                                     </List.Item>
                                 )}
                             />

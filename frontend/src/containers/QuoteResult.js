@@ -26,13 +26,13 @@ import { QuoteButtonBack } from '../components/buttons';
 
 function QuoteResult(props) {
     const { quoteState, history, userState } = props;
-
-
     const [modalState, setModalState] = useState(false);
-    const [loginState, setLoginState] = useState({
-        username: quoteState.email || '',
-        password: ''
-    });
+    // const [loginState, setLoginState] = useState({
+    //     username: quoteState.email || '',
+    //     password: ''
+    // });
+
+    const [form] = Form.useForm();
 
 
     const onClickButton = () => {
@@ -72,16 +72,7 @@ function QuoteResult(props) {
     const onModalCancel = () => {
         setModalState(false)
     }
-    const onFinishLogin = async () => {
 
-        const user_id = await props.handleLogin(loginState);
-
-        if (user_id) {
-            props.handleProfileFetch(user_id)
-            history.push('/get-quote/payment');
-        }
-
-    }
 
     const title = quoteState.project_type.charAt(0).toUpperCase() + quoteState.project_type.slice(1)
     return (
@@ -112,40 +103,46 @@ function QuoteResult(props) {
 
             </Row>
             <Form
-
+                form={form}
                 labelCol={{ span: 24 }}>
                 <Modal
                     title="Your account already exist"
                     visible={modalState}
                     onCancel={onModalCancel}
-                    onOk={onFinishLogin}
+                    onOk={async () => {
+                        try {
+                            const values = await form.validateFields();
+
+                            const user_id = await props.handleLogin(values);
+
+                            if (user_id) {
+                                props.handleProfileFetch(user_id);
+                                history.push('/get-quote/payment');
+                            }
+
+                        } catch (error) {
+                            console.log(error);
+
+                        }
+
+                    }}
                     okText='Login'
                 >
 
                     <Form.Item
                         name='username'
-
-                        label='Username'>
-                        <Input
-                            defaultValue={quoteState.email || ''}
-                            type='text'
-                            onChange={({ target: { value } }) => setLoginState({
-                                ...loginState,
-                                username: value
-                            })}
-                            value={loginState.password}
-                        />
+                        label='Username'
+                        rules={[{ required: true, message: 'Please enter your username!' }]}
+                    >
+                        <Input type='text' />
                     </Form.Item>
                     <Form.Item
                         name='password'
-                        label='Password'>
-                        <Input
-                            onChange={({ target: { value } }) => setLoginState({
-                                ...loginState,
-                                password: value
-                            })}
-                            value={loginState.password}
-                            type='password'
+                        label='Password'
+                        rules={[{ required: true, message: 'Please enter your password!' }]}
+                    >
+                        <Input type='password'
+
                         />
                     </Form.Item>
 

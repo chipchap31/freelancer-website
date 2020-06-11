@@ -44,7 +44,7 @@ function Header(props) {
     }
     return (
         <>
-            {!userState.authenticated && (<aside>
+            {!userState.authenticated && (<aside >
                 <div className='container'>
                     <Row justify='end' >
                         <Link to='/login'>Client Login</Link>
@@ -56,9 +56,13 @@ function Header(props) {
                 <Row className='container' justify='space-between d-flex content-center'>
                     <Col>
                         <Link to={userState.authenticated ? '/dashboard' : '/'}>
-
                             <img src={logo} />
                         </Link>
+                        {!userState.authenticated && <Link
+                            className='ml-2'
+                            to={userState.authenticated ? '/dashboard' : '/'}>
+                            Home
+                        </Link>}
                         {userState.authenticated && (
                             <>
                                 <Link

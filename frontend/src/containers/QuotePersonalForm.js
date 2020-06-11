@@ -59,8 +59,9 @@ function QuotePersonalForm(props) {
                                     <Form.Item
                                         name='email'
 
-                                        label='email'
-                                        rules={[{ required: true, message: 'Please enter an email!' }]} label='Email Address'>
+
+                                        rules={[{ required: true, message: 'Please enter an email!' }]}
+                                        label='Email Address'>
                                         <Input type='email' />
                                     </Form.Item>
                                 </Col>

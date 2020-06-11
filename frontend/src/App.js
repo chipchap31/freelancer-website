@@ -17,6 +17,7 @@ import LandingView from "./containers/LandingView";
 import ProfileView from "./containers/ProfileView";
 import ProjectAccept from './containers/ProjectAccept';
 import Works from "./containers/Works";
+import WorkDetailed from "./containers/WorksDetailed";
 function App(props) {
 
     const { authenticated, isLoading, password_changed } = props.userState;
@@ -75,7 +76,8 @@ function App(props) {
                         <PrivateRoute exempt={true} path='/profile' component={ProfileView} />
                         <PrivateRoute exempt={true} path='/projects/accept/:project_id/concept/:concept_id' component={ProjectAccept} />
 
-                        <Route path='/works' component={Works} />
+                        <Route exact path='/works' component={Works} />
+                        <Route path='/works/:id' component={WorkDetailed} />
                         <Route path='/get-quote' component={QuoteRouter} />
                         <Route path='/waiting-list' component={WaitingListPage} />
                         <Route path='/login' component={Login} />

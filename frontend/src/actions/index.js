@@ -309,7 +309,7 @@ export const handlePublicProjectFetch = () => async dispatch => {
 
 
     } catch (error) {
-        debugger
+
         console.log(error);
 
     }

@@ -3,11 +3,15 @@ import {
     Typography,
     Row,
     Col,
-    Button
+    Button,
+    Card,
+    Rate
+
 } from 'antd';
 import { connect } from 'react-redux';
 import Spinner from '../components/accessories';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import {
     DribbbleOutlined,
     BehanceOutlined,
@@ -18,7 +22,7 @@ import {
 
 function LandingView(props) {
     const { servicesState, projectPublicState } = props;
-    console.log(projectPublicState);
+
 
     if (servicesState.length <= 0 || !projectPublicState) {
         return <Spinner size='large' />
@@ -70,7 +74,7 @@ function LandingView(props) {
                         {servicesState.map((service, index) =>
                             <Col
                                 className='text-center p-1'
-                                key={index}
+                                key={index + '_service_id'}
                                 md={24 / 3}>
                                 <Row justify='center' >
                                     <img src={service.image} />
@@ -95,20 +99,33 @@ function LandingView(props) {
                 </div>
             </section>
 
-            <section id='projects' className='my-5'>
+            <section id='works' className='my-5'>
                 <div className='container'>
 
 
-                    <Typography.Title level={2}>Projects</Typography.Title>
+                    <Typography.Title level={2}>Works</Typography.Title>
                     <Typography.Text>Collection of previous projects.</Typography.Text>
                     <Row className='mt-2' justify='space-between'>
-                        {projectPublicState.map((data, index) =>
-                            <Col style={{ backgroundImage: `url(${data.image_url})` }}
-                                className='project-public'>
+                        {projectPublicState.map((item, index) =>
+                            <Card hoverable key={"work" + index} className='project-public'>
+                                <Link
 
-                            </Col>
+                                    to={{
+                                        pathname: `/works/${item.id}`,
+                                        state: item
+                                    }}>
+                                    <img src={item.image_url} alt="work-image" />
+                                    <div className='work-info'>
+                                        <Row justify='space-between'>
+                                            <Typography.Title level={4}>{item.project_name} Design</Typography.Title>
+                                            {moment(item.published_at).fromNow()}
+                                        </Row>
+                                        <Rate value={Number(item.rate)} disabled />
+                                    </div>
+                                </Link>
+                            </Card>
                         )}
-                        {placeholder.map(() => <div className='project-placeholder'></div>)}
+                        {placeholder.map((key, index) => <div key={"placeholder" + index} className='project-placeholder'></div>)}
                     </Row>
                 </div>
             </section>

@@ -11,18 +11,23 @@ function Works(props) {
     for (var i = 0; i < (9 - works_len); i++) {
         placeholder.push(i);
     }
-    console.log(props.works);
+
 
 
     return (
         <section id='works'>
             <div className='container py-4'>
                 <Typography.Title level={1}>Works</Typography.Title>
-
+                <Typography.Text>Previous projects for different businesses</Typography.Text>
                 <Row className='mt-2' justify='space-between'>
                     {props.works.map((item, index) =>
                         <Card hoverable key={"work" + index} className='project-public'>
-                            <Link to={`/works/${item.id}`}>
+                            <Link
+
+                                to={{
+                                    pathname: `/works/${item.id}`,
+                                    state: item
+                                }}>
                                 <img src={item.image_url} alt="work-image" />
                                 <div className='work-info'>
                                     <Row justify='space-between'>

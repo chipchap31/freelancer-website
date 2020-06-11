@@ -138,7 +138,7 @@ function ProjectView(props) {
 
     }
 
-    console.log(project)
+
 
     return (
         <>
