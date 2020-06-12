@@ -12,7 +12,7 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
-import logo from '../../templates/images/drawing.svg'
+
 function Header(props) {
 
     const { profileState, userState } = props;
@@ -56,7 +56,7 @@ function Header(props) {
                 <Row className='container' justify='space-between d-flex content-center'>
                     <Col>
                         <Link to={userState.authenticated ? '/dashboard' : '/'}>
-                            <img src={logo} />
+                            <img src='https://jomari-designs-2020.s3-eu-west-1.amazonaws.com/static/4934b82af4909d1dff4c003050a15d8e.svg' alt='brand-logo' />
                         </Link>
                         {!userState.authenticated && <Link
                             className='ml-2'

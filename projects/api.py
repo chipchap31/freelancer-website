@@ -37,11 +37,11 @@ class PublicProjectView(viewsets.ModelViewSet):
             "owner_name": f"{first_name} {last_name}"
         })
         public_project_new.is_valid(raise_exception=True)
-        public_project_new.save()
+        public_project_new.save(owner=self.request.user)
         project = get_object_or_404(
             ProjectModel, pk=request.data.get('project_id'))
         project.approved = True
-        project.save(owner=self.request.user)
+        project.save()
         return Response(data=public_project_new.data)
 
     @action(detail=False)

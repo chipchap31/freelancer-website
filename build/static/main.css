@@ -24538,7 +24538,7 @@ aside a {
   color: #F0F0F0;
 }
 #landing-view {
-  background-image: url(/2b4ca16eab2529640069a963f6ef8af8.jpg);
+  background-image: url('https://jomari-designs-2020.s3-eu-west-1.amazonaws.com/static/2b4ca16eab2529640069a963f6ef8af8.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   min-height: 70vh;
