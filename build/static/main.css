@@ -23905,7 +23905,7 @@ body {
   margin-left: 30px;
 }
 .ant-rate.large .ant-rate-star svg {
-  font-size: calc(7vw * 0.8);
+  font-size: calc(7vw * 0.6);
 }
 .ant-alert-message {
   color: grey;
@@ -23950,6 +23950,12 @@ body {
 }
 .ant-modal.image-modal .ant-modal-body img {
   width: 200px;
+}
+.anticon.clickable {
+  cursor: pointer;
+}
+.anticon.clickable:hover {
+  color: #ffb34f;
 }
 .m-1 {
   margin: 10px;
@@ -24397,6 +24403,18 @@ body {
 .color-white {
   color: white !important;
 }
+.bg-orange {
+  background-color: #faad14;
+}
+.bg-blue {
+  background-color: #364DFF;
+}
+aside {
+  background-color: #364DFF;
+}
+aside a {
+  color: white;
+}
 .header {
   background-color: #ffb34f;
   border-bottom: #FF7642 solid 2px;
@@ -24474,6 +24492,51 @@ body {
 .cell.deadline.selected {
   background-color: #69ffe4;
 }
+.project-placeholder {
+  background-color: rgba(211, 211, 211, 0.322);
+  min-height: 250px;
+  width: 29.5%;
+  margin: 5px 0;
+  min-width: 250px;
+  max-height: 300px;
+}
+.icon-link {
+  transition: 200ms;
+}
+.icon-link:hover svg {
+  color: #dddddd;
+}
+.project-public {
+  min-height: 250px;
+  max-height: 300px;
+  width: 29.5%;
+  margin: 5px 0;
+  position: relative;
+  min-width: 250px;
+  overflow: hidden;
+}
+.project-public img {
+  width: 85%;
+  margin: 0 auto;
+  display: block;
+}
+.project-public .work-info {
+  background-color: #f4f1f1;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 5px;
+}
+.project-public .ant-rate-star:not(:last-child) {
+  margin-right: 0;
+}
+.star {
+  color: #FADB15;
+}
+.star-placeholder {
+  color: #F0F0F0;
+}
 #landing-view {
   background-image: url(/2b4ca16eab2529640069a963f6ef8af8.jpg);
   background-size: cover;
@@ -24482,5 +24545,48 @@ body {
 }
 #landing-view h1 {
   font-size: 50px;
+}
+#get-quote-helper .container {
+  justify-content: center;
+}
+#useful-links .anticon {
+  font-size: 35px;
+}
+#useful-links .icon-link:not(:first-child) {
+  margin-left: 30px;
+}
+#work-detailed img {
+  width: 100%;
+}
+@media only screen and (max-width: 520px) {
+  .container {
+    max-width: 98%;
+    width: 100%;
+  }
+  .project-public {
+    width: 98%;
+  }
+  .project-placeholder {
+    width: 98%;
+  }
+  .project-action {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .project-action button:nth-child(2) {
+    margin-top: 5px;
+    margin-left: 0;
+  }
+  #get-quote-helper .container {
+    flex-direction: column;
+    text-align: center;
+  }
+  #useful-links h1 {
+    font-size: 24px;
+  }
+  #works .ant-row {
+    justify-content: center;
+  }
 }
 

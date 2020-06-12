@@ -21,7 +21,7 @@ function Works(props) {
                 <Typography.Text>Previous projects for different businesses</Typography.Text>
                 <Row className='mt-2' justify='space-between'>
                     {props.works.map((item, index) =>
-                        <Card hoverable key={"work" + index} className='project-public'>
+                        <Card key={"works" + index} hoverable key={"work" + index} className='project-public'>
                             <Link
 
                                 to={{

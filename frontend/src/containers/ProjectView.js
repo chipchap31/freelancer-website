@@ -95,11 +95,11 @@ function ProjectView(props) {
             key: "img_url",
             render: (text, record) => {
                 return (
-                    <>
+                    <div className='project-action'>
                         <Button disabled={!text} onClick={() => setImageSource(record)}>View</Button>
                         <Button className='ml-1' type='primary' disabled={!text || project.approved}><Link to={`/projects/accept/${id}/concept/${record.id + 1}`}>Accept</Link></Button>
 
-                    </>
+                    </div>
                 )
             }
         }
@@ -224,7 +224,7 @@ function ProjectView(props) {
 
                             </Row>
                             <Row className='mt-3' justify='center'>
-                                <Col md={17}>
+                                <Col xs={24} sm={17} md={17}>
                                     <ImageCarousel
                                         carousel_data={table_data}
                                         deadline={project.deadline_date}

@@ -20,41 +20,30 @@ import * as actions from '../actions';
 import { WidgetButton } from '../components/buttons';
 function ProjectList(props) {
     const {
-        profileState,
+
         history,
         projectsState,
         servicesState
     } = props;
-
+    const [state, setState] = React.useState([])
     useEffect(() => {
-        props.handleProjectsFetch()
+        props.handleProjectsFetch();
+        setState(projectsState)
     }, [])
 
 
     const columns = [
         {
-            title: 'Request Date',
-            dataIndex: 'ordered_at',
-            key: 'ordered_at',
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
 
         },
         {
             title: 'Type',
             dataIndex: 'project_name',
             key: 'project_name',
-            render: text => <span>{text}</span>,
-        },
-        {
-            title: 'Concept Amount',
-            dataIndex: 'concept_amount',
-            key: 'concept_amount',
-            render: text => <span>{`${Number(text)} requested`}</span>,
-        },
-        {
-            title: 'Deadline Date',
-            dataIndex: 'deadline_date',
-            key: 'deadline_date',
-            render: text => <span>{text ? text : "No Deadline"}</span>,
+            render: text => <span>{text} Design</span>
         },
         {
             title: 'Status',
@@ -71,10 +60,37 @@ function ProjectList(props) {
                     return <Tag color="warning">In progress</Tag>
                 }
             },
+        },
+        {
+            title: 'Requested Date',
+            dataIndex: 'ordered_at',
+            key: 'ordered_at',
+            render: text => <span>{text ? moment(text).format('DD/MM/YYYY') : "No Deadline"}</span>,
+
+            sorter: (a, b) => new Date(a.ordered_at) - new Date(b.ordered_at),
         }
 
 
+
+
+
+
     ]
+
+    const filterData = target => {
+
+
+        if (target == 'All') {
+            return setState(projectsState)
+        }
+        const data_new = projectsState.filter((item, index) => {
+            return item.project_name === target;
+        })
+
+        setState(data_new)
+
+    }
+
 
     return (
         <>
@@ -91,7 +107,7 @@ function ProjectList(props) {
                     <div className='flex'>
                         <Form.Item label='Filter'>
                             <Select
-
+                                onChange={value => filterData(value)}
                                 className='dropdown'
                                 defaultValue="All">
                                 <Select.Option value='All'>
@@ -105,13 +121,7 @@ function ProjectList(props) {
                                 )}
                             </Select>
                         </Form.Item>
-                        <Form.Item className='ml-2' label='Sort'>
-                            <Select defaultValue="Newest">
-                                <Select.Option value="Newest">
-                                    Newest
-                                </Select.Option>
-                            </Select>
-                        </Form.Item>
+
                     </div>
 
 
@@ -119,6 +129,9 @@ function ProjectList(props) {
                 <Row>
                     <Col md={24}>
                         <Table
+
+
+                            showSorterTooltip
                             className='hoverable'
                             size="small"
                             rowKey={record => record.id}
@@ -131,7 +144,7 @@ function ProjectList(props) {
                                 };
                             }}
                             columns={columns}
-                            dataSource={projectsState} />
+                            dataSource={state} />
                     </Col>
 
 
@@ -140,7 +153,6 @@ function ProjectList(props) {
                     <Row className='mt-5' justify='center'>
                         <Col className='text-center'>
                             <Empty description='You have no designs bought yet!' >
-
                             </Empty>
 
                             <Button className='mt-2' type='primary'>
