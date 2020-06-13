@@ -178,8 +178,18 @@ In order to testing the backend of the project I used the [APITestCase](https://
     2. Click the accept button and the add feedback page will be displayed.
     3. Fill out the form with feedback and the rate fro the particular design.
 
-6.	I want to be able to log out of my account, to make sure that nobody can access my account.
-7.	I want to be able to edit my profile, to change the display of my information.
+- I want to be able to log out of my account, to make sure that nobody can access my account.
+    Steps: 
+    1. When logged in, click on the initial icon or the avatar.
+    2. Verify that the dropdown is visible.
+    3. Click logout and you should be redirected to the login page.
+- I want to be able to edit my profile, to change the display of my information.
+    Steps: 
+    1. Click on the avatar on the navigation bar.
+    2. Clicks you full name and you shoud be redirected to profile page.
+    3. Verify that if you didn't change any field, a warning is displayed stating you didn't change anything.
+    4. Change any field and when you click save changes a notification is shown at the right top section.
+    
 
 ### Admin Features 
 In order to use all of the admin functional please go to the [admin page](https://jomari-designs-app.herokuapp.com/admin/). Use the following login details.
