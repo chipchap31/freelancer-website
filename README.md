@@ -189,15 +189,42 @@ In order to testing the backend of the project I used the [APITestCase](https://
     2. Clicks you full name and you shoud be redirected to profile page.
     3. Verify that if you didn't change any field, a warning is displayed stating you didn't change anything.
     4. Change any field and when you click save changes a notification is shown at the right top section.
-    
 
-### Admin Features 
+### Unit Testing 
+
+In order to see if the most important feature of the application is working properly, I had to do some testing and this is can be done using travis.
+
+I added a file called .travis.yml and added snippet below.
+
+```javascript
+language: python 
+python: 
+  - "3.8.1"
+
+install: "pip3 install -r requirements.txt"
+env: 
+  - SECRET_KEY='Test'
+script: python manage.py test
+```
+ 
+So far, I was able to run 21 successful tests.
+
+
+
+### Admin Testing 
 In order to use all of the admin functional please go to the [admin page](https://jomari-designs-app.herokuapp.com/admin/). Use the following login details.
+
+Note: This is for the examiner only and please refrain from uploading inappropriate images.
 
 - Username: admin
 - Password: testing_password
 
-- As an admin, I want to be able to upload an image to a particular project to see if the client likes it.
+- As an admin, I want to be able to upload an image to a particular project to show the client the initial design.
+
+    1. Click on the project models and choose any item on the list.
+    2. Check the amount of concept requested by the user. For example if the concept_amount is equal to two, please upload to images.
+    3. After uploading, check the finished checkbox to let the user know that you are finished designing the concept.
+    4. Verify the upload is completed by going to media section of your Amazon S3 bucket. 
 
 ### Testing Bugs
 There are numerous bugs I came accross while testing. For example:
@@ -281,7 +308,7 @@ For the production deployment of this project, I used [Heroku](https://www.herok
     AWS_ACCESS_KEY_ID=<AWS access key>
     AWS_SECRET_ACCESS_KEY=<AWS secret access key>
     CLIENTS_EMAIL=<site owner's preferred email>
-    DISABLE_COLLECTSTATIC=1 # since 
+    DISABLE_COLLECTSTATIC=1 # essential to prevent Heroku from uloading static files
     ```
 
 7. Click the configure add-ons and on the search field, type in Heroku Postgres.
