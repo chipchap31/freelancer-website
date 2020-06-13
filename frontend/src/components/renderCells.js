@@ -5,7 +5,7 @@ import {
     Col
 } from 'antd';
 export default function renderCells(value, props) {
-    console.log(props);
+
 
     // CalendarCells is the component for every cell in the deadline calendar
     const isDisabled = moment().add(14, 'days') > value; // disable date if two weeks from now

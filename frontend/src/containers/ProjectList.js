@@ -28,6 +28,7 @@ function ProjectList(props) {
     const [state, setState] = React.useState([])
     useEffect(() => {
         props.handleProjectsFetch();
+
         setState(projectsState)
     }, [])
 

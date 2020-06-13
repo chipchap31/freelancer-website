@@ -30,7 +30,7 @@ class CustomEmail:
                             <p>Hello,</p>
 
                             <p>Your account has been created and ready to use. In order to obtain access to your account
-                                please click <a href="http://localhost:5000/login">here</a> and enter the details below:
+                                please click <a href="https://jomari-designs-app.herokuapp.com/login">here</a> and enter the details below:
                             </p>
                             <ul>
                                 <li>username: {username}</li>
@@ -43,9 +43,9 @@ class CustomEmail:
                     </html>
                     """
 
-        from_email = From("no_reply@test.com")
+        from_email = From("no_reply@jomaridesigns.com")
         to_email = To(self._receiver)
-        subject = Subject('test subject')
+        subject = Subject('Welcome To Jomari Designs')
         html_content = HtmlContent(html_text)
 
         soup = BeautifulSoup(html_text, features='html.parser')

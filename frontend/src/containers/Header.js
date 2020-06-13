@@ -31,8 +31,6 @@ function Header(props) {
         </Menu>
     );
     const AvatarRender = () => {
-
-
         return (
             <Dropdown overlay={menu}>
                 <Avatar size='large'>

@@ -7,7 +7,7 @@ import { ButtonBack } from '../components/buttons'
 function WorkDetailed(props) {
 
     const { state } = props.history.location;
-    console.log(state);
+
 
     const stars = [];
     for (var i = 0; i < state.rate; i++) {
@@ -49,7 +49,4 @@ function WorkDetailed(props) {
     )
 
 }
-
-
-
 export default withRouter(WorkDetailed);

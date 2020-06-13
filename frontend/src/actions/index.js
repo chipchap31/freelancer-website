@@ -128,7 +128,6 @@ export const handleAuthentication = () => async dispatch => {
         dispatch({
             type: USER_LOGGED_IN, payload: {
                 authenticated: true,
-
                 user: response
             }
         })
@@ -144,8 +143,6 @@ export const handleProfileFetch = user_id => async dispatch => {
             url: `/api/profile/${user_id}`,
             auth: true
         })
-
-
         dispatch({ type: PROFILE_LOADED, payload: response })
     } catch (error) {
         dispatch({ type: PROFILE_ERROR, payload: error })
@@ -153,10 +150,7 @@ export const handleProfileFetch = user_id => async dispatch => {
 
 }
 export const handleLogin = data => async dispatch => {
-    dispatch({ type: USER_LOGGING_IN })
-
-
-
+    dispatch({ type: USER_LOGGING_IN });
     try {
 
         const response = await postRequest({

@@ -99,6 +99,7 @@ function QuotePayForm(props) {
             })
         }
         props.handleQuoteChange({ current: quoteState.current + 1 })
+        props.handleProjectsFetch();
     }
     const handleSubmit = async () => {
         if (!stripe || !elements) {
