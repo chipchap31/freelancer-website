@@ -25,7 +25,7 @@ You can read more information about the stories by clicking here.
 
 Wireframing is one of the important process of the design, as it helps the client, designers and developers be on the same page regarding the web application's structure.
 
-I created the wireframe using [Balsamiq](https://balsamiq.com/). Please click [here] if you want to see them.
+I created the wireframe using [Balsamiq](https://balsamiq.com/). Please click [here](https://github.com/chipchap31/freelancer-website/blob/master/essentials/jomari-designs-wireframe.pdf) if you want to see them.
 
 ## Features
 ### Existing Features
@@ -189,6 +189,15 @@ In order to testing the backend of the project I used the [APITestCase](https://
     2. Clicks you full name and you shoud be redirected to profile page.
     3. Verify that if you didn't change any field, a warning is displayed stating you didn't change anything.
     4. Change any field and when you click save changes a notification is shown at the right top section.
+
+
+### Mobile Responsiveness
+To test the application if it works properly on mobile, I used the chrome developer tools and the following images where captured.
+
+
+![IphoneX](https://github.com/chipchap31/freelancer-website/blob/master/essentials/Screenshot%202020-06-13%20at%2003.32.56.png?raw=true "Iphone X")
+
+![Ipad](https://github.com/chipchap31/freelancer-website/blob/master/essentials/Screenshot%202020-06-13%20at%2003.34.04.png?raw=true "Ipad")
 
 ### Unit Testing 
 
