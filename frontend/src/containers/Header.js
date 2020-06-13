@@ -57,23 +57,23 @@ function Header(props) {
                             <img src='https://jomari-designs-2020.s3-eu-west-1.amazonaws.com/static/4934b82af4909d1dff4c003050a15d8e.svg' alt='brand-logo' />
                         </Link>
                         {!userState.authenticated && <Link
-                            className='ml-2'
+                            className='ml-2 color-white'
                             to={userState.authenticated ? '/dashboard' : '/'}>
                             Home
                         </Link>}
                         {userState.authenticated && (
                             <>
                                 <Link
-                                    className='ml-3'
+                                    className='ml-3 color-white'
                                     to='/dashboard'>Dashboard</Link>
                                 <Link
-                                    className='ml-2'
+                                    className='ml-2 color-white'
                                     to='/projects'>Projects</Link>
 
                             </>
                         )}
                         <Link
-                            className='ml-2'
+                            className='ml-2 color-white'
                             to='/works'>Works</Link>
                     </Col>
                     <Col>
