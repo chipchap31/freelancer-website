@@ -19,7 +19,8 @@ This can be done by listing user stories. Here are some of the most simple:
 - As an admin, I want to able to upload an image to provide a concept to the clients.
 
 
-You can read more information about the stories by clicking here.
+You can read more information about the stories by clicking [here](https://github.com/chipchap31/freelancer-website/blob/master/essentials/User%20Stories%20-%20Jomari%20Designs.pdf).
+
 
 ### Wireframing 
 
@@ -52,6 +53,11 @@ I created the wireframe using [Balsamiq](https://balsamiq.com/). Please click [h
 - **Password Recovery** - Using [Sendgrid](https://sendgrid.com/), I want to give the user the ability to recover their password, just in case they forgot their password. 
 - **Request Changes Modification** - In the near future, I want to be able to give users the ability to edit their changes instead of just deleting.
 - **User Rating** - In the future, I want the users to be able to add comments or rate on other projects.
+- **Price Calculators** - In the future, I want to include color, width, and height as a factor that changes the price of the quote.
+
+- **Email Signup** - In the future, I also want to include a functionality when the site owner does not want to take anymore client, users will have to leave email and wait for notification when the ownere is ready again.
+
+## Database Architecture
 ## Technologies Used
 
 ### Languages 
