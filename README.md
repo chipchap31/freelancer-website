@@ -58,6 +58,8 @@ I created the wireframe using [Balsamiq](https://balsamiq.com/). Please click [h
 - **Email Signup** - In the future, I also want to include a functionality when the site owner does not want to take anymore client, users will have to leave email and wait for notification when the ownere is ready again.
 
 ## Database Architecture
+
+![Database](https://github.com/chipchap31/freelancer-website/blob/master/essentials/database-architecture.jpg?raw=true "Database")
 ## Technologies Used
 
 ### Languages 
