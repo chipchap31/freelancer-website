@@ -47,7 +47,7 @@ class PublicProjectView(viewsets.ModelViewSet):
     @action(detail=False)
     def list(self, request):
         query = PublicProjectModel.objects.all()
-        print(query)
+
         serializer = PublicProjectsSerializer(query, many=True)
         return Response(serializer.data)
 

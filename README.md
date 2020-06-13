@@ -227,6 +227,25 @@ script: python manage.py test
 So far, I was able to run 21 successful tests.
 
 
+#### Account test write up
+
+If you want to see the test for the account application please click [here](https://github.com/chipchap31/freelancer-website/blob/master/accounts/tests.py)
+
+To run the test for the account please open your terminal and enter: 
+
+    ```python
+        $ python3 manage.py test accounts
+    ```
+
+#### Checkout test write up
+
+If you want to see the test for the account application please click [here](https://github.com/chipchap31/freelancer-website/blob/master/checkout/tests.py)
+
+To run the test for the account please open your terminal and enter: 
+
+    ```python
+        $ python3 manage.py test checkout
+    ```
 
 ### Admin Testing 
 In order to use all of the admin functional please go to the [admin page](https://jomari-designs-app.herokuapp.com/admin/). Use the following login details.
