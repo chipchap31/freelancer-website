@@ -33,7 +33,7 @@ idna==2.9
 ipython-genutils==0.2.0
 itsdangerous==1.1.0
 itypes==1.2.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 jmespath==0.10.0
 jsonschema==3.2.0
 jupyter-core==4.6.3
