@@ -64,6 +64,6 @@ sqlparse==0.3.1
 stripe==2.46.0
 traitlets==4.3.3
 uritemplate==3.0.1
-urllib3==1.25.9
+urllib3==1.26.5
 URLObject==2.4.3
 Werkzeug==1.0.1
